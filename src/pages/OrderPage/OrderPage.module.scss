@@ -1,0 +1,30 @@
+$primary-color: #f36522;
+$secondary-color: rgba(0, 0, 0, 0.34);
+.orderSection {
+	margin-top: 1rem;
+}
+.headingFlex {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+.headingTitle {
+	color: $secondary-color;
+}
+.headingChange {
+	cursor: pointer;
+	color: $primary-color;
+}
+.boxContent {
+	background: white;
+	display: grid;
+	grid-template-columns: repeat(2, 1fr);
+	align-items: center;
+	padding: 1rem 1rem;
+}
+.boxContentHeading {
+	font-weight: bold;
+}
+.boxContentTitle {
+	color: $secondary-color;
+}
