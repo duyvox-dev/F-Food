@@ -1,0 +1,72 @@
+@import url('../../constansts/color.css');
+
+.container {
+	max-width: 1400px;
+	height: 1000px;
+	//display: flex;
+	margin: auto;
+	//justify-content: center;
+	//align-items: center;
+	.product-image {
+		width: 100%;
+		height: 450px;
+		//border-radius: 10%;
+		margin: 20px auto;
+		& img {
+			width: 100%;
+			height: 100%;
+			border-radius: 10px;
+		}
+	}
+	.product-detail {
+		.product-name {
+			margin-bottom: 5px;
+		}
+		.line {
+			width: 50px;
+			height: 10px;
+			background: var(--ORANGE_COLOR);
+		}
+		.product-price {
+			margin-top: 15px;
+			width: 300px;
+			display: flex;
+			justify-content: space-around;
+			.price {
+				font-size: 32px;
+				font-weight: bolder;
+			}
+			.price-sale {
+				font-size: 24px;
+				text-decoration: line-through;
+				color: gray;
+			}
+			.price-tag-sale {
+				width: 50px;
+				border-radius: 5px;
+				height: 25px;
+				background: #fed134;
+				color: white;
+				text-align: center;
+			}
+		}
+	}
+	.btn-add-product {
+		font-size: large;
+		width: 150px;
+		height: 50px;
+		border-radius: 5px;
+		background: var(--ORANGE_COLOR);
+		color: white;
+		margin-top: 15px;
+		cursor: pointer;
+	}
+	.product-vendor {
+		margin-top: 25px;
+		font-size: 16px;
+		color: gray;
+		.vendor-name {
+			color: var(--ORANGE_COLOR);
+		}
+	}
+}
