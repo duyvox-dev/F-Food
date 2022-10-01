@@ -1,0 +1,64 @@
+$orange-light: rgba(243, 101, 34, 0.5);
+$orange: rgba(243, 101, 34);
+$blue: #1976d2;
+.cart {
+	&-item {
+		padding: 1rem 0.5rem;
+		box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+		display: flex;
+		background: white;
+		&.cart-outstock {
+			opacity: 0.5;
+		}
+	}
+	&-image {
+		width: 10%;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		img {
+			display: block;
+			width: 100%;
+			max-width: 100%;
+		}
+	}
+	&-quantity {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		margin: 0 1rem;
+		span {
+			display: block;
+			padding: 3px 15px;
+			font-size: 14px;
+			border: 1px solid $orange-light;
+			border-radius: 4px;
+			color: $orange;
+			cursor: pointer;
+		}
+	}
+	&-info {
+		flex: 1;
+		display: flex;
+		flex-direction: column;
+		gap: 5px;
+		padding-right: 2rem;
+	}
+	&-name {
+		font-size: 18px;
+		font-weight: 600;
+	}
+	&-outstock-message {
+		color: $orange;
+	}
+	&-change {
+		color: $blue;
+		cursor: pointer;
+		display: inline;
+	}
+	&-price {
+		margin-left: auto;
+		margin-right: 2rem;
+		font-weight: 600;
+	}
+}

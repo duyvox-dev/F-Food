@@ -1,25 +1,22 @@
 import React from 'react';
 import { Typography, Box, Paper } from '@mui/material';
-import styles from './OrderPage.module.scss';
 export default function OrderLocation() {
 	return (
-		<Box className={styles.orderSection}>
-			<div className={styles.headingFlex}>
-				<Typography variant='h6' className={styles.headingTitle}>
-					Thông tin người nhận
-				</Typography>
-				<Typography className={styles.headingChange}>Thay đổi</Typography>
+		<div className='order-section'>
+			<div className='heading-flex'>
+				<h3 className='heading-title'>Người nhận</h3>
+				<span className='heading-change'>Thay đổi</span>
 			</div>
-			<Paper className={styles.boxContent} elevation={0}>
+			<div className='box-content' elevation={0}>
 				<div>
-					<Typography className={styles.boxContentTitle}>Số điện thoại</Typography>
-					<Typography className={styles.boxContentInfo}>0326 836 877</Typography>
+					<span className='box-content-title'>Email</span>
+					<span className='box-content-info'>johnCena@gmail.com</span>
 				</div>
 				<div>
-					<Typography className={styles.boxContentTitle}>Họ tên</Typography>
-					<Typography className={styles.boxContentInfo}>John Cena</Typography>
+					<span className='box-content-title'>Họ tên</span>
+					<span className='box-content-info'>John Cena</span>
 				</div>
-			</Paper>
-		</Box>
+			</div>
+		</div>
 	);
 }
