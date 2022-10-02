@@ -1,6 +1,7 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 import { appRoutes } from './routes/appRoutes';
+
 function App() {
 	return (
 		<div className='App'>
@@ -14,6 +15,7 @@ function App() {
 					})}
 				</Routes>
 			</BrowserRouter>
+			{/* <h1>HomePage</h1> */}
 		</div>
 	);
 }
