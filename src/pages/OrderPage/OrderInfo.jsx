@@ -9,12 +9,12 @@ export default function OrderLocation() {
 			</div>
 			<div className='box-content' elevation={0}>
 				<div>
-					<span className='box-content-title'>Email</span>
-					<span className='box-content-info'>johnCena@gmail.com</span>
-				</div>
-				<div>
 					<span className='box-content-title'>Họ tên</span>
 					<span className='box-content-info'>John Cena</span>
+				</div>
+				<div>
+					<span className='box-content-title'>Số điện thoại</span>
+					<span className='box-content-info'>0326 833 874</span>
 				</div>
 			</div>
 		</div>

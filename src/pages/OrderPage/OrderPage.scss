@@ -40,3 +40,14 @@ $secondary-color: rgba(0, 0, 0, 0.34);
 	display: block;
 	margin-bottom: 5px;
 }
+.price-cost {
+	display: flex;
+	flex-direction: column;
+	gap: 5px;
+	font-weight: 600;
+}
+.dash {
+	text-decoration: line-through;
+	color: gray;
+	font-weight: 400;
+}
