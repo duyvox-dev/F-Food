@@ -10,6 +10,7 @@ const CheckoutButton = styled(Button)({
 	backgroundColor: 'rgba(243, 101, 34)',
 	width: '100%',
 	marginTop: '1rem',
+	boxShadow: 'inherit',
 	'&:hover': { backgroundColor: 'rgba(243, 101, 34)' },
 });
 export default function Checkout({ fees = {}, cartList = [] }) {

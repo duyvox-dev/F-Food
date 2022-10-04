@@ -37,7 +37,7 @@ export default function LocationModal({
 				)}
 				<Button
 					variant='contained'
-					sx={{ width: { xs: '80%', sm: '50%' } }}
+					sx={{ width: { xs: '80%', sm: '50%' }, boxShadow: 'inherit' }}
 					onClick={() => {
 						handleSubmitNewLocation();
 					}}

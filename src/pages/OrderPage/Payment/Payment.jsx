@@ -12,7 +12,7 @@ export default function Payment({ fees = {}, cartList = [] }) {
 	};
 	return (
 		<div className='payment'>
-			<h3 className='heading-title payment-heading'>Tổng ({calculateProductQuantity()} mặt hàng)</h3>
+			<h3 className='heading-title payment-heading'>Tổng ({calculateProductQuantity()} mặt hàng): </h3>
 			<div className='price-cost'>
 				{fees?.discountCost?.cost === fees?.originCost?.cost ? (
 					<>

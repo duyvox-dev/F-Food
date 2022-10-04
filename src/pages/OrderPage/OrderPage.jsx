@@ -85,13 +85,20 @@ export default function OrderPage() {
 			label: 'Phòng 102',
 		},
 	];
+	const mockDataUser = {
+		phone: '',
+		email: 'vobaoduy123@gmail.com',
+		name: 'duyvox',
+	};
 	const [fees, setFees] = useState(mockDataFee);
 	const [cart, setCart] = useState(mockDataCart);
 	const [locationList, setLocationList] = useState(mockDataLocation);
 	const [currentLocation, setCurrenLocation] = useState(mockDataLocation[2]);
+	const [user, setUser] = useState(mockDataUser);
 	const [shippingFee, setShippingFee] = useState(15000);
 	const [quantityModal, openQuantityModal, closeQuantityModal] = useModal();
 	const [locationModal, openLocationModal, closeLocationModal] = useModal();
+	const [userModal, openUserModal, closeUserModal] = useModal();
 	const [selectedCart, setSelectedCart] = useState({});
 	const calculateFee = (shippingFee) => {
 		let discountCost = 0;
@@ -133,6 +140,12 @@ export default function OrderPage() {
 		setCurrenLocation(location);
 		closeLocationModal();
 	};
+	const handleChangeUserPhoneNumber = (phone) => {
+		setUser({
+			phone,
+			...user,
+		});
+	};
 	useEffect(() => {
 		if (_.isEmpty(selectedCart) === false) {
 			openQuantityModal();
@@ -145,6 +158,7 @@ export default function OrderPage() {
 	}, [quantityModal]);
 	return (
 		<>
+			{/* Modals */}
 			<QuantityModal modalVisible={quantityModal} closeModal={closeQuantityModal} cartItem={selectedCart} />
 			<LocationModal
 				modalVisible={locationModal}
@@ -153,6 +167,13 @@ export default function OrderPage() {
 				defaultLocation={currentLocation}
 				handleChangeLocation={handleChangeLocation}
 			/>
+			<PersonalInfoModal
+				modalVisible={userModal}
+				closeModal={closeUserModal}
+				user={user}
+				handleChangeUserPhoneNumber={handleChangeUserPhoneNumber}
+			/>
+			{/* -------------------------------- */}
 			<Container
 				maxWidth='md'
 				sx={{
@@ -165,7 +186,7 @@ export default function OrderPage() {
 					Đơn hàng của bạn
 				</Typography>
 				<OrderLocation openLocationModal={openLocationModal} location={currentLocation} />
-				<OrderInfo />
+				<OrderInfo user={user} openUserModal={openUserModal} />
 				<CartList carts={cart} handleChangeQuantity={handleChangeQuantity} />
 				<FeeList fees={fees}></FeeList>
 				<Checkout fees={fees} cartList={cart} />
