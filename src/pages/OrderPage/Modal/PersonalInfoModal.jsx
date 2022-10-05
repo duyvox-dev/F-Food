@@ -5,7 +5,7 @@ import _ from 'lodash';
 import Button from '@mui/material/Button';
 import BasicModal from '../../../components/Modal/BasicModal';
 import TextField from '@mui/material/TextField';
-import { formatPhoneNumber } from '../../../util/string.util';
+import { useEffect } from 'react';
 export default function PersonalInfoModal({
 	modalVisible = false,
 	closeModal = () => {},
@@ -13,12 +13,19 @@ export default function PersonalInfoModal({
 	handleChangeUserPhoneNumber = () => {},
 }) {
 	const [currentPhone, setCurrentPhoneNumber] = useState(user?.phone);
+	const [isValidPhoneNumber, setIsValidPhoneNumber] = useState(false);
 	const handleSubmitNewPhoneNumber = () => {
 		handleChangeUserPhoneNumber(currentPhone);
 	};
-	const checkUserForm = () => {
-		return true;
+
+	const isValidPhone = (phoneNumber) => {
+		const pattern = /^0\d{9}$/;
+		return pattern.test(phoneNumber);
 	};
+	useEffect(() => {
+		if (isValidPhone(currentPhone)) setIsValidPhoneNumber(true);
+		else setIsValidPhoneNumber(false);
+	}, [currentPhone]);
 	return (
 		<BasicModal modalVisible={modalVisible} closeModal={closeModal}>
 			<span className='modal-heading'>Thay đổi thông tin người nhận</span>
@@ -30,10 +37,15 @@ export default function PersonalInfoModal({
 							label='Số điện thoại'
 							required
 							fullWidth
-							placeholder={formatPhoneNumber('0123456789')}
-							defaultValue={formatPhoneNumber(user?.phone)}
+							placeholder={'0123456789'}
+							defaultValue={user?.phone}
 							sx={{ margin: '1rem 0' }}
-							helperText='Vui lòng nhập đúng định dạng số điện thoại'
+							value={currentPhone}
+							onChange={(e) => {
+								setCurrentPhoneNumber(e.target.value);
+							}}
+							error={!isValidPhoneNumber}
+							helperText={!isValidPhoneNumber ? 'Vui lòng nhập đúng định dạng số điện thoại' : ''}
 						/>
 					</form>
 				</div>
@@ -43,7 +55,7 @@ export default function PersonalInfoModal({
 					onClick={() => {
 						handleSubmitNewPhoneNumber();
 					}}
-					disabled={!checkUserForm()}>
+					disabled={!isValidPhoneNumber}>
 					Cập nhật thông tin
 				</Button>
 			</div>

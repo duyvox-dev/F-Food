@@ -27,14 +27,26 @@ export default function LocationModal({
 					id='combo-box-demo'
 					options={locationList}
 					sx={{ width: '100%' }}
-					renderInput={(params) => <TextField {...params} label='Địa điểm' />}
+					renderInput={(params) => (
+						<TextField
+							{...params}
+							label='Địa điểm'
+							helperText={
+								_.isEmpty(currentLocation) ? (
+									<span className='text-helper '>Địa điểm giao hàng không được bỏ trống</span>
+								) : (
+									<></>
+								)
+							}
+						/>
+					)}
 					onChange={(event, newLocation) => {
 						setCurrenLocation(newLocation);
 					}}
 				/>
-				{_.isEmpty(currentLocation) && (
+				{/* {_.isEmpty(currentLocation) && (
 					<span className='text-helper locationModal-text-helper'>Địa điểm giao hàng không được bỏ trống</span>
-				)}
+				)} */}
 				<Button
 					variant='contained'
 					sx={{ width: { xs: '80%', sm: '50%' }, boxShadow: 'inherit' }}

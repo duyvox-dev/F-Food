@@ -140,11 +140,12 @@ export default function OrderPage() {
 		setCurrenLocation(location);
 		closeLocationModal();
 	};
-	const handleChangeUserPhoneNumber = (phone) => {
+	const handleChangeUserPhoneNumber = (newPhone) => {
 		setUser({
-			phone,
 			...user,
+			phone: newPhone,
 		});
+		closeUserModal();
 	};
 	useEffect(() => {
 		if (_.isEmpty(selectedCart) === false) {
