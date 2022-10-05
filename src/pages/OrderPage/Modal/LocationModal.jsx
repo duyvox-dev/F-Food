@@ -31,22 +31,15 @@ export default function LocationModal({
 						<TextField
 							{...params}
 							label='Địa điểm'
-							helperText={
-								_.isEmpty(currentLocation) ? (
-									<span className='text-helper '>Địa điểm giao hàng không được bỏ trống</span>
-								) : (
-									<></>
-								)
-							}
+							error={_.isEmpty(currentLocation)}
+							helperText={_.isEmpty(currentLocation) ? 'Địa điểm giao hàng không được bỏ trống' : ''}
 						/>
 					)}
 					onChange={(event, newLocation) => {
 						setCurrenLocation(newLocation);
 					}}
 				/>
-				{/* {_.isEmpty(currentLocation) && (
-					<span className='text-helper locationModal-text-helper'>Địa điểm giao hàng không được bỏ trống</span>
-				)} */}
+
 				<Button
 					variant='contained'
 					sx={{ width: { xs: '80%', sm: '50%' }, boxShadow: 'inherit' }}
