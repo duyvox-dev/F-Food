@@ -32,11 +32,12 @@ export default function PersonalInfoModal({
 			<div className='modal-content personal-modal-content'>
 				<div>
 					<form action=''>
-						<TextField label='Họ tên' disabled fullWidth defaultValue={user?.name} />
+						<TextField label='Họ tên' variant='standard' disabled fullWidth defaultValue={user?.name} />
 						<TextField
 							label='Số điện thoại'
 							required
 							fullWidth
+							variant='standard'
 							placeholder={'0123456789'}
 							defaultValue={user?.phone}
 							sx={{ margin: '1rem 0' }}

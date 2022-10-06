@@ -31,6 +31,7 @@ export default function LocationModal({
 						<TextField
 							{...params}
 							label='Địa điểm'
+							variant='standard'
 							error={_.isEmpty(currentLocation)}
 							helperText={_.isEmpty(currentLocation) ? 'Địa điểm giao hàng không được bỏ trống' : ''}
 						/>

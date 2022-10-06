@@ -20,7 +20,6 @@ export default function Checkout({ fees = {}, cartList = [] }) {
 			<CheckoutButton size='large' variant='contained'>
 				Đặt hàng
 			</CheckoutButton>
-			{/* <span className='checkout-button'>Đặt hàng ngay</span> */}
 		</div>
 	);
 }

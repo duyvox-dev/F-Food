@@ -47,6 +47,9 @@ $blue: #1976d2;
 	&-name {
 		font-size: 18px;
 		font-weight: 600;
+		@media screen and (max-width: 767.98px) {
+			font-size: 16px;
+		}
 	}
 	&-outstock-message {
 		color: $orange;

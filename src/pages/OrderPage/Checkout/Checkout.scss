@@ -7,15 +7,4 @@ $orange: rgba(243, 101, 34);
 	bottom: 0px;
 	left: 0;
 	box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
-	&-button {
-		display: block;
-		text-align: center;
-		padding: 10px;
-		background: $orange;
-		color: white;
-		font-weight: 600;
-		font-size: 20px;
-		margin-top: 10px;
-		cursor: pointer;
-	}
 }

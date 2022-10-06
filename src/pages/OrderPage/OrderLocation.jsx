@@ -16,7 +16,7 @@ export default function OrderLocation({ openLocationModal = () => {}, location =
 			<div className='box-content' elevation={0}>
 				<span className='box-content-heading'>{location?.label}</span>
 				<div>
-					<span className='box-content-title'>Thời gian giao hàng dự kiến</span>
+					<span className='box-content-title'>Thời gian giao hàng</span>
 					<span className='box-content-info'>9:15 - 9:45 </span>
 				</div>
 			</div>

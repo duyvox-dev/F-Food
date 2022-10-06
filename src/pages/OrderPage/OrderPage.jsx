@@ -90,6 +90,7 @@ export default function OrderPage() {
 		email: 'vobaoduy123@gmail.com',
 		name: 'duyvox',
 	};
+	// -----------------------------------------
 	const [fees, setFees] = useState(mockDataFee);
 	const [cart, setCart] = useState(mockDataCart);
 	const [locationList, setLocationList] = useState(mockDataLocation);
@@ -100,6 +101,7 @@ export default function OrderPage() {
 	const [locationModal, openLocationModal, closeLocationModal] = useModal();
 	const [userModal, openUserModal, closeUserModal] = useModal();
 	const [selectedCart, setSelectedCart] = useState({});
+	// --------------------------------------------------
 	const calculateFee = (shippingFee) => {
 		let discountCost = 0;
 		let originCost = 0;
@@ -129,10 +131,6 @@ export default function OrderPage() {
 		};
 	};
 
-	useEffect(() => {
-		const totalFee = calculateFee(shippingFee);
-		setFees(totalFee);
-	}, [cart]);
 	const handleChangeQuantity = (cart) => {
 		setSelectedCart(cart);
 	};
@@ -147,6 +145,10 @@ export default function OrderPage() {
 		});
 		closeUserModal();
 	};
+	useEffect(() => {
+		const totalFee = calculateFee(shippingFee);
+		setFees(totalFee);
+	}, [cart]);
 	useEffect(() => {
 		if (_.isEmpty(selectedCart) === false) {
 			openQuantityModal();
@@ -179,8 +181,8 @@ export default function OrderPage() {
 				maxWidth='md'
 				sx={{
 					background: '#F7F7F7',
-					// height: '90vh',
-					// overflow: 'scroll',
+					height: '90vh',
+					overflow: 'scroll',
 					padding: '1rem 0',
 				}}>
 				<Typography variant='h4' align='center' fontWeight='bold'>
