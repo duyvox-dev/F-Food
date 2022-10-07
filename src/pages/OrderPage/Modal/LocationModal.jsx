@@ -1,11 +1,12 @@
 import React from 'react';
-import BasicModal from '../../../components/Modal/BasicModal';
+
 import TextField from '@mui/material/TextField';
 import Autocomplete from '@mui/material/Autocomplete';
 import Button from '@mui/material/Button';
 import { useState } from 'react';
 import './Modal.scss';
 import _ from 'lodash';
+import BasicModal from '../../../Components/Modal/BasicModal';
 export default function LocationModal({
 	modalVisible = false,
 	closeModal = () => {},

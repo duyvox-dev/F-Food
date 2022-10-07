@@ -3,3 +3,10 @@ const vndCurrencyFormat = (rawPrice) => {
 };
 
 export { vndCurrencyFormat };
+
+
+const discountPercent = (newPrice, oldPrice) => {
+	return (100 - (newPrice / oldPrice) * 100).toFixed(0);
+};
+
+export { discountPercent }
