@@ -3,18 +3,22 @@ import './ProductDetailPage.scss';
 import banhmi from '../../assets/image/banhmi.jpg';
 
 // or
-import { Grid, Paper, Card, CardContent, Typography, CardActions, Button, CardMedia } from '@mui/material';
+import { Grid, Paper, Card, CardContent, Typography, CardActions, Button, CardMedia, Container } from '@mui/material';
 import { Box } from '@mui/system';
 
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import { ORANGE_COLOR } from '../../constansts/constants';
+import { useLocation } from 'react-router-dom';
+import { discountPercent, vndCurrencyFormat } from '../../util/currency.util';
 
 export default function ProductDetailPage() {
 	let vendor = '7Eleven';
 
 	// Prepare for get product Id detail from Homepage
 	// const {id} = useParams();
-	// const data = useLocation();
+	const data = useLocation();
+
+	console.log('data: ', data);
 
 	// Data mock
 	const productsDataMock = [
@@ -52,17 +56,19 @@ export default function ProductDetailPage() {
 
 	return (
 		<>
-			<div className='container'>
+			<Container maxWidth='md'>
 				<div className='product-image'>
-					<img src={banhmi} alt='' />
+					<img src={data.state.image} alt='' />
 				</div>
 				<div className='product-detail'>
-					<h1 className='product-name'>Bánh Mì</h1>
+					<h1 className='product-name'>{data.state.productName}</h1>
 					<div className='line'></div>
 					<div className='product-price'>
-						<span className='price'>24.000 đ</span>
-						<span className='price-sale'>28.000 đ</span>
-						<span className='price-tag-sale'>-15%</span>
+						<span className='price'>{vndCurrencyFormat(data.state.productNewPrice)} </span>
+						<span className='price-sale'>{vndCurrencyFormat(data.state.productOldPrice)} </span>
+						<span className='price-tag-sale'>
+							{-discountPercent(data.state.productNewPrice, data.state.productOldPrice)} %
+						</span>
 					</div>
 				</div>
 
@@ -101,7 +107,7 @@ export default function ProductDetailPage() {
 						))}
 					</Grid>
 				</Box>
-			</div>
+			</Container>
 		</>
 	);
 }

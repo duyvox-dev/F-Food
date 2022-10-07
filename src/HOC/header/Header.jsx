@@ -1,19 +1,21 @@
 import React from 'react';
-import {} from '@mui/material';
+import { Container } from '@mui/material';
 import { SearchRounded } from '@mui/icons-material';
 import './Header.scss';
 import Logo from '../../img/logo.png';
 import ProfilePic from '../../img/avatar.png';
+import { Link } from 'react-router-dom';
 
 function Header() {
 	return (
-		<header className='container'>
-			{/* desktop & tablet */}
+		<Container maxWidth='lg'>
 			<div className='header'>
-				<div className='logo-page'>
-					<img src={Logo} alt='' className='logo' />
-					<p className='nameApp'>F-Food</p>
-				</div>
+				<Link to='/'>
+					<div className='logo-page'>
+						<img src={Logo} alt='' className='logo' />
+						<p className='nameApp'>F-Food</p>
+					</div>
+				</Link>
 				<div className='inputBox'>
 					<SearchRounded className='searchIcon' />
 					<input type='text' placeholder='Bạn đang thèm ăn gì?' />
@@ -24,7 +26,7 @@ function Header() {
 					</div>
 				</div>
 			</div>
-		</header>
+		</Container>
 	);
 }
 

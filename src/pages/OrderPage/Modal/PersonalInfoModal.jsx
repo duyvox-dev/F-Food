@@ -3,9 +3,10 @@ import { useState } from 'react';
 import './Modal.scss';
 import _ from 'lodash';
 import Button from '@mui/material/Button';
-import BasicModal from '../../../components/Modal/BasicModal';
+
 import TextField from '@mui/material/TextField';
 import { useEffect } from 'react';
+import BasicModal from '../../../components/Modal/BasicModal';
 export default function PersonalInfoModal({
 	modalVisible = false,
 	closeModal = () => {},

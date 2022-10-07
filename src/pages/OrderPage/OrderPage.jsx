@@ -178,11 +178,11 @@ export default function OrderPage() {
 			/>
 			{/* -------------------------------- */}
 			<Container
-				maxWidth='md'
+				maxWidth='lg'
 				sx={{
 					background: '#F7F7F7',
-					height: '90vh',
-					overflow: 'scroll',
+					// height: '90vh',
+					// overflow: 'scroll',
 					padding: '1rem 0',
 				}}>
 				<Typography variant='h4' align='center' fontWeight='bold'>
