@@ -4,6 +4,7 @@ import ProductCategory from './ProductCategory';
 import MenuCategory from './MenuCategory';
 import HomeContainer from './HomeContainer';
 import TimeOrderBar from './TimeOrderBar';
+import { Link } from 'react-router-dom';
 
 export default function HomePage() {
 	return (
