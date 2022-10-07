@@ -1,0 +1,102 @@
+$primaryColor: #f36522;
+.productContainer {
+	display: grid;
+	grid-template-columns: repeat(4, 1fr);
+	gap: 40px;
+}
+
+.product-content {
+	height: auto;
+	border-radius: 15px;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	box-shadow: 0px 0px 20px rgb(0 0 0 / 15%);
+	background-color: #fff;
+	padding: 15px;
+}
+
+.image-products {
+	width: 110px;
+}
+
+.content-item {
+	margin-bottom: 0px;
+}
+
+.name-item {
+	font-size: 15px;
+	line-height: 20px;
+	height: 44px;
+	font-weight: 500;
+	color: #000000;
+	margin-bottom: -3px;
+	//show 2 line
+	overflow: hidden;
+	text-overflow: ellipsis;
+	-webkit-line-clamp: 2;
+	display: -webkit-box;
+	-webkit-box-orient: vertical;
+}
+
+.price-item-discount {
+	display: flex;
+	align-items: center;
+	margin-top: -18px;
+	margin-bottom: -18px;
+	gap: 15px;
+}
+.item-price {
+	font-size: 16px;
+	line-height: 24px;
+	font-weight: 600;
+}
+
+.unit-item-price {
+	text-decoration: underline;
+}
+
+.discount-item {
+	font-size: 13px;
+	font-weight: 700;
+	border-radius: 6.5px;
+	height: 18px;
+	background: #fed134;
+	color: #fff;
+	display: flex;
+	text-align: center;
+	justify-content: center;
+	width: 50px;
+	padding-top: 2px;
+	padding-bottom: 2px;
+}
+.itemOldPrice {
+	font-size: 15px;
+	text-decoration: line-through;
+	filter: opacity(0.35);
+	margin-top: 0px;
+	margin-bottom: 0px;
+}
+
+.content-item .bottom-item {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+
+.content-item .bottom-item .addItemToCart {
+	background-color: $primaryColor;
+	width: 25px;
+	height: 25px;
+	border-radius: 100%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.15);
+}
+
+.content-item .bottom-item .addItemToCart .MuiSvgIcon-root {
+	font-size: 17px;
+	color: #faf9fb;
+}
