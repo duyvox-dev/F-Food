@@ -1,0 +1,11 @@
+$orange: rgba(243, 101, 34);
+.payment {
+	display: flex;
+	justify-content: space-between;
+	padding-right: 0.5rem;
+	&-heading {
+		margin-top: 0;
+		color: black;
+		margin-left: 0;
+	}
+}
