@@ -8,7 +8,7 @@ import { Link } from 'react-router-dom';
 
 function Header() {
 	return (
-		<Container>
+		<Container maxWidth='lg'>
 			<div className='header'>
 				<Link to='/'>
 					<div className='logo-page'>
