@@ -42,7 +42,7 @@ export const hotMenuData = [
 	},
 ];
 
-export const MenuCategory = [
+export const DataMenuCategory = [
 	{
 		id: 1,
 		name: 'Ưu Đãi Hấp Dẫn',
@@ -129,5 +129,24 @@ export const ProductByCategory = [
 		productNewPrice: 63000,
 		productOldPrice: 76000,
 		image: Nem,
+	},
+];
+
+export const TimeOrder = [
+	// {
+	// 	id: 1,
+	// 	time: '7:00 - 9:15',
+	// },
+	// {
+	// 	id: 2,
+	// 	time: '9:45 - 12:00',
+	// },
+	{
+		id: 1,
+		time: '12:30 - 14:45',
+	},
+	{
+		id: 2,
+		time: '15:15 - 17:30',
 	},
 ];

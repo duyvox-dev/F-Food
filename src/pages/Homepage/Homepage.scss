@@ -1,3 +1,4 @@
+$primaryColor: #f36522;
 .home {
 	width: 100vw;
 	padding-top: 68px;
@@ -67,7 +68,7 @@
 
 .sub-content {
 	font-size: 60px;
-	color: #f36522;
+	color: $primaryColor;
 }
 
 .hotMenu {
@@ -108,8 +109,6 @@
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	padding-top: 2px;
-	padding-bottom: 4px;
 	gap: 16px;
 	flex-wrap: wrap;
 }
@@ -124,6 +123,7 @@
 	box-shadow: 0px 0px 20px rgb(0 0 0 / 15%);
 	background-color: #fff;
 	padding: 15px;
+	cursor: pointer;
 }
 
 .image-hot-items {
@@ -193,7 +193,7 @@
 }
 
 .contentProduct .bottom .addToCart {
-	background-color: #f36522;
+	background-color: $primaryColor;
 	width: 25px;
 	height: 25px;
 	border-radius: 100%;
@@ -217,7 +217,7 @@
 
 .titleOrder {
 	display: flex;
-	color: #f36522;
+	color: $primaryColor;
 	font-weight: 700;
 	font-size: 20px;
 	line-height: 25px;
@@ -227,23 +227,24 @@
 	display: flex;
 	justify-content: space-between;
 	margin: 0 150px;
-	// gap: 10px;
+	gap: 10px;
 }
 
 .btChooseTime {
 	border-radius: 8px;
 	padding: 8px 16px;
 	background: #fcf6f6;
-	border: 2px solid #f36522;
-	color: #f36522;
+	border: 2px solid $primaryColor;
+	color: $primaryColor;
 	font-weight: 700;
 	font-size: 16px;
 	line-height: 20px;
+	cursor: pointer;
 }
 
 .btChooseTime.active {
 	background-color: transparent;
-	background: #f36522;
+	background: $primaryColor;
 	color: #fcf6f6;
 }
 
@@ -253,7 +254,7 @@
 
 .btChooseTime:hover {
 	background-color: transparent;
-	background: #f36522;
+	background: $primaryColor;
 	color: #fcf6f6;
 }
 // style timeOrderBar end
@@ -284,6 +285,7 @@
 	align-items: center;
 	justify-content: center;
 	background-color: #fff;
+	cursor: pointer;
 }
 
 .image-category {
@@ -317,19 +319,12 @@
 	border-radius: 8px;
 	width: 64px;
 	height: 3px;
-	background-color: #f36522;
+	background-color: $primaryColor;
 }
 
 // style listProductByCategory end
 
-// style productContainer start
-// .productContainer {
-// 	display: flex;
-// 	justify-content: space-between;
-// 	align-items: center;
-// 	flex-wrap: wrap;
-// 	gap: 40px;
-// }
+//// style productContainer start
 
 .productContainer {
 	display: grid;
@@ -338,18 +333,16 @@
 }
 
 .product-content {
-	// width: 200px;
 	height: auto;
 	border-radius: 15px;
-	display: block;
 	display: flex;
 	flex-direction: column;
 	align-items: center;
-	// justify-content: center;
-	// filter: drop-shadow(0px 5px 15px rgba(180, 181, 229, 0.9));
+	justify-content: center;
 	box-shadow: 0px 0px 20px rgb(0 0 0 / 15%);
 	background-color: #fff;
 	padding: 15px;
+	cursor: pointer;
 }
 
 .image-products {
@@ -421,7 +414,7 @@
 }
 
 .content-item .bottom-item .addItemToCart {
-	background-color: #f36522;
+	background-color: $primaryColor;
 	width: 25px;
 	height: 25px;
 	border-radius: 100%;
@@ -448,8 +441,8 @@
 	border-radius: 100px;
 	padding: 8px 16px;
 	background: #fff;
-	border: 1.7px solid #f36522;
-	color: #f36522;
+	border: 1.7px solid $primaryColor;
+	color: $primaryColor;
 	font-weight: 550;
 	font-size: 16px;
 	line-height: 20px;
