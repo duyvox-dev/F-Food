@@ -6,7 +6,7 @@ import Button from '@mui/material/Button';
 
 import TextField from '@mui/material/TextField';
 import { useEffect } from 'react';
-import BasicModal from '../../../Components/Modal/BasicModal';
+import BasicModal from '../../../components/Modal/BasicModal';
 export default function PersonalInfoModal({
 	modalVisible = false,
 	closeModal = () => {},

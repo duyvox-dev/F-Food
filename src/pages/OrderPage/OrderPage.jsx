@@ -6,7 +6,7 @@ import OrderInfo from './OrderInfo';
 import Checkout from './Checkout/Checkout';
 import OrderLocation from './OrderLocation';
 import FeeList from './Fee/FeeList';
-import QuantityModal from '../../Components/Modal/QuantityModal';
+import QuantityModal from '../../components/Modal/QuantityModal';
 import LocationModal from './Modal/LocationModal';
 import PersonalInfoModal from './Modal/PersonalInfoModal';
 import useModal from '../../hooks/useModal';

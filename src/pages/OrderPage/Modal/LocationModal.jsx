@@ -6,7 +6,7 @@ import Button from '@mui/material/Button';
 import { useState } from 'react';
 import './Modal.scss';
 import _ from 'lodash';
-import BasicModal from '../../../Components/Modal/BasicModal';
+import BasicModal from '../../../components/Modal/BasicModal';
 export default function LocationModal({
 	modalVisible = false,
 	closeModal = () => {},
