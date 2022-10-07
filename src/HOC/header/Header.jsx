@@ -10,11 +10,9 @@ function Header() {
 	return (
 		<Container maxWidth='lg'>
 			<div className='header'>
-				<Link to='/'>
-					<div className='logo-page'>
-						<img src={Logo} alt='' className='logo' />
-						<p className='nameApp'>F-Food</p>
-					</div>
+				<Link to='/' className='logo-page'>
+					<img src={Logo} alt='' className='logo' />
+					<p className='nameApp'>F-Food</p>
 				</Link>
 				<div className='inputBox'>
 					<SearchRounded className='searchIcon' />
