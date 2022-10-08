@@ -28,11 +28,11 @@ function HomeContainer() {
 					<img src={HeroBg} className='image-background' alt='hero-bg' />
 
 					<div className='menu-items'>
-						<Grid2 container spacing={2}>
+						<Grid2 container spacing={2} justifyContent='center'>
 							{hotMenuData &&
 								hotMenuData.map((product) => {
 									return (
-										<Grid2 item xs={6} key={product.id}>
+										<Grid2 item xs={5} key={product.id}>
 											<ProductItem product={product}></ProductItem>
 										</Grid2>
 									);

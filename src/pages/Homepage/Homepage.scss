@@ -83,7 +83,7 @@ $primaryColor: #f36522;
 	display: flex;
 	flex: 1 1 0%;
 	flex-direction: column;
-	align-items: flex-start;
+	align-items: center;
 	position: relative;
 	gap: 24px;
 	// margin-right: 64px;
@@ -110,8 +110,8 @@ $primaryColor: #f36522;
 	width: 90%;
 	// height: 90%;
 	position: absolute;
-	top: 40px;
-	left: 0px;
+	top: 35px;
+	// left: 0px;
 	// display: flex;
 	// align-items: center;
 	// justify-content: center;
@@ -225,6 +225,11 @@ $primaryColor: #f36522;
 	padding: 0 64px;
 	margin: 10px 0;
 }
+@media screen and (max-width: 768px) {
+	.timeOrderBar {
+		padding: 0;
+	}
+}
 
 .titleOrder {
 	display: flex;
@@ -234,11 +239,37 @@ $primaryColor: #f36522;
 	line-height: 25px;
 }
 
+@media screen and (max-width: 768px) {
+	.titleOrder {
+		font-size: 18px;
+		line-height: 22px;
+	}
+}
+
 .timeOrder {
 	display: flex;
 	justify-content: space-between;
-	margin: 0 150px;
+	margin: 0 130px;
 	gap: 10px;
+}
+
+@media screen and (max-width: 1024px) {
+	.timeOrder {
+		margin: 0 40px;
+	}
+}
+
+@media screen and (max-width: 640px) {
+	.timeOrder {
+		margin: 0;
+	}
+}
+
+@media screen and (max-width: 455px) {
+	.timeOrder {
+		display: grid;
+		grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+	}
 }
 
 .btChooseTime {
@@ -251,6 +282,21 @@ $primaryColor: #f36522;
 	font-size: 16px;
 	line-height: 20px;
 	cursor: pointer;
+}
+
+@media screen and (max-width: 1024px) {
+	.btChooseTime {
+		font-size: 14px;
+		line-height: 18px;
+	}
+}
+
+@media screen and (max-width: 640px) {
+	.btChooseTime {
+		font-size: 13px;
+		line-height: 16px;
+		padding: 4px 8px;
+	}
 }
 
 .btChooseTime.active {
@@ -276,6 +322,12 @@ $primaryColor: #f36522;
 	margin: 40px 0;
 }
 
+@media screen and (max-width: 1024px) {
+	.menuCategory {
+		padding: 0 0;
+	}
+}
+
 .titleCategory {
 	display: flex;
 	justify-content: center;
@@ -285,12 +337,35 @@ $primaryColor: #f36522;
 	line-height: 25px;
 }
 
+@media screen and (max-width: 768px) {
+	.titleCategory {
+		font-size: 18px;
+		line-height: 22px;
+	}
+}
+
 .contentCategory {
 	display: flex;
 	justify-content: space-between;
 }
+
+@media screen and (max-width: 568px) {
+	.contentCategory {
+		display: grid;
+		justify-content: center;
+		grid-template-columns: repeat(4, minmax(100px, 1fr));
+	}
+}
+
+@media screen and (max-width: 455px) {
+	.contentCategory {
+		display: grid;
+		grid-template-columns: repeat(3, minmax(60px, 1fr));
+	}
+}
+
 .itemsCategory {
-	width: 190px;
+	// width: 190px;
 	display: flex;
 	flex-direction: column;
 	align-items: center;
@@ -304,10 +379,31 @@ $primaryColor: #f36522;
 	height: 57px;
 }
 
+@media screen and (max-width: 768px) {
+	.image-category {
+		width: 40px;
+		height: 46px;
+	}
+}
+
 .name-category {
 	font-weight: 700;
 	font-size: 16px;
 	line-height: 24px;
+}
+
+@media screen and (max-width: 768px) {
+	.name-category {
+		font-size: 14px;
+		line-height: 18px;
+	}
+}
+
+@media screen and (max-width: 640px) {
+	.name-category {
+		font-size: 13px;
+		line-height: 16px;
+	}
 }
 
 // style menuCategory end
@@ -323,6 +419,13 @@ $primaryColor: #f36522;
 	font-size: 20px;
 	line-height: 24px;
 	text-transform: capitalize;
+}
+
+@media screen and (max-width: 768px) {
+	.titleListCategory {
+		font-size: 19px;
+		line-height: 23px;
+	}
 }
 
 .underline-content {
