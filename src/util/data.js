@@ -15,15 +15,15 @@ export const hotMenuData = [
 	{
 		id: 1,
 		productName: 'Combo 2 hộp Quýt Thái Ngọt 500g',
-		productNewPrice: 63000,
-		productOldPrice: 76000,
+		productNewPrice: 37000,
+		productOldPrice: 74000,
 		image: Quyt,
 	},
 	{
 		id: 2,
 		productName: 'Combo Cơm Trộn Hàn Quốc, Cơm Chiên, Cafe, Nước ép dâu',
-		productNewPrice: 63000,
-		productOldPrice: 76000,
+		productNewPrice: 107000,
+		productOldPrice: 122000,
 		image: Comtron,
 	},
 	{
@@ -36,8 +36,8 @@ export const hotMenuData = [
 	{
 		id: 4,
 		productName: 'Combo 2 Nem Nướng Xiên Que Giảm 4,000',
-		productNewPrice: 63000,
-		productOldPrice: 76000,
+		productNewPrice: 24000,
+		productOldPrice: 28000,
 		image: Nem,
 	},
 ];
@@ -84,15 +84,15 @@ export const ProductByCategory = [
 	{
 		id: 1,
 		productName: 'Combo 2 hộp Quýt Thái Ngọt 500g',
-		productNewPrice: 63000,
-		productOldPrice: 76000,
+		productNewPrice: 37000,
+		productOldPrice: 74000,
 		image: Quyt,
 	},
 	{
 		id: 2,
 		productName: 'Combo Cơm Trộn Hàn Quốc, Cơm Chiên, Cafe, Nước ép dâu',
-		productNewPrice: 63000,
-		productOldPrice: 76000,
+		productNewPrice: 107000,
+		productOldPrice: 122000,
 		image: Comtron,
 	},
 	{
@@ -105,29 +105,29 @@ export const ProductByCategory = [
 	{
 		id: 4,
 		productName: 'Combo 2 Nem Nướng Xiên Que Giảm 4,000',
-		productNewPrice: 63000,
-		productOldPrice: 76000,
+		productNewPrice: 24000,
+		productOldPrice: 28000,
 		image: Nem,
 	},
 	{
 		id: 5,
 		productName: 'Combo 2 Nem Nướng Xiên Que Giảm 4,000',
-		productNewPrice: 63000,
-		productOldPrice: 76000,
+		productNewPrice: 24000,
+		productOldPrice: 28000,
 		image: Nem,
 	},
 	{
 		id: 6,
 		productName: 'Combo 2 Nem Nướng Xiên Que Giảm 4,000',
-		productNewPrice: 63000,
-		productOldPrice: 76000,
+		productNewPrice: 24000,
+		productOldPrice: 28000,
 		image: Nem,
 	},
 	{
 		id: 7,
 		productName: 'Combo 2 Nem Nướng Xiên Que Giảm 4,000',
-		productNewPrice: 63000,
-		productOldPrice: 76000,
+		productNewPrice: 24000,
+		productOldPrice: 28000,
 		image: Nem,
 	},
 ];

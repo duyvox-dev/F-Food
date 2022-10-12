@@ -6,7 +6,15 @@ import Button from '@mui/material/Button';
 import { useState } from 'react';
 import './Modal.scss';
 import _ from 'lodash';
+import { styled } from '@mui/material/styles';
+
 import BasicModal from '../../../components/Modal/BasicModal';
+const ModalButton = styled(Button)({
+	display: 'block',
+	color: 'white',
+	backgroundColor: 'rgba(243, 101, 34)',
+	'&:hover': { backgroundColor: 'rgba(243, 101, 34)' },
+});
 export default function LocationModal({
 	modalVisible = false,
 	closeModal = () => {},
@@ -42,15 +50,15 @@ export default function LocationModal({
 					}}
 				/>
 
-				<Button
+				<ModalButton
 					variant='contained'
-					sx={{ width: { xs: '80%', sm: '50%' }, boxShadow: 'inherit' }}
+					sx={{ width: { xs: '80%', sm: '50%' } }}
 					onClick={() => {
 						handleSubmitNewLocation();
 					}}
 					disabled={_.isEmpty(currentLocation)}>
 					Cập nhật địa điểm
-				</Button>
+				</ModalButton>
 			</div>
 		</BasicModal>
 	);

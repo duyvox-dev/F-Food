@@ -5,6 +5,9 @@ import Delivery from '../../img/delivery.png';
 import HeroBg from '../../img/heroBg.png';
 import { hotMenuData } from '../../util/data';
 
+import ProductItem from '../../components/Product/ProductItem/ProductItem';
+import Grid2 from '@mui/material/Unstable_Grid2'; // Grid version 2
+
 function HomeContainer() {
 	return (
 		<>
@@ -25,29 +28,16 @@ function HomeContainer() {
 					<img src={HeroBg} className='image-background' alt='hero-bg' />
 
 					<div className='menu-items'>
-						{hotMenuData &&
-							hotMenuData.map((n) => (
-								<div key={n.id} className='content-items'>
-									<img src={n.image} alt='' className='image-hot-items' />
-									<div className='contentProduct'>
-										<p className='productName'>{n.productName}</p>
-										<div className='price-discount'>
-											<p className='productPrice'>
-												{n.productNewPrice} <span className='unitPrice'>đ</span>
-											</p>
-											<p className='discount'>-14%</p>
-										</div>
-										<div className='bottom'>
-											<p className='productOldPrice'>
-												{n.productOldPrice} <span className='unitPrice'>đ</span>
-											</p>
-											<div className='addToCart'>
-												<AddRounded />
-											</div>
-										</div>
-									</div>
-								</div>
-							))}
+						<Grid2 container spacing={2} justifyContent='center'>
+							{hotMenuData &&
+								hotMenuData.map((product) => {
+									return (
+										<Grid2 item xs={5} key={product.id}>
+											<ProductItem product={product}></ProductItem>
+										</Grid2>
+									);
+								})}
+						</Grid2>
 					</div>
 				</div>
 			</div>

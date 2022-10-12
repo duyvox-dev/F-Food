@@ -11,7 +11,7 @@ function TimeOrderBar() {
 				</div>
 				<div className='timeOrder'>
 					<button type='button' className='btChooseTime disable'>
-						9:45 - 12:00
+						7:00 - 9:15
 					</button>
 					<button type='button' className='btChooseTime active'>
 						9:45 - 12:00
