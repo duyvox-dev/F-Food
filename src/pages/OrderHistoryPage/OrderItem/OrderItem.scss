@@ -1,0 +1,6 @@
+$orange: rgba(243, 101, 34);
+.orderItem {
+	&-status {
+		color: $orange;
+	}
+}
