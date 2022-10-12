@@ -3,7 +3,12 @@ import BasicModal from './BasicModal';
 import Button from '@mui/material/Button';
 import ButtonGroup from '@mui/material/ButtonGroup';
 import { styled } from '@mui/material/styles';
-
+const ModalButton = styled(Button)({
+	display: 'block',
+	color: 'white',
+	backgroundColor: 'rgba(243, 101, 34)',
+	'&:hover': { backgroundColor: 'rgba(243, 101, 34)' },
+});
 const DisabledButton = styled(Button)({
 	'&:disabled': {
 		color: 'black',
@@ -23,9 +28,9 @@ export default function QuantityModal({ modalVisible = false, closeModal = () =>
 					</DisabledButton>
 					<Button variant='outlined'>+</Button>
 				</ButtonGroup>
-				<Button variant='contained' sx={{ width: { xs: '80%', sm: '50%' } }}>
+				<ModalButton variant='contained' sx={{ width: { xs: '80%', sm: '50%' } }}>
 					Cập nhật giỏ hàng
-				</Button>
+				</ModalButton>
 			</div>
 		</BasicModal>
 	);

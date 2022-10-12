@@ -7,6 +7,14 @@ import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import { useEffect } from 'react';
 import BasicModal from '../../../components/Modal/BasicModal';
+import { styled } from '@mui/material/styles';
+
+const ModalButton = styled(Button)({
+	display: 'block',
+	color: 'white',
+	backgroundColor: 'rgba(243, 101, 34)',
+	'&:hover': { backgroundColor: 'rgba(243, 101, 34)' },
+});
 export default function PersonalInfoModal({
 	modalVisible = false,
 	closeModal = () => {},
@@ -51,15 +59,15 @@ export default function PersonalInfoModal({
 						/>
 					</form>
 				</div>
-				<Button
+				<ModalButton
 					variant='contained'
-					sx={{ width: { xs: '80%', sm: '50%' }, boxShadow: 'inherit', margin: '0 auto', display: 'block' }}
+					sx={{ width: { xs: '80%', sm: '50%' }, margin: '0 auto' }}
 					onClick={() => {
 						handleSubmitNewPhoneNumber();
 					}}
 					disabled={!isValidPhoneNumber}>
 					Cập nhật thông tin
-				</Button>
+				</ModalButton>
 			</div>
 		</BasicModal>
 	);
