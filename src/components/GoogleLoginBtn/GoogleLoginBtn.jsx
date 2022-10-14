@@ -10,7 +10,7 @@ const StyledButton = styled(Button)({
 });
 export default function GoogleLoginBtn() {
 	const onSuccess = (res) => {
-		console.log(res);
+		console.log(res.credential);
 		// dispatch(loginViaGoogle(res.tokenId));
 	};
 	const onError = (res) => {
