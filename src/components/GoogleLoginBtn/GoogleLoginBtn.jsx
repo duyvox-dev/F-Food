@@ -19,7 +19,7 @@ export default function GoogleLoginBtn() {
 
 	return (
 		<>
-			<GoogleOAuthProvider clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID}>
+			<GoogleOAuthProvider clientId={'336558258554-0kocf8i3i9arsv4ik9h0jc2clft4u36s.apps.googleusercontent.com'}>
 				<GoogleLogin onSuccess={onSuccess} onError={onError} locale='VN' cancel_on_tap_outside={false} useOneTap />
 			</GoogleOAuthProvider>
 		</>
