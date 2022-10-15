@@ -15,10 +15,10 @@ const AddToCartButton = styled(IconButton)({
 	height: '25px',
 	padding: 0,
 	fontSize: '17px',
-	// justifyContent: 'center',
-	// alignItems: 'center',
-	// boxShadow: 'inherit',
-	// borderRadius: '999px',
+	position: "absolute",
+	right: "1rem",
+	bottom: "1rem",
+	zIndex: "99",
 	'&:hover': { backgroundColor: 'rgba(243, 101, 34)' },
 });
 const ProductItem = ({ product }) => {
