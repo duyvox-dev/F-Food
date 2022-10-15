@@ -8,7 +8,24 @@ const getAllProduct = async (params) => {
     })
     return res.data
 }
+
+
+const getProductDetail = async (id) => {
+    const params = {
+        id: id
+    }
+    const res = await httpClient.get({
+        url: apiLinks.product.getAllProduct,
+        params: params,
+    })
+    return res.data
+}
+
+
+
+
 const productService = {
-    getAllProduct
+    getAllProduct,
+    getProductDetail
 }
 export default productService
