@@ -19,7 +19,7 @@ export const appRoutes = [
 		component: <ThemeLayout Component={OrderPage} />,
 	},
 	{
-		path: '/searchproduct',
+		path: '/search',
 		component: <ThemeLayout Component={SearchProductPage} />,
 	},
 	{
