@@ -67,6 +67,7 @@ export default function ProductDetailPage() {
 	// 	},
 	// ];
 	useEffect(() => {
+		window.scrollTo(0, 0);
 		const product = ProductByCategory.find((product) => product.id == id);
 		setCurrProduct(product);
 	}, [id]);
@@ -88,7 +89,7 @@ export default function ProductDetailPage() {
 					</div>
 				</div>
 
-				<AddToCartButton onClick={() => {}} size='large'>
+				<AddToCartButton onClick={() => { }} size='large'>
 					Thêm
 				</AddToCartButton>
 
