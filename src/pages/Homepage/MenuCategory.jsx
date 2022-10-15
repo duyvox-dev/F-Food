@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import './Homepage.scss';
 import { DataMenuCategory } from '../../util/data';
 
@@ -12,10 +13,12 @@ function MenuCategory() {
 				<div className='contentCategory'>
 					{DataMenuCategory &&
 						DataMenuCategory.map((n) => (
-							<div key={n.id} className='itemsCategory'>
-								<img src={n.image} alt='' className='image-category' />
-								<p className='name-category'>{n.name}</p>
-							</div>
+							<Link to={`/category/${n.id}`} className='category'>
+								<div key={n.id} className='itemsCategory'>
+									<img src={n.image} alt='' className='image-category' />
+									<p className='name-category'>{n.name}</p>
+								</div>
+							</Link>
 						))}
 				</div>
 			</div>

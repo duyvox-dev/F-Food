@@ -4,6 +4,7 @@ import OrderPage from '../pages/OrderPage/OrderPage';
 import NotFoundPage from '../pages/NotFoundPage/NotFoundPage';
 import HomePage from '../pages/Homepage/Homepage';
 import SearchProductPage from '../pages/SearchProductPage/SearchProductPage';
+import ProductByCategoryPage from '../pages/ProductByCategoryPage/ProductByCategoryPage';
 
 export const appRoutes = [
 	{
@@ -19,8 +20,12 @@ export const appRoutes = [
 		component: <ThemeLayout Component={OrderPage} />,
 	},
 	{
-		path: '/searchproduct',
+		path: '/search',
 		component: <ThemeLayout Component={SearchProductPage} />,
+	},
+	{
+		path: '/category/:id',
+		component: <ThemeLayout Component={ProductByCategoryPage} />,
 	},
 	{
 		path: '*',
