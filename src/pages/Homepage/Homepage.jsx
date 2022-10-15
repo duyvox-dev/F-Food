@@ -7,10 +7,11 @@ import HomeContainer from './HomeContainer';
 import TimeOrderBar from './TimeOrderBar';
 import { Link } from 'react-router-dom';
 import { Container } from '@mui/material';
+import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
 import { ProductByCategory } from '../../util/data';
 import GoogleLoginBtn from "../../components/GoogleLoginBtn/GoogleLoginBtn"
 export default function HomePage() {
-	
+
 	return (
 		<>
 			<Container maxWidth='lg'>
@@ -42,8 +43,16 @@ export default function HomePage() {
 								Xem thêm
 							</button>
 						</div>
+						<div className='iconShoppingCart'>
+							<div className='icon-cart'><ShoppingCartOutlinedIcon className='cart' /></div>
+							<div className='cart_content'>
+								<p>2 </p>
+							</div>
+						</div>
 					</div>
+
 				</div>
+
 			</Container>
 		</>
 	);
