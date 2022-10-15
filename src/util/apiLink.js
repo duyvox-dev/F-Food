@@ -13,7 +13,9 @@ const apiLinks = {
   },
   menu: {
     getListTimeSlot: `${baseURL}/menu/GetListTimeslot`,
-
+  },
+  category: {
+    getAllCategory: `${baseURL}/category/GetListCategory`
   }
 }
 export default apiLinks;
