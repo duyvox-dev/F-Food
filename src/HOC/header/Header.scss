@@ -66,6 +66,7 @@ $primaryColor: #f36522;
 	display: flex;
 	align-items: center;
 	margin-left: auto;
+	position: relative;
 }
 
 .profileContainer .imgBox {
@@ -95,7 +96,7 @@ $primaryColor: #f36522;
 
 .dropdown-menu {
 	position: absolute;
-	top: 60px;
+	top: 43px;
 	right: 4.32%;
 	background-color: #fff;
 	border-radius: 8px;
@@ -130,16 +131,15 @@ h3 {
 
 .dropdownItem {
 	display: flex;
-	padding: 10px 0 10px 30px;
+	gap: 10px;
+	align-items: center;
+	text-decoration: none;
+	color: black;
+	padding: 1rem 0;
+	width: 100%;
 	border-top: 1px solid rgba(0, 0, 0, 0.05);
-}
-
-.nameItem {
-	margin-left: 10px;
-}
-
-.nameItem:hover {
-	margin-left: 10px;
-	color: $primaryColor;
 	cursor: pointer;
+	&:hover {
+		color: $primaryColor;
+	}
 }

@@ -32,14 +32,14 @@ function Header() {
 					</div>
 					<div className={`dropdown-menu ${open ? 'active' : 'inactive'}`}>
 						<h3>Ha Anh</h3>
-						<div className='dropdownItem'>
+						<Link to='/profile' className='dropdownItem'>
 							<AccountCircleIcon />
 							<div className='nameItem'>Tài khoản của tôi</div>
-						</div>
-						<div className='dropdownItem'>
+						</Link>
+						<Link to='/order-history' className='dropdownItem'>
 							<InventoryOutlinedIcon />
 							<div className='nameItem'>Đơn mua</div>
-						</div>
+						</Link>
 						<div className='dropdownItem'>
 							<LogoutIcon />
 							<div className='nameItem'>Đăng xuất</div>
