@@ -3,88 +3,14 @@ import { Container } from '@mui/material';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import { styled } from '@mui/material/styles';
 import Button from '@mui/material/Button';
+import { useEffect, useState } from 'react';
 import './ProductByCategoryPage.scss';
 import { vndCurrencyFormat, discountPercent } from '../../util/currency.util';
 import IconCacLoaiBanh from '../../img/icon-cac-loai-banh.jpg';
 import BanhMiGaXe from '../../img/banhmigaxe.png';
-import { ProductByCategory } from '../../util/data';
-import { Link, useLocation } from 'react-router-dom';
-
-// import * as React from 'react';
-import IconButton from '@mui/material/IconButton';
-import Menu from '@mui/material/Menu';
-import MenuItem from '@mui/material/MenuItem';
-import MoreVertIcon from '@mui/icons-material/MoreVert';
-
-import InputLabel from '@mui/material/InputLabel';
-import FormHelperText from '@mui/material/FormHelperText';
-import FormControl from '@mui/material/FormControl';
-import Select from '@mui/material/Select';
-import { useState } from 'react';
-
-const options = [
-	'None',
-	'Atria',
-	'Callisto',
-	'Dione',
-	'Ganymede',
-	'Hangouts Call',
-	'Luna',
-	'Oberon',
-	'Phobos',
-	'Pyxis',
-	'Sedna',
-	'Titania',
-	'Triton',
-	'Umbriel',
-];
-
-const ITEM_HEIGHT = 48;
-
-// export default function LongMenu() {
-// 	const [anchorEl, setAnchorEl] = React.useState(null);
-// 	const open = Boolean(anchorEl);
-// 	const handleClick = (event) => {
-// 		setAnchorEl(event.currentTarget);
-// 	};
-// 	const handleClose = () => {
-// 		setAnchorEl(null);
-// 	};
-
-// 	return (
-// 		<div>
-// 			<IconButton
-// 				aria-label='more'
-// 				id='long-button'
-// 				aria-controls={open ? 'long-menu' : undefined}
-// 				aria-expanded={open ? 'true' : undefined}
-// 				aria-haspopup='true'
-// 				onClick={handleClick}>
-// 				<MoreVertIcon />
-// 			</IconButton>
-// 			<Menu
-// 				id='long-menu'
-// 				MenuListProps={{
-// 					'aria-labelledby': 'long-button',
-// 				}}
-// 				anchorEl={anchorEl}
-// 				open={open}
-// 				onClose={handleClose}
-// 				PaperProps={{
-// 					style: {
-// 						maxHeight: ITEM_HEIGHT * 4.5,
-// 						width: '20ch',
-// 					},
-// 				}}>
-// 				{options.map((option) => (
-// 					<MenuItem key={option} selected={option === 'Pyxis'} onClick={handleClose}>
-// 						{option}
-// 					</MenuItem>
-// 				))}
-// 			</Menu>
-// 		</div>
-// 	);
-// }
+import { ProductByCategory, Products } from '../../util/data';
+import { Link, useParams } from 'react-router-dom';
+import { DataMenuCategory } from '../../util/data';
 
 const CheckoutButton = styled(Button)({
 	display: 'block',
@@ -96,26 +22,19 @@ const CheckoutButton = styled(Button)({
 	'&:hover': { backgroundColor: 'rgba(243, 101, 34)' },
 });
 export default function ProductByCategoryPage() {
-	// get data from menu
-	const [anchorEl, setAnchorEl] = useState(null);
-	const open = Boolean(anchorEl);
-	const handleClick = (event) => {
-		setAnchorEl(event.currentTarget);
-	};
-	const handleClose = () => {
-		setAnchorEl(null);
-	};
+	const { id } = useParams();
+	const [currCategory, setCurrCategory] = useState({});
+	useEffect(() => {
+		const category = DataMenuCategory.find((category) => category.id == id);
+		setCurrCategory(category);
+	}, [id]);
 
-	const handleClickOption = (event) => {
-		const { myValue } = event.currentTarget.dataset;
-		setCake(myValue);
-		setAnchorEl(null);
-		console.log(myValue); // --> 123
+	const [isMainData, setMainData] = useState(Products.filter((element) => element.categoryId == 'uudai'));
+
+	const setData = (categoryId) => {
+		setMainData(Products.filter((element) => element.categoryId == categoryId));
 	};
 
-	const [cake, setCake] = useState('');
-
-	console.log('data: ', cake);
 	return (
 		<>
 			<Container
@@ -126,100 +45,39 @@ export default function ProductByCategoryPage() {
 				<div>
 					<div className='header-category'>
 						<img src={IconCacLoaiBanh} alt='' className='icon-category' />
-						<div className='title-category'>{cake}</div>
-						<div>
-							<IconButton
-								aria-label='more'
-								id='long-button'
-								aria-controls={open ? 'long-menu' : undefined}
-								aria-expanded={open ? 'true' : undefined}
-								aria-haspopup='true'
-								onClick={handleClick}>
-								<MoreVertIcon />
-							</IconButton>
-						</div>
+						<div className='title-category'>{currCategory?.name}</div>
+						<KeyboardArrowDownIcon />
+					</div>
+
+					<div className='listProductByCategory'>
+						{isMainData &&
+							isMainData.map((data) => (
+								<div key={data.id} className='content-product'>
+									<Link to={`/detail/${data.id}`} className='category'>
+										<div className='content-item'>
+											<img src={data.image} alt='' className='image-product' />
+											<div className='info-product'>
+												<div className='name-product'>{data.productName}</div>
+												<div className='product-price-discount'>
+													<div className='product-new-price'>{vndCurrencyFormat(data.productNewPrice)}</div>
+													<div className='discount-percent'>
+														-{discountPercent(data.productNewPrice, data.productOldPrice)}%
+													</div>
+												</div>
+												<div className='product-bottom'>
+													<div className='product-old-price'>{vndCurrencyFormat(data.productOldPrice)}</div>
+												</div>
+											</div>
+										</div>
+									</Link>
+									<CheckoutButton size='large' variant='contained'>
+										Thêm
+									</CheckoutButton>
+								</div>
+							))}
 					</div>
 				</div>
 			</Container>
-			<FormControl sx={{ m: 1, minWidth: 120 }}>
-				<Menu id='long-menu' anchorEl={anchorEl} open={open} onClose={handleClose}>
-					{options.map((option, key) => (
-						<MenuItem data-my-value={option} onClick={handleClickOption} key={key}>
-							{option}
-						</MenuItem>
-					))}
-				</Menu>
-				<FormHelperText>Without label</FormHelperText>
-			</FormControl>
 		</>
-		// <>
-		// <Container
-		// 		maxWidth='lg'
-		// 		sx={{
-		// 			padding: '1rem 0',
-		// 		}}>
-		// 		<div className=''>
-		// 			<div className='header-category'>
-		// 				<img src={IconCacLoaiBanh} alt='' className='icon-category' />
-		// 				<div className='title-category'>CÁC LOẠI BÁNH</div>
-		// 				<div>
-		// 					<IconButton
-		// 						aria-label='more'
-		// 						id='long-button'
-		// 						aria-controls={open ? 'long-menu' : undefined}
-		// 						aria-expanded={open ? 'true' : undefined}
-		// 						aria-haspopup='true'
-		// 						onClick={handleClick}>
-		// 						<MoreVertIcon />
-		// 					</IconButton>
-		// 					<Menu
-		// 						id='long-menu'
-		// 						MenuListProps={{
-		// 							'aria-labelledby': 'long-button',
-		// 						}}
-		// 						anchorEl={anchorEl}
-		// 						open={open}
-		// 						onClose={handleClose}
-		// 						onChange={handleChange}
-		// 						PaperProps={{
-		// 							style: {
-		// 								maxHeight: ITEM_HEIGHT * 4.5,
-		// 								width: '20ch',
-		// 							},
-		// 						}}>
-		// 						{options.map((option) => (
-		// 							<MenuItem key={option} value={option} selected={option === 'Pyxis'} onClick={handleClose}>
-		// 								{option}
-		// 							</MenuItem>
-		// 						))}
-		// 					</Menu>
-		// 				</div>
-		// 				<KeyboardArrowDownIcon />
-		// 			</div>
-		// 			<div className='listProductByCategory'>
-		// 				<div className='content-product'>
-		// 					{/* <Link to={`/category/${n.id}`} className='category'> */}
-		// 					<div className='content-item'>
-		// 						<img src={BanhMiGaXe} alt='' className='image-product' />
-		// 						<div className='info-product'>
-		// 							<div className='name-product'>Combo Bánh Mì Que Gà Xé Phay Phô Mai và 1 Trà Dâu</div>
-		// 							<div className='product-price-discount'>
-		// 								<div className='product-new-price'>{vndCurrencyFormat(42000)}</div>
-		// 								<div className='discount-percent'>-{discountPercent(42000, 49000)}%</div>
-		// 							</div>
-		// 							<div className='product-bottom'>
-		// 								<div className='product-old-price'>{vndCurrencyFormat(49000)}</div>
-		// 							</div>
-		// 						</div>
-		// 					</div>
-		// 					{/* </Link> */}
-		// 					<CheckoutButton size='large' variant='contained'>
-		// 						Thêm
-		// 					</CheckoutButton>
-		// 				</div>
-		// 			</div>
-		// 		</div>
-		// 	</Container>
-		// </>
 	);
 }
