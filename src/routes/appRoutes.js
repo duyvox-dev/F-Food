@@ -3,6 +3,7 @@ import ProductDetailPage from '../pages/ProductDetailPage/ProductDetailPage';
 import OrderPage from '../pages/OrderPage/OrderPage';
 import NotFoundPage from '../pages/NotFoundPage/NotFoundPage';
 import HomePage from '../pages/Homepage/Homepage';
+import OrderHistoryPage from '../pages/OrderHistoryPage/OrderHistoryPage';
 export const appRoutes = [
 	{
 		path: '/',
@@ -15,6 +16,10 @@ export const appRoutes = [
 	{
 		path: '/order',
 		component: <ThemeLayout Component={OrderPage} />,
+	},
+	{
+		path: '/order-history',
+		component: <ThemeLayout Component={OrderHistoryPage} />,
 	},
 	{
 		path: '*',

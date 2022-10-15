@@ -1,0 +1,7 @@
+$orange: rgba(243, 101, 34);
+.MuiButtonBase-root.MuiTab-root.Mui-selected {
+	color: $orange !important;
+}
+.MuiTabs-indicator {
+	background-color: $orange !important;
+}
