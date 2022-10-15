@@ -10,6 +10,10 @@ const apiLinks = {
   product: {
     getAllProduct: `${baseURL}/product`,
 
+  },
+  menu: {
+    getListTimeSlot: `${baseURL}/menu/GetListTimeslot`,
+
   }
 }
 export default apiLinks;

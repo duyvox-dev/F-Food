@@ -4,6 +4,7 @@ import { DataMenuCategory } from '../../util/data';
 import { useDispatch } from 'react-redux';
 
 import { getAllProduct } from '../../redux/product'
+import { getListTimeSlot } from '../../redux/menuSlice'
 
 function MenuCategory() {
 
@@ -11,6 +12,7 @@ function MenuCategory() {
 
 	const getData = useCallback(() => {
 		dispatch(getAllProduct())
+		dispatch(getListTimeSlot())
 	}, [])
 
 	useEffect(() => { getData() }, [])

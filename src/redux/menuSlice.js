@@ -1,51 +1,47 @@
 import { createAction, createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import productService from '../service/product';
-
+import menuService from '../service/menu';
 
 const initialState = {
     accessToken: '',
-    getAllRespone: {},
+    getTimeSlotRespone: {},
     getAllProductLoading: false,
 }
 // async action
-const getAllProduct = createAsyncThunk(
-    'auth/getAllProduct',
+const getListTimeSlot = createAsyncThunk(
+    'auth/getListTimeSlot',
     async () => {
-        const result = await productService.getAllProduct();
+        const result = await menuService.getListTimeSlot();
         console.log(result);
         return result;
     },
 );
-
 // normal action
-
-const productSlice = createSlice({
-    name: 'productSlice',
+const menuSlice = createSlice({
+    name: 'menuSlice',
     initialState: initialState,
     reducers: {
-
     },
     extraReducers: (builder) => {
         // get user info
-        builder.addCase(getAllProduct.pending, (state) => ({
+        builder.addCase(getListTimeSlot.pending, (state) => ({
             ...state,
             getAllProductLoading: true,
         }));
-        builder.addCase(getAllProduct.fulfilled, (state, { payload }) => ({
+        builder.addCase(getListTimeSlot.fulfilled, (state, { payload }) => ({
             ...state,
-            getAllRespone: payload,
+            getTimeSlotRespone: payload,
             getAllProductLoading: false,
         }));
-        builder.addCase(getAllProduct.rejected, (state) => ({
+        builder.addCase(getListTimeSlot.rejected, (state) => ({
             ...state,
             getAllProductLoading: false,
         }));
 
     },
 });
-const { reducer, actions } = productSlice;
+const { reducer, actions } = menuSlice;
 export const { } = actions;
 export default reducer;
 export {
-    getAllProduct,
+    getListTimeSlot,
 }

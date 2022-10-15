@@ -21,9 +21,6 @@ const getProductDetail = async (id) => {
     return res.data
 }
 
-
-
-
 const productService = {
     getAllProduct,
     getProductDetail
