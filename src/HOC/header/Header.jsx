@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Container } from '@mui/material';
+import { Container, Typography } from '@mui/material';
 import { SearchRounded } from '@mui/icons-material';
 import './Header.scss';
 import Logo from '../../img/logo.png';
@@ -31,7 +31,18 @@ function Header() {
 						<img src={ProfilePic} alt='' className='profilePic' />
 					</div>
 					<div className={`dropdown-menu ${open ? 'active' : 'inactive'}`}>
-						<h3>Ha Anh</h3>
+						<Typography
+							variant='h5'
+							sx={{
+								width: '100%',
+								textAlign: 'center',
+								padding: '1rem 0',
+								fontWeight: '500',
+								fontSize: '18px',
+								lineHeight: '1rem',
+							}}>
+							Ha Anh
+						</Typography>
 						<Link to='/profile' className='dropdownItem'>
 							<AccountCircleIcon />
 							<div className='nameItem'>Tài khoản của tôi</div>

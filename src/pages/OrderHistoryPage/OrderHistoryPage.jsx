@@ -285,7 +285,7 @@ export default function OrderHistoryPage() {
 			<Container
 				maxWidth='lg'
 				sx={{
-					background: '#F7F7F7',
+					// background: '#F7F7F7',
 					// height: '90vh',
 					// overflow: 'scroll',
 					padding: '1rem 0',
