@@ -8,7 +8,7 @@ import { vndCurrencyFormat, discountPercent } from '../../util/currency.util';
 import IconCacLoaiBanh from '../../img/icon-cac-loai-banh.jpg';
 import BanhMiGaXe from '../../img/banhmigaxe.png';
 import { ProductByCategory } from '../../util/data';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 
 // import * as React from 'react';
 import IconButton from '@mui/material/IconButton';
@@ -20,6 +20,7 @@ import InputLabel from '@mui/material/InputLabel';
 import FormHelperText from '@mui/material/FormHelperText';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
+import { useState } from 'react';
 
 const options = [
 	'None',
@@ -95,21 +96,24 @@ const CheckoutButton = styled(Button)({
 	'&:hover': { backgroundColor: 'rgba(243, 101, 34)' },
 });
 export default function ProductByCategoryPage() {
-	const [anchorEl, setAnchorEl] = React.useState(null);
+	// get data from menu
+	const [anchorEl, setAnchorEl] = useState(null);
 	const open = Boolean(anchorEl);
 	const handleClick = (event) => {
 		setAnchorEl(event.currentTarget);
-		console.log('data: ', event);
 	};
 	const handleClose = () => {
 		setAnchorEl(null);
 	};
 
-	const [cake, setCake] = React.useState('');
-
-	const handleChange = (event) => {
-		setCake(event.target.value);
+	const handleClickOption = (event) => {
+		const { myValue } = event.currentTarget.dataset;
+		setCake(myValue);
+		setAnchorEl(null);
+		console.log(myValue); // --> 123
 	};
+
+	const [cake, setCake] = useState('');
 
 	console.log('data: ', cake);
 	return (
@@ -138,11 +142,13 @@ export default function ProductByCategoryPage() {
 				</div>
 			</Container>
 			<FormControl sx={{ m: 1, minWidth: 120 }}>
-				<Select value={cake} onChange={handleChange} displayEmpty inputProps={{ 'aria-label': 'Without label' }}>
-					{options.map((option) => (
-						<MenuItem value={option}>{option}</MenuItem>
+				<Menu id='long-menu' anchorEl={anchorEl} open={open} onClose={handleClose}>
+					{options.map((option, key) => (
+						<MenuItem data-my-value={option} onClick={handleClickOption} key={key}>
+							{option}
+						</MenuItem>
 					))}
-				</Select>
+				</Menu>
 				<FormHelperText>Without label</FormHelperText>
 			</FormControl>
 		</>
