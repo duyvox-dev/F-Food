@@ -66,6 +66,7 @@ $primaryColor: #f36522;
 	display: flex;
 	align-items: center;
 	margin-left: auto;
+	position: relative;
 }
 
 .profileContainer .imgBox {
@@ -84,10 +85,61 @@ $primaryColor: #f36522;
 	width: 100%;
 	height: 100%;
 	object-fit: cover;
+	cursor: pointer;
 }
 
 @media screen and (min-width: 650px) {
 	.inputBox {
 		width: 30%;
+	}
+}
+
+.dropdown-menu {
+	position: absolute;
+	top: 43px;
+	right: 4.32%;
+	background-color: #fff;
+	border-radius: 8px;
+	padding: 10px 20px;
+	width: 200px;
+	z-index: 110;
+	box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.15);
+}
+
+.dropdown-menu.active {
+	opacity: 1;
+	visibility: visible;
+	transform: translateY(0);
+	transition: 500ms ease;
+}
+
+.dropdown-menu.inactive {
+	opacity: 0;
+	visibility: hidden;
+	transform: translateY(-20px);
+	transition: 500ms ease;
+}
+
+h3 {
+	width: 100%;
+	text-align: center;
+	padding: 5px 0;
+	font-weight: 500;
+	font-size: 18px;
+	line-height: 1rem;
+}
+
+.dropdownItem {
+	display: flex;
+	gap: 10px;
+	align-items: center;
+	text-decoration: none;
+	color: black;
+	padding: 1rem 0;
+	width: 100%;
+	border-top: 1px solid rgba(0, 0, 0, 0.05);
+	cursor: pointer;
+	&:hover {
+		color: $primaryColor;
 	}
 }
