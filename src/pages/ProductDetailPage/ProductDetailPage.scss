@@ -13,6 +13,12 @@
 		border-radius: 10px;
 	}
 }
+
+@media screen and (max-width: 768px) {
+	.product-detail-image img {
+		width: 70%;
+	}
+}
 .product-detail-detail {
 	.product-detail-name {
 		margin-bottom: 5px;
