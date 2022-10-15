@@ -7,8 +7,8 @@ import axios, { Method, AxiosResponse, ResponseType } from 'axios';
 
 
 const request = (arg) => {
-//   const { token, documentToken ,cookieValue } = store.getState().auth;
-//   const cookie=getCookie(CookiesName.NAME)
+  //   const { token, documentToken ,cookieValue } = store.getState().auth;
+  //   const cookie=getCookie(CookiesName.NAME)
   const {
     method,
     contentType = 'application/json',
@@ -32,9 +32,9 @@ const request = (arg) => {
     method,
     headers: {
       'content-type': contentType,
-    //   Authorization: `bearer ${token}`,
+      // Authorization: `bearer ${token}`,
     },
-    url:  url ??'',
+    url: url ?? '',
     data,
     params,
     responseType,
@@ -44,7 +44,7 @@ const request = (arg) => {
 
 const httpClient = {
   request,
-  get: (arg ) => {
+  get: (arg) => {
     return request({ ...arg, method: 'GET' });
   },
   post: (arg) => {

@@ -1,8 +1,20 @@
-import React from 'react';
+import React, { useCallback, useEffect } from 'react';
 import './Homepage.scss';
 import { DataMenuCategory } from '../../util/data';
+import { useDispatch } from 'react-redux';
+
+import { getAllProduct } from '../../redux/product'
 
 function MenuCategory() {
+
+	const dispatch = useDispatch()
+
+	const getData = useCallback(() => {
+		dispatch(getAllProduct())
+	}, [])
+
+	useEffect(() => { getData() }, [])
+
 	return (
 		<>
 			<div className='menuCategory'>

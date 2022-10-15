@@ -50,9 +50,7 @@ const authSlice = createSlice({
 		builder.addCase(loginWithGoogle.rejected, (state) => ({
 		  ...state,
 		  loginLoading: false,
-		}));
-	
-	 
+		})); 
 		
 	  },
 });
