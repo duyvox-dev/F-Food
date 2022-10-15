@@ -43,41 +43,42 @@ export const hotMenuData = [
 ];
 
 export const DataMenuCategory = [
-	{
-		id: 1,
-		name: 'Ưu Đãi Hấp Dẫn',
-		image: Uudai,
-	},
-	{
-		id: 2,
-		name: 'Cơm',
-		image: Com,
-	},
-	{
-		id: 3,
-		name: 'Đồ ăn vặt',
-		image: Doanvat,
-	},
-	{
-		id: 4,
-		name: 'Các loại bánh',
-		image: Banh,
-	},
-	{
-		id: 5,
-		name: 'Đồ uống',
-		image: Douong,
-	},
-	{
-		id: 6,
-		name: 'Thức uống',
-		image: Thucuong,
-	},
-	{
-		id: 7,
-		name: 'Món khác',
-		image: Monkhac,
-	},
+	Uudai, Com, Doanvat, Banh, Douong, Thucuong, Monkhac,
+	// {
+	// 	id: 1,
+	// 	name: 'Ưu Đãi Hấp Dẫn',
+	// 	image: Uudai,
+	// },
+	// {
+	// 	id: 2,
+	// 	name: 'Cơm',
+	// 	image: Com,
+	// },
+	// {
+	// 	id: 3,
+	// 	name: 'Đồ ăn vặt',
+	// 	image: Doanvat,
+	// },
+	// {
+	// 	id: 4,
+	// 	name: 'Các loại bánh',
+	// 	image: Banh,
+	// },
+	// {
+	// 	id: 5,
+	// 	name: 'Đồ uống',
+	// 	image: Douong,
+	// },
+	// {
+	// 	id: 6,
+	// 	name: 'Thức uống',
+	// 	image: Thucuong,
+	// },
+	// {
+	// 	id: 7,
+	// 	name: 'Món khác',
+	// 	image: Monkhac,
+	// },
 ];
 
 export const ProductByCategory = [

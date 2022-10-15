@@ -1,26 +1,61 @@
 import React, { useEffect, useState } from 'react';
-// import './Homepage.scss';
 import { TimeOrder } from '../../util/data';
+import Button from '@mui/material/Button';
+import { styled } from '@mui/material/styles';
 import { useSelector } from 'react-redux';
+import moment from 'moment';
+import Tooltip from '@mui/material/Tooltip';
 
-function BtnTime({ arriveTime, checkoutTime }) {
-
-    const currentTimeMinus20 = new Date(Date.now() - 220000 * 60)
-    const [isDisable, setIsDisable] = useState(false)
-    console.log(currentTimeMinus20);
-
-    const getIsValidDate = () => {
-        const currentDate = `${currentTimeMinus20.getHours()}:${currentTimeMinus20.getMinutes()}:${currentTimeMinus20.getSeconds()}`
-        return currentDate < arriveTime && currentDate < checkoutTime;
+const StyledButton = styled(Button)({
+    background: '#fcf6f6',
+    border: '2px solid rgba(243, 101, 34)',
+    color: 'rgba(243, 101, 34)',
+    // backgroundColor: 'rgba(243, 101, 34)',
+    padding: '0.5rem 3rem',
+    '&:hover': { backgroundColor: 'rgba(243, 101, 34)', color: 'white' },
+    '&:disabled': {
+        // backgroundColor: "gray",
+        background: '#fcf6f6',
+        border: '2px solid rgba(243, 101, 34)',
+        color: 'rgba(243, 101, 34)',
+        opacity: 0.3,
+    },
+    '&:active': {
+        backgroundColor: 'rgba(243, 101, 34)',
     }
 
-    useEffect(() => {
-        //    const 
-    }, [])
+});
+function BtnTime({ time = {}, state, handleChooseTime = () => { } }) {
+
 
     return (
         <>
-            {getIsValidDate() ? <button style={{ backgroundColor: "orange" }}>{arriveTime} - {checkoutTime}</button> : <button disabled style={{ backgroundColor: "grey" }}>{arriveTime} - {checkoutTime}</button>}
+            {state == 'disabled' ?
+                <>
+                    <Tooltip title={<span style={{ fontSize: "16px" }}>Khung giờ đã qua</span>} placement="bottom" arrow >
+                        <span><StyledButton onClick={() => { handleChooseTime(time) }} disabled>
+                            {moment(`2015-06-17 ${time.arriveTime}`).format('HH:mm')}
+                            -
+                            {moment(`2015-06-17 ${time.checkoutTime}`).format('HH:mm')}</StyledButton></span>
+                    </Tooltip>
+                </> : <>
+                    {state == 'choosable' ?
+                        <StyledButton onClick={() => { handleChooseTime(time) }}>
+                            {moment(`2015-06-17 ${time.arriveTime}`).format('HH:mm')}
+                            -
+                            {moment(`2015-06-17 ${time.checkoutTime}`).format('HH:mm')}</StyledButton>
+                        :
+                        <StyledButton
+                            sx={{
+                                background: "rgba(243, 101, 34)",
+                                color: "white"
+                            }}
+                            onClick={() => { handleChooseTime(time) }}>
+                            {moment(`2015-06-17 ${time.arriveTime}`).format('HH:mm')}
+                            -
+                            {moment(`2015-06-17 ${time.checkoutTime}`).format('HH:mm')}</StyledButton>}
+                </>}
+
         </>
     );
 }

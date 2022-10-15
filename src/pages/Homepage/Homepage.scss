@@ -233,10 +233,13 @@ $primaryColor: #f36522;
 
 .titleOrder {
 	display: flex;
-	color: $primaryColor;
+	color: black;
 	font-weight: 700;
 	font-size: 20px;
 	line-height: 25px;
+	span {
+		color: $primaryColor;
+	}
 }
 
 @media screen and (max-width: 768px) {
