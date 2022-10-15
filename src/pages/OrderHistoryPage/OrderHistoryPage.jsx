@@ -11,6 +11,8 @@ export default function OrderHistoryPage() {
 			SupplierStore: {
 				id: 1,
 				name: 'SevenEleven',
+				image:
+					'https://play-lh.googleusercontent.com/2uAkj0BVNrJaJOOOs4K5FbFTw4dbFb7Mo6mI_Qtov0OC58hDYvPAQH6LXKsc_sj8jvE',
 			},
 			products: [
 				{
@@ -43,6 +45,8 @@ export default function OrderHistoryPage() {
 			SupplierStore: {
 				id: 1,
 				name: 'SevenEleven',
+				image:
+					'https://play-lh.googleusercontent.com/2uAkj0BVNrJaJOOOs4K5FbFTw4dbFb7Mo6mI_Qtov0OC58hDYvPAQH6LXKsc_sj8jvE',
 			},
 			products: [
 				{
@@ -75,6 +79,7 @@ export default function OrderHistoryPage() {
 			SupplierStore: {
 				id: 2,
 				name: 'Passio',
+				image: 'https://gigamall.com.vn/data/2019/09/20/12011897_LOGO-PASSIO-500x500.jpg',
 			},
 			products: [
 				{
@@ -107,6 +112,8 @@ export default function OrderHistoryPage() {
 			SupplierStore: {
 				id: 1,
 				name: 'SevenEleven',
+				image:
+					'https://play-lh.googleusercontent.com/2uAkj0BVNrJaJOOOs4K5FbFTw4dbFb7Mo6mI_Qtov0OC58hDYvPAQH6LXKsc_sj8jvE',
 			},
 			products: [
 				{
@@ -130,6 +137,8 @@ export default function OrderHistoryPage() {
 			SupplierStore: {
 				id: 1,
 				name: 'SevenEleven',
+				image:
+					'https://play-lh.googleusercontent.com/2uAkj0BVNrJaJOOOs4K5FbFTw4dbFb7Mo6mI_Qtov0OC58hDYvPAQH6LXKsc_sj8jvE',
 			},
 			products: [
 				{
@@ -162,6 +171,8 @@ export default function OrderHistoryPage() {
 			SupplierStore: {
 				id: 1,
 				name: 'SevenEleven',
+				image:
+					'https://play-lh.googleusercontent.com/2uAkj0BVNrJaJOOOs4K5FbFTw4dbFb7Mo6mI_Qtov0OC58hDYvPAQH6LXKsc_sj8jvE',
 			},
 			products: [
 				{
@@ -194,6 +205,7 @@ export default function OrderHistoryPage() {
 			SupplierStore: {
 				id: 2,
 				name: 'Passio',
+				image: 'https://gigamall.com.vn/data/2019/09/20/12011897_LOGO-PASSIO-500x500.jpg',
 			},
 			products: [
 				{
@@ -273,6 +285,9 @@ export default function OrderHistoryPage() {
 			<Container
 				maxWidth='lg'
 				sx={{
+					background: '#F7F7F7',
+					// height: '90vh',
+					// overflow: 'scroll',
 					padding: '1rem 0',
 				}}>
 				<Typography variant='h4' align='center' fontWeight='bold'>
