@@ -4,7 +4,7 @@ import { SearchRounded } from '@mui/icons-material';
 import './Header.scss';
 import Logo from '../../img/logo.png';
 import ProfilePic from '../../img/avatar.png';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import LogoutIcon from '@mui/icons-material/Logout';
 import InventoryOutlinedIcon from '@mui/icons-material/InventoryOutlined';
@@ -39,18 +39,13 @@ function Header() {
 		setSearchText(e.target.value)
 	}
 
-	const { products } = useSelector((state) => state.product)
+	let navigate = useNavigate();
 
 	const submitSearchText = (value) => {
 		console.log("value submit: ", value)
 		dispatch(searchProduct(value))
+		navigate('/search')
 	}
-
-	useEffect(() => {
-		console.log(products)
-	}, [products])
-
-	console.log("search txt: ", searchText)
 
 	const { accessToken, user } = useSelector((state) => state.auth)
 	useEffect(() => {
