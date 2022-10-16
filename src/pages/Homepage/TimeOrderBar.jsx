@@ -1,12 +1,11 @@
 import React, { useEffect } from 'react';
 import './Homepage.scss';
-import { TimeOrder } from '../../util/data';
 import { useDispatch, useSelector } from 'react-redux';
 import BtnTime from '../../components/BtnTime/BtnTime';
 import Grid2 from '@mui/material/Unstable_Grid2'; // Grid version 2
-import moment from 'moment';
-import { getNearestTimeSlot, updateCurrentTimeSlot, getListTimeSlot } from '../../redux/menuSlice';
+import { updateCurrentTimeSlot, getListTimeSlot } from '../../redux/menuSlice';
 import _ from 'lodash'
+import { getIsValidDate } from "../../util/time.util"
 function TimeOrderBar() {
 	const dispatch = useDispatch()
 	const { getTimeSlotRespone } = useSelector(
@@ -15,11 +14,8 @@ function TimeOrderBar() {
 	const { currentTimeSlot } = useSelector(
 		(state) => state.menu,
 	);
-	const currentTimeMinus20 = new Date(Date.now() - 220000 * 60)
-	const getIsValidDate = (arriveTime, checkoutTime) => {
-		const currentDate = `${currentTimeMinus20.getHours()}:${currentTimeMinus20.getMinutes()}:${currentTimeMinus20.getSeconds()}`
-		return currentDate < arriveTime && currentDate < checkoutTime;
-	}
+
+
 
 	useEffect(() => {
 		console.log(currentTimeSlot)
@@ -30,6 +26,20 @@ function TimeOrderBar() {
 	useEffect(() => {
 		dispatch(getListTimeSlot())
 	}, [])
+	useEffect(() => {
+		let defaultTime = null;
+		if (getTimeSlotRespone.length > 0) {
+			defaultTime = getTimeSlotRespone.find((timeslot) => {
+				if (getIsValidDate(timeslot?.arriveTime, timeslot?.checkoutTime)) {
+					return timeslot;
+				}
+			})
+			if (defaultTime) {
+				dispatch(updateCurrentTimeSlot(defaultTime))
+			}
+		}
+
+	}, [getTimeSlotRespone])
 	return (
 		<>
 			<div className='timeOrderBar'>
