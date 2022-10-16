@@ -6,6 +6,7 @@ const login = (token) => {
 }
 const updatePhoneNumber = async (userInfo, phone) => {
   const updateProps = {
+    id: userInfo.id,
     Name: userInfo.name,
     ImageUrl: userInfo.imageUrl,
     Phone: phone

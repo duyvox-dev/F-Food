@@ -7,6 +7,8 @@ import IconButton from '@mui/material/IconButton';
 import { styled } from '@mui/material/styles';
 
 import { Link } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { addToCart } from '../../../redux/cartSlice';
 const AddToCartButton = styled(IconButton)({
 	// display: 'flex',
 	color: 'white',
@@ -22,6 +24,7 @@ const AddToCartButton = styled(IconButton)({
 	'&:hover': { backgroundColor: 'rgba(243, 101, 34)' },
 });
 const ProductItem = ({ product }) => {
+	const dispatch = useDispatch();
 	return (
 		<Link to={`/detail/${product?.id}`} className='product'>
 			<img src={product?.image} alt='' className='product-image' />
@@ -33,7 +36,9 @@ const ProductItem = ({ product }) => {
 					{/* <div className='addToCart'>
 						<AddRounded />
 					</div> */}
-					<AddToCartButton>
+					<AddToCartButton onClick={() => {
+						dispatch(addToCart(product))
+					}}>
 						<AddRounded />
 					</AddToCartButton>
 				</div>
