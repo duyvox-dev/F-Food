@@ -2,7 +2,7 @@ import React, { useCallback, useEffect } from 'react';
 import './Homepage.scss';
 import { DataMenuCategory } from '../../util/data';
 import { useDispatch, useSelector } from 'react-redux';
-
+import { Link } from 'react-router-dom';
 import { getAllProduct } from '../../redux/product'
 import { getCategoryList } from '../../redux/categorySlice';
 
@@ -27,10 +27,12 @@ function MenuCategory() {
 				<div className='contentCategory'>
 					{categoryList &&
 						categoryList.map((n, index) => (
-							<div key={n.id} className='itemsCategory'>
-								<img src={DataMenuCategory[index]} alt='' className='image-category' />
-								<p className='name-category'>{n.categoryName}</p>
-							</div>
+							<Link to={`/category/${n?.id}`} className="category">
+								<div key={n.id} className='itemsCategory'>
+									<img src={DataMenuCategory[index]} alt='' className='image-category' />
+									<p className='name-category'>{n.categoryName}</p>
+								</div>
+							</Link>
 						))}
 				</div>
 			</div>
