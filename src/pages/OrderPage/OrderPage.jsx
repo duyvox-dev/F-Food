@@ -8,9 +8,10 @@ import OrderLocation from './OrderLocation';
 import FeeList from './Fee/FeeList';
 import QuantityModal from '../../components/Modal/QuantityModal';
 import LocationModal from './Modal/LocationModal';
-import PersonalInfoModal from './Modal/PersonalInfoModal';
+import PersonalInfoModal from '../../components/Modal/PersonalInfoModal';
 import useModal from '../../hooks/useModal';
 import _ from 'lodash';
+import { useSelector } from 'react-redux';
 export default function OrderPage() {
 	const mockDataFee = {
 		originCost: {
@@ -85,17 +86,13 @@ export default function OrderPage() {
 			label: 'Phòng 102',
 		},
 	];
-	const mockDataUser = {
-		phone: '',
-		email: 'vobaoduy123@gmail.com',
-		name: 'duyvox',
-	};
+
 	// -----------------------------------------
+	const { user } = useSelector((state) => state.auth)
 	const [fees, setFees] = useState(mockDataFee);
 	const [cart, setCart] = useState(mockDataCart);
 	const [locationList, setLocationList] = useState(mockDataLocation);
 	const [currentLocation, setCurrenLocation] = useState(mockDataLocation[2]);
-	const [user, setUser] = useState(mockDataUser);
 	const [shippingFee, setShippingFee] = useState(15000);
 	const [quantityModal, openQuantityModal, closeQuantityModal] = useModal();
 	const [locationModal, openLocationModal, closeLocationModal] = useModal();
@@ -138,13 +135,7 @@ export default function OrderPage() {
 		setCurrenLocation(location);
 		closeLocationModal();
 	};
-	const handleChangeUserPhoneNumber = (newPhone) => {
-		setUser({
-			...user,
-			phone: newPhone,
-		});
-		closeUserModal();
-	};
+
 	useEffect(() => {
 		const totalFee = calculateFee(shippingFee);
 		setFees(totalFee);
@@ -174,7 +165,6 @@ export default function OrderPage() {
 				modalVisible={userModal}
 				closeModal={closeUserModal}
 				user={user}
-				handleChangeUserPhoneNumber={handleChangeUserPhoneNumber}
 			/>
 			{/* -------------------------------- */}
 			<Container

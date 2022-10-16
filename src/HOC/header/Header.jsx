@@ -12,6 +12,9 @@ import { styled } from '@mui/material/styles';
 import { useDispatch, useSelector } from 'react-redux';
 import { searchProduct } from '../../redux/product';
 import { useEffect } from 'react';
+import _ from "lodash"
+import { logout } from '../../redux/authSlice';
+import GoogleLoginBtn from '../../components/GoogleLoginBtn/GoogleLoginBtn';
 
 const CustomBorderTextField = styled(TextField)`
   & label.Mui-focused {
@@ -23,13 +26,6 @@ const CustomBorderTextField = styled(TextField)`
     }
   }
 `;
-
-const styles = theme => ({
-	notchedOutline: {
-		borderWidth: "1px",
-		borderColor: "yellow !important"
-	}
-});
 
 function Header() {
 
@@ -56,6 +52,14 @@ function Header() {
 
 	console.log("search txt: ", searchText)
 
+	const { accessToken, user } = useSelector((state) => state.auth)
+	useEffect(() => {
+	}, [])
+	const handleLogout = () => {
+		dispatch(logout())
+	}
+
+
 	return (
 		<Container maxWidth='lg'>
 			<div className='header'>
@@ -81,13 +85,14 @@ function Header() {
 						}}
 					/>
 				</div>
-				<div className='profileContainer'>
+				{_.isEmpty(user) ? <GoogleLoginBtn style={{ marginLeft: 'auto' }} /> : <div className='profileContainer'>
+
 					<div
 						className='imgBox'
 						onClick={() => {
 							setOpen(!open);
 						}}>
-						<img src={ProfilePic} alt='' className='profilePic' />
+						<img src={user.imageUrl} alt='' className='profilePic' />
 					</div>
 					<div className={`dropdown-menu ${open ? 'active' : 'inactive'}`}>
 						<Typography
@@ -97,10 +102,10 @@ function Header() {
 								textAlign: 'center',
 								padding: '1rem 0',
 								fontWeight: '500',
-								fontSize: '18px',
+								fontSize: '16px',
 								lineHeight: '1rem',
 							}}>
-							Ha Anh
+							{user.name}
 						</Typography>
 						<Link to='/profile' className='dropdownItem'>
 							<AccountCircleIcon />
@@ -110,12 +115,13 @@ function Header() {
 							<InventoryOutlinedIcon />
 							<div className='nameItem'>Đơn mua</div>
 						</Link>
-						<div className='dropdownItem'>
+						<div className='dropdownItem' onClick={() => { handleLogout() }}>
 							<LogoutIcon />
 							<div className='nameItem'>Đăng xuất</div>
 						</div>
 					</div>
-				</div>
+				</div>}
+
 			</div>
 		</Container>
 	);
