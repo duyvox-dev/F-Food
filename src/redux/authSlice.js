@@ -70,12 +70,12 @@ const authSlice = createSlice({
 			...state,
 			loginLoading: true,
 		}));
-		builder.addCase(loginWithGoogle.fulfilled, (state, { payload }) => ({
+		builder.addCase(updateUserPhone.fulfilled, (state, { payload }) => ({
 			...state,
 			user: payload,
 			loginLoading: false,
 		}));
-		builder.addCase(loginWithGoogle.rejected, (state) => ({
+		builder.addCase(updateUserPhone.rejected, (state) => ({
 			...state,
 			loginLoading: false,
 		}));
