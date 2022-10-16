@@ -8,6 +8,6 @@ export const store = configureStore({
         auth: authSlice,
         product: productSlice,
         menu: menuSlice,
-        category: categorySice
+        category: categorySice,
     },
 });

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Typography, Box, Paper } from '@mui/material';
 import { formatPhoneNumber } from '../../util/string.util';
-export default function OrderLocation({ user = {}, openUserModal = () => {} }) {
+export default function OrderLocation({ user = {}, openUserModal = () => { } }) {
 	return (
 		<div className='order-section'>
 			<div className='heading-flex'>

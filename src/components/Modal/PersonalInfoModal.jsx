@@ -6,8 +6,10 @@ import Button from '@mui/material/Button';
 
 import TextField from '@mui/material/TextField';
 import { useEffect } from 'react';
-import BasicModal from '../../../components/Modal/BasicModal';
+import BasicModal from './BasicModal';
 import { styled } from '@mui/material/styles';
+import { useDispatch, useSelector } from 'react-redux';
+import { updateUserPhone } from '../../redux/authSlice';
 
 const ModalButton = styled(Button)({
 	display: 'block',
@@ -18,13 +20,13 @@ const ModalButton = styled(Button)({
 export default function PersonalInfoModal({
 	modalVisible = false,
 	closeModal = () => { },
-	user = {},
-	handleChangeUserPhoneNumber = () => { },
 }) {
+	const dispatch = useDispatch()
+	const { user } = useSelector((state) => state.auth)
 	const [currentPhone, setCurrentPhoneNumber] = useState(user?.phone);
 	const [isValidPhoneNumber, setIsValidPhoneNumber] = useState(false);
 	const handleSubmitNewPhoneNumber = () => {
-		handleChangeUserPhoneNumber(currentPhone);
+		dispatch(updateUserPhone({ user, currentPhone }))
 	};
 
 	const isValidPhone = (phoneNumber) => {
@@ -37,11 +39,12 @@ export default function PersonalInfoModal({
 	}, [currentPhone]);
 	return (
 		<BasicModal modalVisible={modalVisible} closeModal={closeModal}>
-			<span className='modal-heading'>Thay đổi thông tin người nhận</span>
+			<span className='modal-heading'>Thay đổi thông tin cá nhân</span>
 			<div className='modal-content personal-modal-content'>
 				<div>
 					<form action=''>
 						<TextField label='Họ tên' variant='standard' disabled fullWidth defaultValue={user?.name} />
+						<TextField label='Email' variant='standard' disabled fullWidth defaultValue={user?.email} sx={{ marginTop: '1rem' }} />
 						<TextField
 							label='Số điện thoại'
 							required
