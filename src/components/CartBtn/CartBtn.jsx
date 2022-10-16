@@ -1,10 +1,11 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import IconButton from '@mui/material/IconButton';
 
 import { styled } from '@mui/material/styles';
 import { Link } from 'react-router-dom';
 import LocalMallIcon from '@mui/icons-material/LocalMall';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { calculateToTalAmount, setTotalQuantity } from '../../redux/cartSlice';
 const AddToCartButton = styled(IconButton)({
     // display: 'flex',
     color: 'white',
@@ -14,13 +15,26 @@ const AddToCartButton = styled(IconButton)({
     padding: 0,
     fontSize: '17px',
     position: "relative",
-    zIndex: "99",
+    zIndex: "100",
     '&:hover': { backgroundColor: 'rgba(243, 101, 34)' },
 });
 export default function CartBtn() {
-    const { totalAmount } = useSelector((state) => state.cart)
+    const dispatch = useDispatch()
+    const { totalAmount, carts } = useSelector((state) => state.cart)
+    const calculateToTalAmount = (carts) => {
+        return carts?.reduce((sum, cart) => {
+            return sum + cart.quantity
+        }, 0);
+    }
+    useEffect(() => {
+        if (carts.length > 0) {
+
+            dispatch(setTotalQuantity(calculateToTalAmount(carts)))
+        }
+
+    }, [carts])
     return (
-        <Link to="/order" style={{ position: "fixed", bottom: "1rem", right: "2rem" }}>
+        <Link to="/order" style={{ position: "fixed", bottom: "1rem", right: "2rem", zIndex: "100", }}>
             <AddToCartButton>
                 <LocalMallIcon></LocalMallIcon>
                 <span
@@ -36,7 +50,9 @@ export default function CartBtn() {
                         height: "20px",
                         color: "rgba(243, 101, 34)",
                         border: "1px solid rgba(243, 101, 34)",
-                        borderRadius: "999px"
+                        borderRadius: "999px",
+                        zIndex: "100",
+
                     }}
                 >{totalAmount}</span>
             </AddToCartButton>

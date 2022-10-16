@@ -13,10 +13,10 @@ const CheckoutButton = styled(Button)({
 	boxShadow: 'inherit',
 	'&:hover': { backgroundColor: 'rgba(243, 101, 34)' },
 });
-export default function Checkout({ fees = {}, cartList = [] }) {
+export default function Checkout({ fees = {}, totalAmount = 0 }) {
 	return (
 		<div className='checkout'>
-			<Payment fees={fees} cartList={cartList}></Payment>
+			<Payment fees={fees} totalAmount={totalAmount}></Payment>
 			<CheckoutButton size='large' variant='contained'>
 				Đặt hàng
 			</CheckoutButton>

@@ -88,12 +88,13 @@ export default function OrderPage() {
 	];
 
 	// -----------------------------------------
+	const { carts, totalAmount } = useSelector((state) => state.cart)
 	const { user } = useSelector((state) => state.auth)
 	const [fees, setFees] = useState(mockDataFee);
-	const [cart, setCart] = useState(mockDataCart);
+	// const [cart, setCart] = useState(mockDataCart);
 	const [locationList, setLocationList] = useState(mockDataLocation);
 	const [currentLocation, setCurrenLocation] = useState(mockDataLocation[2]);
-	const [shippingFee, setShippingFee] = useState(15000);
+	const [shippingFee, setShippingFee] = useState(5000);
 	const [quantityModal, openQuantityModal, closeQuantityModal] = useModal();
 	const [locationModal, openLocationModal, closeLocationModal] = useModal();
 	const [userModal, openUserModal, closeUserModal] = useModal();
@@ -103,14 +104,10 @@ export default function OrderPage() {
 		let discountCost = 0;
 		let originCost = 0;
 
-		cart.map((cartItem) => {
-			if (cartItem?.discountPrice) {
-				discountCost += cartItem?.discountPrice;
-			} else {
-				discountCost += cartItem?.price;
-			}
-			originCost += cartItem?.price;
+		carts.map((cartItem) => {
+			originCost += cartItem?.product.price * cartItem.quantity;
 		});
+		discountCost = originCost
 		return {
 			originCost: {
 				name: 'Tạm tính',
@@ -139,7 +136,7 @@ export default function OrderPage() {
 	useEffect(() => {
 		const totalFee = calculateFee(shippingFee);
 		setFees(totalFee);
-	}, [cart]);
+	}, [carts]);
 	useEffect(() => {
 		if (_.isEmpty(selectedCart) === false) {
 			openQuantityModal();
@@ -180,9 +177,9 @@ export default function OrderPage() {
 				</Typography>
 				<OrderLocation openLocationModal={openLocationModal} location={currentLocation} />
 				<OrderInfo user={user} openUserModal={openUserModal} />
-				<CartList carts={cart} handleChangeQuantity={handleChangeQuantity} />
+				<CartList carts={carts} handleChangeQuantity={handleChangeQuantity} />
 				<FeeList fees={fees}></FeeList>
-				<Checkout fees={fees} cartList={cart} />
+				<Checkout fees={fees} totalAmount={totalAmount} />
 			</Container>
 		</>
 	);
