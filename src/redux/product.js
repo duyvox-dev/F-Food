@@ -26,6 +26,15 @@ const getProductDetail = createAsyncThunk(
     },
 );
 
+const getProductByCategory = createAsyncThunk(
+    'product/getProductByCategory',
+    async (categoryId) => {
+        const result = await productService.getProductByCategory(categoryId);
+
+        return result.data.results;
+    },
+);
+
 const searchProduct = createAsyncThunk(
     'product/searchProduct',
     async (searchText) => {
@@ -73,6 +82,22 @@ const productSlice = createSlice({
             getAllProductLoading: false,
         }));
 
+        // get product by category 
+        builder.addCase(getProductByCategory.pending, (state) => ({
+            ...state,
+            getAllProductLoading: true,
+        }));
+        builder.addCase(getProductByCategory.fulfilled, (state, { payload }) => ({
+            ...state,
+            products: payload,
+            getAllProductLoading: false,
+        }));
+        builder.addCase(getProductByCategory.rejected, (state) => ({
+            ...state,
+            getAllProductLoading: false,
+        }));
+
+
         // search product
         builder.addCase(searchProduct.pending, (state) => ({
             ...state,
@@ -94,5 +119,5 @@ const { reducer, actions } = productSlice;
 export const { } = actions;
 export default reducer;
 export {
-    getAllProduct, getProductDetail, searchProduct
+    getAllProduct, getProductDetail, getProductByCategory, searchProduct
 }

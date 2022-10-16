@@ -8,6 +8,7 @@ import OrderHistoryPage from '../pages/OrderHistoryPage/OrderHistoryPage';
 import SearchProductPage from '../pages/SearchProductPage/SearchProductPage';
 
 import OrderDetailPage from '../pages/OrderDetailPage/OrderDetailPage';
+import ProductByCategoryPage from '../pages/ProductByCategoryPage/ProductByCategoryPage';
 export const appRoutes = [
 	{
 		path: '/',
@@ -25,7 +26,14 @@ export const appRoutes = [
 		path: '/order-history',
 		component: <ThemeLayout Component={OrderHistoryPage} />,
 	},
-	{ path: '/search', component: <ThemeLayout Component={SearchProductPage} /> },
+	{
+		path: '/search',
+		component: <ThemeLayout Component={SearchProductPage} />
+	},
+	{
+		path: '/category/:id',
+		component: <ThemeLayout Component={ProductByCategoryPage} />,
+	},
 	{
 		path: 'order-detail/:id',
 		component: <ThemeLayout Component={OrderDetailPage} />,
