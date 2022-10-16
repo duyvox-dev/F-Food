@@ -8,14 +8,7 @@ const getProductDetail = (id) => {
 }
 
 const searchProduct = async (searchText) => {
-    const params = {
-        searchText: searchText
-    }
-    const res = await httpClient.get({
-        url: apiLinks.product.searchProduct,
-        params: params,
-    })
-    return res.data
+    return httpService.get(`${apiLinks.product.searchProduct}?searchString=${searchText}`)
 }
 
 const productService = {

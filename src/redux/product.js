@@ -5,6 +5,7 @@ import productService from '../service/product';
 const initialState = {
     currentProduct: {},
     products: [],
+    searchProducts: [],
     getAllProductLoading: false,
 }
 // async action
@@ -27,10 +28,10 @@ const getProductDetail = createAsyncThunk(
 
 const searchProduct = createAsyncThunk(
     'product/searchProduct',
-    async () => {
-        const result = await productService.searchProduct();
+    async (searchText) => {
+        const result = await productService.searchProduct(searchText);
         console.log(result);
-        return result;
+        return result.data.results;
     }
 )
 
@@ -79,7 +80,7 @@ const productSlice = createSlice({
         }))
         builder.addCase(searchProduct.fulfilled, (state, { payload }) => ({
             ...state,
-            getAllRespone: payload,
+            searchProducts: payload,
             getAllProductLoading: true,
         }))
         builder.addCase(searchProduct.rejected, (state) => ({
