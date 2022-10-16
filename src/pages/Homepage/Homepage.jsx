@@ -24,7 +24,7 @@ export default function HomePage() {
 		<>
 			<Container maxWidth='lg'>
 				<div className='home'>
-					<HomeContainer />
+					<HomeContainer products={products} />
 					<TimeOrderBar />
 					<MenuCategory />
 					{/* <div className='listProductByCategory'>

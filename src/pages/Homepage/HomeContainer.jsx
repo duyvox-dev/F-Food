@@ -8,7 +8,7 @@ import { hotMenuData } from '../../util/data';
 import ProductItem from '../../components/Product/ProductItem/ProductItem';
 import Grid2 from '@mui/material/Unstable_Grid2'; // Grid version 2
 
-function HomeContainer() {
+function HomeContainer({ products = [] }) {
 	return (
 		<>
 			<div className='homeContainer'>
@@ -29,8 +29,8 @@ function HomeContainer() {
 
 					<div className='menu-items'>
 						<Grid2 container spacing={2} justifyContent='center'>
-							{hotMenuData &&
-								hotMenuData.map((product) => {
+							{products &&
+								products.slice(0, 4).map((product) => {
 									return (
 										<Grid2 item xs={5} key={product.id}>
 											<ProductItem product={product}></ProductItem>

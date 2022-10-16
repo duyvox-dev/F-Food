@@ -15,6 +15,8 @@ import { useEffect, useState } from 'react';
 import Button from '@mui/material/Button';
 import { styled } from '@mui/material/styles';
 import ProductList from '../../components/Product/ProductList/ProductList';
+import { useDispatch, useSelector } from 'react-redux';
+import { getAllProduct, getProductDetail } from '../../redux/product';
 const AddToCartButton = styled(Button)({
 	display: 'block',
 	color: 'white',
@@ -28,7 +30,8 @@ export default function ProductDetailPage() {
 
 	// Prepare for get product Id detail from Homepage
 	const { id } = useParams();
-	const [currProduct, setCurrProduct] = useState({});
+	const dispatch = useDispatch();
+	const { currentProduct, products } = useSelector((state) => state.product)
 	// const data = useLocation();
 
 	// console.log('data: ', data);
@@ -68,24 +71,27 @@ export default function ProductDetailPage() {
 	// ];
 	useEffect(() => {
 		window.scrollTo(0, 0);
-		const product = ProductByCategory.find((product) => product.id == id);
-		setCurrProduct(product);
+		dispatch(getProductDetail(id))
+
 	}, [id]);
+	useEffect(() => {
+		dispatch(getAllProduct())
+	}, [])
 	return (
 		<>
 			<Container maxWidth='lg'>
 				<div className='product-detail-image'>
-					<img src={currProduct?.image} alt='' />
+					<img src={currentProduct?.image} alt='' />
 				</div>
 				<div className='product-detail-detail'>
-					<h1 className='product-detail-name'>{currProduct?.productName}</h1>
+					<h1 className='product-detail-name'>{currentProduct?.name}</h1>
 					<div className='line'></div>
 					<div className='product-detail-price'>
-						<span className='price'>{vndCurrencyFormat(currProduct?.productNewPrice)} </span>
-						<span className='price-sale'>{vndCurrencyFormat(currProduct?.productOldPrice)} </span>
+						<span className='price'>{vndCurrencyFormat(currentProduct?.price)} </span>
+						{/* <span className='price-sale'>{vndCurrencyFormat(currProduct?.productOldPrice)} </span>
 						<span className='price-tag-sale'>
-							{-discountPercent(currProduct?.productNewPrice, currProduct?.productOldPrice)} %
-						</span>
+							{-discountPercent(currentProduct?.productNewPrice, currProduct?.productOldPrice)} %
+						</span> */}
 					</div>
 				</div>
 
@@ -101,7 +107,7 @@ export default function ProductDetailPage() {
 
 				{/* Product Components */}
 				<div>
-					<ProductList products={ProductByCategory}></ProductList>
+					<ProductList products={products}></ProductList>
 				</div>
 			</Container>
 		</>

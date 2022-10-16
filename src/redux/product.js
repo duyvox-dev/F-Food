@@ -3,12 +3,13 @@ import productService from '../service/product';
 
 
 const initialState = {
+    currentProduct: {},
     products: [],
     getAllProductLoading: false,
 }
 // async action
 const getAllProduct = createAsyncThunk(
-    'auth/getAllProduct',
+    'product/getAllProduct',
     async () => {
         const result = await productService.getAllProduct();
 
@@ -16,7 +17,7 @@ const getAllProduct = createAsyncThunk(
     },
 );
 const getProductDetail = createAsyncThunk(
-    'auth/getProductDetail',
+    'product/getProductDetail',
     async (id) => {
         const result = await productService.getProductDetail(id);
 
@@ -25,7 +26,7 @@ const getProductDetail = createAsyncThunk(
 );
 
 const searchProduct = createAsyncThunk(
-    'auth/searchProduct',
+    'product/searchProduct',
     async () => {
         const result = await productService.searchProduct();
         console.log(result);
@@ -53,6 +54,20 @@ const productSlice = createSlice({
             getAllProductLoading: false,
         }));
         builder.addCase(getAllProduct.rejected, (state) => ({
+            ...state,
+            getAllProductLoading: false,
+        }));
+        // get detail
+        builder.addCase(getProductDetail.pending, (state) => ({
+            ...state,
+            getAllProductLoading: true,
+        }));
+        builder.addCase(getProductDetail.fulfilled, (state, { payload }) => ({
+            ...state,
+            currentProduct: payload,
+            getAllProductLoading: false,
+        }));
+        builder.addCase(getProductDetail.rejected, (state) => ({
             ...state,
             getAllProductLoading: false,
         }));
