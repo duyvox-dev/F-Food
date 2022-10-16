@@ -12,6 +12,7 @@ const apiLinks = {
     getAllProduct: `${baseURL}/product`,
     getProductDetail: `${baseURL}/product/GetById`,
 
+    searchProduct: `${baseURL}/product/SearchProduct`
   },
   menu: {
     getListTimeSlot: `${baseURL}/menu/GetListTimeslot`,
