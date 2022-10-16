@@ -17,6 +17,8 @@ import { styled } from '@mui/material/styles';
 import ProductList from '../../components/Product/ProductList/ProductList';
 import { useDispatch, useSelector } from 'react-redux';
 import { getAllProduct, getProductDetail } from '../../redux/product';
+import CartBtn from '../../components/CartBtn/CartBtn';
+import { addToCart } from '../../redux/cartSlice';
 const AddToCartButton = styled(Button)({
 	display: 'block',
 	color: 'white',
@@ -79,7 +81,7 @@ export default function ProductDetailPage() {
 	}, [])
 	return (
 		<>
-			<Container maxWidth='lg'>
+			<Container maxWidth='lg' sx={{ position: "relative" }}>
 				<div className='product-detail-image'>
 					<img src={currentProduct?.image} alt='' />
 				</div>
@@ -95,7 +97,9 @@ export default function ProductDetailPage() {
 					</div>
 				</div>
 
-				<AddToCartButton onClick={() => { }} size='large'>
+				<AddToCartButton onClick={() => {
+					dispatch(addToCart(currentProduct))
+				}} size='large'>
 					Thêm
 				</AddToCartButton>
 
@@ -109,6 +113,7 @@ export default function ProductDetailPage() {
 				<div>
 					<ProductList products={products}></ProductList>
 				</div>
+				<CartBtn></CartBtn>
 			</Container>
 		</>
 	);

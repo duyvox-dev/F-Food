@@ -11,6 +11,7 @@ import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
 import { ProductByCategory } from '../../util/data';
 import { useDispatch, useSelector } from 'react-redux';
 import { getAllProduct } from '../../redux/product';
+import CartBtn from '../../components/CartBtn/CartBtn';
 
 export default function HomePage() {
 	const dispatch = useDispatch();
@@ -23,23 +24,12 @@ export default function HomePage() {
 	}, [])
 	return (
 		<>
-			<Container maxWidth='lg'>
+			<Container maxWidth='lg' sx={{ position: "relative" }}>
 				<div className='home'>
 					<HomeContainer products={products} />
 					<TimeOrderBar />
 					<MenuCategory />
-					{/* <div className='listProductByCategory'>
-						<div className='titleListCategory'>
-							<p>Ưu đãi hấp dẫn</p>
-							<p className='underline-content'></p>
-						</div>
-						<ProductCategory />
-						<div className='btViewAllByCategory'>
-							<button type='button' className='styleButton'>
-								Xem thêm
-							</button>
-						</div>
-					</div> */}
+
 					<div className='listProductByCategory'>
 						<div className='titleListCategory'>
 							<p>Ưu đãi hấp dẫn</p>
@@ -51,16 +41,11 @@ export default function HomePage() {
 								Xem thêm
 							</button>
 						</div>
-						<div className='iconShoppingCart'>
-							<div className='icon-cart'><ShoppingCartOutlinedIcon className='cart' /></div>
-							<div className='cart_content'>
-								<p>2 </p>
-							</div>
-						</div>
+
 					</div>
 
 				</div>
-
+				<CartBtn></CartBtn>
 			</Container>
 		</>
 	);
