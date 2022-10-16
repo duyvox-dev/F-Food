@@ -26,15 +26,10 @@ const ProductItem = ({ product }) => {
 		<Link to={`/detail/${product?.id}`} className='product'>
 			<img src={product?.image} alt='' className='product-image' />
 			<div className='product-info'>
-				<p className='product-name'>{product?.productName}</p>
-				{product?.productNewPrice && product?.productNewPrice !== 0 && (
-					<div className='product-price-discount'>
-						<p className='product-price'>{vndCurrencyFormat(product?.productOldPrice)}</p>
-						<p className='discount-percent'>-{discountPercent(product?.productNewPrice, product?.productOldPrice)}%</p>
-					</div>
-				)}
+				<p className='product-name'>{product?.name}</p>
+
 				<div className='product-bottom'>
-					<p className='product-price'>{vndCurrencyFormat(product?.productNewPrice)}</p>
+					<p className='product-price'>{vndCurrencyFormat(product?.price)}</p>
 					{/* <div className='addToCart'>
 						<AddRounded />
 					</div> */}

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import './Homepage.scss';
 import ProductCategory from './ProductCategory';
 import ProductList from '../../components/Product/ProductList/ProductList';
@@ -8,8 +8,18 @@ import TimeOrderBar from './TimeOrderBar';
 import { Link } from 'react-router-dom';
 import { Container } from '@mui/material';
 import { ProductByCategory } from '../../util/data';
-export default function HomePage() {
+import { useDispatch, useSelector } from 'react-redux';
+import { getAllProduct } from '../../redux/product';
 
+export default function HomePage() {
+	const dispatch = useDispatch();
+	const { products } = useSelector((state) => state.product)
+	useEffect(() => {
+		console.log(products)
+	}, [products])
+	useEffect(() => {
+		dispatch(getAllProduct())
+	}, [])
 	return (
 		<>
 			<Container maxWidth='lg'>
@@ -34,7 +44,7 @@ export default function HomePage() {
 							<p>Ưu đãi hấp dẫn</p>
 							<p className='underline-content'></p>
 						</div>
-						<ProductList products={ProductByCategory} />
+						<ProductList products={products} />
 						<div className='btViewAllByCategory'>
 							<button type='button' className='styleButton'>
 								Xem thêm

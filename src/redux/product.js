@@ -3,8 +3,7 @@ import productService from '../service/product';
 
 
 const initialState = {
-    accessToken: '',
-    getAllRespone: {},
+    products: [],
     getAllProductLoading: false,
 }
 // async action
@@ -12,8 +11,16 @@ const getAllProduct = createAsyncThunk(
     'auth/getAllProduct',
     async () => {
         const result = await productService.getAllProduct();
-        console.log(result);
-        return result;
+
+        return result.data.results;
+    },
+);
+const getProductDetail = createAsyncThunk(
+    'auth/getProductDetail',
+    async (id) => {
+        const result = await productService.getProductDetail(id);
+
+        return result.data;
     },
 );
 
@@ -33,7 +40,7 @@ const productSlice = createSlice({
         }));
         builder.addCase(getAllProduct.fulfilled, (state, { payload }) => ({
             ...state,
-            getAllRespone: payload,
+            products: payload,
             getAllProductLoading: false,
         }));
         builder.addCase(getAllProduct.rejected, (state) => ({
@@ -47,5 +54,5 @@ const { reducer, actions } = productSlice;
 export const { } = actions;
 export default reducer;
 export {
-    getAllProduct,
+    getAllProduct, getProductDetail
 }

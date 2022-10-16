@@ -1,11 +1,7 @@
-import httpClient from "../api/httpClient"
+import { httpService } from "../api/http.service"
 import apiLinks from "../util/apiLink"
 const getAllCategory = async (params) => {
-    const res = await httpClient.get({
-        url: apiLinks.category.getAllCategory,
-        params: params,
-    })
-    return res.data
+    return httpService.get(apiLinks.category.getAllCategory)
 }
 const menuService = {
     getAllCategory

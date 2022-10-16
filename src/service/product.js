@@ -1,24 +1,10 @@
-import httpClient from "../api/httpClient"
 import apiLinks from "../util/apiLink"
-
-const getAllProduct = async (params) => {
-    const res = await httpClient.get({
-        url: apiLinks.product.getAllProduct,
-        params: params,
-    })
-    return res.data
+import { httpService } from "../api/http.service"
+const getAllProduct = () => {
+    return httpService.get(apiLinks.product.getAllProduct)
 }
-
-
-const getProductDetail = async (id) => {
-    const params = {
-        id: id
-    }
-    const res = await httpClient.get({
-        url: apiLinks.product.getAllProduct,
-        params: params,
-    })
-    return res.data
+const getProductDetail = (id) => {
+    return httpService.get(`${apiLinks.product.getProductDetail}/?id=${id}`);
 }
 
 const productService = {

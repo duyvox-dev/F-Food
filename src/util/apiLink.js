@@ -6,10 +6,11 @@ const apiLinks = {
   customer: {
     login: `${baseURL}/customer/login`,
     getCustomer: `${baseURL}/customer`,
-    update: `${baseURL}/customer/`,
+    update: `${baseURL}/customer`,
   },
   product: {
     getAllProduct: `${baseURL}/product`,
+    getProductDetail: `${baseURL}/product/GetById`,
 
   },
   menu: {

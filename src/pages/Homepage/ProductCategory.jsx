@@ -4,8 +4,10 @@ import { AddRounded } from '@mui/icons-material';
 import { ProductByCategory } from '../../util/data';
 import { Link } from 'react-router-dom';
 import { discountPercent } from '../../util/currency.util';
-
+import { useDispatch, useSelector } from 'react-redux';
+import { useEffect } from 'react';
 function ProductCategory() {
+
 	return (
 		<>
 			<div className='productContainer'>

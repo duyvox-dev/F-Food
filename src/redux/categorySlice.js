@@ -10,7 +10,7 @@ export const getCategoryList = createAsyncThunk(
     async (data, thunkAPI) => {
         try {
             const res = await menuService.getAllCategory();
-            return res.results;
+            return res.data.results;
         } catch (error) {
             // message.error(error.response.data.message);
             return thunkAPI.rejectWithValue();

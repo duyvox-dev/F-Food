@@ -14,7 +14,7 @@ const loginWithGoogle = createAsyncThunk(
 	'auth/loginWithGoogle',
 	async (token) => {
 		const result = await authService.login(token);
-		return result;
+		return result.data;
 	},
 );
 export const updateUserPhone = createAsyncThunk(
@@ -24,7 +24,7 @@ export const updateUserPhone = createAsyncThunk(
 			// console.log(data)
 			const res = await authService.updatePhoneNumber(data.user, data.currentPhone);
 			console.log(res)
-			return res.results;
+			return res.data.results;
 		} catch (error) {
 			// message.error(error.response.data.message);
 			return thunkAPI.rejectWithValue();
