@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Container, Typography } from '@mui/material';
+import { Button, Container, TextField, Typography } from '@mui/material';
 import { SearchRounded } from '@mui/icons-material';
 import './Header.scss';
 import Logo from '../../img/logo.png';
@@ -8,9 +8,54 @@ import { Link } from 'react-router-dom';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import LogoutIcon from '@mui/icons-material/Logout';
 import InventoryOutlinedIcon from '@mui/icons-material/InventoryOutlined';
+import { styled } from '@mui/material/styles';
+import { useDispatch, useSelector } from 'react-redux';
+import { searchProduct } from '../../redux/product';
+import { useEffect } from 'react';
+
+const CustomBorderTextField = styled(TextField)`
+  & label.Mui-focused {
+    color: #f36522;
+  }
+  & .MuiOutlinedInput-root {
+    &.Mui-focused fieldset {
+      border-color: #f36522;
+    }
+  }
+`;
+
+const styles = theme => ({
+	notchedOutline: {
+		borderWidth: "1px",
+		borderColor: "yellow !important"
+	}
+});
 
 function Header() {
+
+	const dispatch = useDispatch();
+
 	const [open, setOpen] = useState(false);
+
+	const [searchText, setSearchText] = useState('');
+
+	const handleChangeSearchText = (e) => {
+		setSearchText(e.target.value)
+	}
+
+	const { products } = useSelector((state) => state.product)
+
+	const submitSearchText = (value) => {
+		console.log("value submit: ", value)
+		dispatch(searchProduct(value))
+	}
+
+	useEffect(() => {
+		console.log(products)
+	}, [products])
+
+	console.log("search txt: ", searchText)
+
 	return (
 		<Container maxWidth='lg'>
 			<div className='header'>
@@ -19,8 +64,22 @@ function Header() {
 					<p className='nameApp'>F-Food</p>
 				</Link>
 				<div className='inputBox'>
-					<SearchRounded className='searchIcon' />
-					<input type='text' placeholder='Bạn đang thèm ăn gì?' />
+					{/* <SearchRounded className='searchIcon' /> */}
+					{/* <input type='text' placeholder='Bạn đang thèm ăn gì?' /> */}
+					<CustomBorderTextField
+						fullWidth
+						type="search"
+						value={searchText}
+						placeholder="Bạn đang thèm ăn gì?"
+						onChange={handleChangeSearchText}
+						InputProps={{
+							endAdornment: (
+								<Button onClick={() => submitSearchText(searchText)}>
+									<SearchRounded className='searchIcon' />
+								</Button>
+							),
+						}}
+					/>
 				</div>
 				<div className='profileContainer'>
 					<div

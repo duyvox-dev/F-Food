@@ -17,6 +17,15 @@ const getAllProduct = createAsyncThunk(
     },
 );
 
+const searchProduct = createAsyncThunk(
+    'auth/searchProduct',
+    async () => {
+        const result = await productService.searchProduct();
+        console.log(result);
+        return result;
+    }
+)
+
 // normal action
 
 const productSlice = createSlice({
@@ -41,6 +50,21 @@ const productSlice = createSlice({
             getAllProductLoading: false,
         }));
 
+        // search product
+        builder.addCase(searchProduct.pending, (state) => ({
+            ...state,
+            getAllProductLoading: true,
+        }))
+        builder.addCase(searchProduct.fulfilled, (state, { payload }) => ({
+            ...state,
+            getAllRespone: payload,
+            getAllProductLoading: true,
+        }))
+        builder.addCase(searchProduct.rejected, (state) => ({
+            ...state,
+            getAllProductLoading: false,
+        }))
+
     },
 });
 const { reducer, actions } = productSlice;
@@ -48,4 +72,5 @@ export const { } = actions;
 export default reducer;
 export {
     getAllProduct,
+    searchProduct,
 }

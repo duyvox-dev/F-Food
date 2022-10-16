@@ -9,7 +9,7 @@ const apiLinks = {
   },
   product: {
     getAllProduct: `${baseURL}/product`,
-
+    searchProduct: `${baseURL}/product/SearchProduct`
   },
   menu: {
     getListTimeSlot: `${baseURL}/menu/GetListTimeslot`,

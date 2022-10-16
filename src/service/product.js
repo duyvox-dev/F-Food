@@ -21,8 +21,20 @@ const getProductDetail = async (id) => {
     return res.data
 }
 
+const searchProduct = async (searchText) => {
+    const params = {
+        searchText: searchText
+    }
+    const res = await httpClient.get({
+        url: apiLinks.product.searchProduct,
+        params: params,
+    })
+    return res.data
+}
+
 const productService = {
     getAllProduct,
-    getProductDetail
+    getProductDetail,
+    searchProduct,
 }
 export default productService
