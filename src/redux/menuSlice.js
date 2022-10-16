@@ -1,6 +1,6 @@
 import { createAction, createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import menuService from '../service/menu';
-
+import { getIsValidDate } from '../util/time.util';
 const initialState = {
     accessToken: '',
     getTimeSlotRespone: {},
@@ -22,35 +22,13 @@ export const getListTimeSlot = createAsyncThunk(
 
     },
 );
-export const getNearestTimeSlot = createAction('menuSlice/getNearestTimeSlot', (timeSlots) => {
-    const currentTimeMinus20 = new Date(Date.now() - 220000 * 60)
-    const getIsValidDate = (arriveTime, checkoutTime) => {
-        const currentDate = `${currentTimeMinus20.getHours()}:${currentTimeMinus20.getMinutes()}:${currentTimeMinus20.getSeconds()}`
-        return currentDate < arriveTime && currentDate < checkoutTime;
-    }
-    let defaultTimeSlot = {
 
-    };
-    defaultTimeSlot = timeSlots.find((timeslot) => {
-        console.log(timeslot)
-        if (getIsValidDate(timeslot.arriveTime, timeslot.checkoutTime))
-            return timeslot
-    })
-
-    return {
-        payload: {
-            defaultTimeSlot
-        },
-    };
-});
 // normal action
 const menuSlice = createSlice({
     name: 'menuSlice',
     initialState: initialState,
     reducers: {
-        getNearestTimeSlot(state, { payload }) {
-            state.currentTimeSlot = payload;
-        },
+
         updateCurrentTimeSlot(state, { payload }) {
             state.currentTimeSlot = payload;
         }
