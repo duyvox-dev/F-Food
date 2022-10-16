@@ -10,6 +10,9 @@ import Banh from '../img/cacloaibanh.png';
 import Douong from '../img/douong.png';
 import Thucuong from '../img/thucuong.png';
 import Monkhac from '../img/monkhac.png';
+import Dodonglanh from '../img/dodonglanh.png';
+import Douongcocon from '../img/douongcocon.png';
+import PassioCoffe from '../img/PassioCoffe.png';
 
 export const hotMenuData = [
 	{
@@ -43,7 +46,9 @@ export const hotMenuData = [
 ];
 
 export const DataMenuCategory = [
-	Uudai, Com, Doanvat, Banh, Douong, Thucuong, Monkhac,
+	// Uudai, Com, Doanvat, Banh, Douong, Thucuong, Monkhac,
+
+	Thucuong, Banh, Dodonglanh, Doanvat, Douongcocon, Douong, PassioCoffe,
 	// {
 	// 	id: 1,
 	// 	name: 'Ưu Đãi Hấp Dẫn',
