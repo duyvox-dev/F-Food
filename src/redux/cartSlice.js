@@ -1,12 +1,19 @@
+import { localStorageService } from '../util/localStorage.util';
 import { createAction, createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 ;
 
-const initialState = {
-    carts: [],
-    totalAmount: 0,
-}
 
 
+const getInitState = () => {
+    const data = localStorageService.getCartLocal();
+    if (data)
+        return data;
+    return {
+        carts: [],
+        totalAmount: 0,
+    }
+};
+const initialState = getInitState();
 // normal action
 // export const addToCart = createAsyncThunk('cartSlice/addToCart', (product, thunkAPI) => {
 //     console.log(product)
@@ -57,6 +64,7 @@ const cartSlice = createSlice({
                 newCart.splice(indexToDelete, 1)
             }
             state.carts = newCart
+            localStorageService.setCartLocal(state)
         },
         addToCart: (state, { payload }) => {
 
@@ -80,6 +88,7 @@ const cartSlice = createSlice({
                 })
             }
             state.carts = newCart
+            localStorageService.setCartLocal(state)
         },
         decQuantityCart: (state, { payload }) => {
 
@@ -102,6 +111,7 @@ const cartSlice = createSlice({
                 newCart.splice(indexToDelete, 1)
             }
             state.carts = newCart
+            localStorageService.setCartLocal(state)
         }
 
     },

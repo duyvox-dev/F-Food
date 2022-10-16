@@ -1,6 +1,6 @@
 import React from 'react';
 import { Typography, Box, Paper } from '@mui/material';
-export default function OrderLocation({ openLocationModal = () => {}, location = {} }) {
+export default function OrderLocation({ openLocationModal = () => { }, location = {} }) {
 	return (
 		<div className='order-section'>
 			<div className='heading-flex'>
