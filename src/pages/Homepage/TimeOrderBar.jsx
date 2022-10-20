@@ -5,6 +5,10 @@ import BtnTime from '../../components/BtnTime/BtnTime';
 import Grid2 from '@mui/material/Unstable_Grid2'; // Grid version 2
 import { updateCurrentTimeSlot, getListTimeSlot } from '../../redux/menuSlice';
 import _ from 'lodash'
+import InfoIcon from '@mui/icons-material/Info';
+import Tooltip from '@mui/material/Tooltip';
+import IconButton from '@mui/material/IconButton';
+
 import { getIsValidDate } from "../../util/time.util"
 function TimeOrderBar() {
 	const dispatch = useDispatch()
@@ -28,7 +32,7 @@ function TimeOrderBar() {
 	}, [])
 	useEffect(() => {
 		let defaultTime = null;
-		if (getTimeSlotRespone.length > 0) {
+		if (getTimeSlotRespone.length > 0 && _.isEmpty(currentTimeSlot)) {
 			defaultTime = getTimeSlotRespone.find((timeslot) => {
 				if (getIsValidDate(timeslot?.arriveTime, timeslot?.checkoutTime)) {
 					return timeslot;
@@ -44,7 +48,11 @@ function TimeOrderBar() {
 		<>
 			<div className='timeOrderBar'>
 				<div className='titleOrder'>
-					<p>Chọn khung giờ đặt hàng cho <span> hôm nay</span></p>
+					<p>Chọn khung giờ giao hàng cho  <span style={{ margin: "0 5px" }}> hôm nay</span>     <Tooltip title={<span style={{ fontSize: "16px" }}>Vui lòng đặt trước khung giờ 20 phút.</span>} >
+						<IconButton>
+							<InfoIcon />
+						</IconButton>
+					</Tooltip></p>
 				</div>
 				<Grid2 container spacing={{ xs: 2, md: 4 }}>
 					{getTimeSlotRespone && getTimeSlotRespone.length > 0 &&

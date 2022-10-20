@@ -6,6 +6,7 @@ import { Container, Typography } from '@mui/material';
 import Button from '@mui/material/Button';
 import { styled } from '@mui/material/styles';
 import { vndCurrencyFormat } from '../../util/currency.util';
+import CartBtn from "../../components/CartBtn/CartBtn"
 
 const CheckoutButton = styled(Button)({
     display: 'block',
@@ -35,6 +36,7 @@ function ProductByCategoryPage(props) {
             maxWidth='lg'
             sx={{
                 padding: '1rem 0',
+                position: "relative"
             }}>
             <div className='searchpage'>
                 <div className='header-search-page'>
@@ -68,6 +70,7 @@ function ProductByCategoryPage(props) {
                     ))}
                 </div>
             </div>
+            <CartBtn></CartBtn>
         </Container>
 
     );

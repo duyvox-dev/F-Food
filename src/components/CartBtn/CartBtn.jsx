@@ -40,14 +40,15 @@ export default function CartBtn() {
                 <span
                     style={{
                         position: "absolute",
-                        top: "-5px",
-                        right: "0px",
+                        top: "-9px",
+                        right: "-13px",
                         display: "flex",
                         justifyContent: "center",
                         alignItem: "center",
                         background: "white",
                         width: "20px",
                         height: "20px",
+                        padding: "5px",
                         color: "rgba(243, 101, 34)",
                         border: "1px solid rgba(243, 101, 34)",
                         borderRadius: "999px",

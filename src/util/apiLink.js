@@ -19,6 +19,10 @@ const apiLinks = {
   },
   category: {
     getAllCategory: `${baseURL}/category/GetListCategory`
+  },
+  order: {
+    sendMail: `${baseURL}/order/SendQRToMail`,
+    createOrder: `${baseURL}/order/CreateOrder`
   }
 }
 export default apiLinks;

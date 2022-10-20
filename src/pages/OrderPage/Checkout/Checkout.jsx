@@ -4,6 +4,7 @@ import Button from '@mui/material/Button';
 import { styled } from '@mui/material/styles';
 
 import './Checkout.scss';
+import { useDispatch, useSelector } from 'react-redux';
 const CheckoutButton = styled(Button)({
 	display: 'block',
 	color: 'white',
@@ -14,10 +15,13 @@ const CheckoutButton = styled(Button)({
 	'&:hover': { backgroundColor: 'rgba(243, 101, 34)' },
 });
 export default function Checkout({ fees = {}, totalAmount = 0 }) {
+	const dispatch = useDispatch();
+	const { user } = useSelector((state) => state.auth)
 	return (
 		<div className='checkout'>
 			<Payment fees={fees} totalAmount={totalAmount}></Payment>
-			<CheckoutButton size='large' variant='contained'>
+			<CheckoutButton size='large' variant='contained' onClick={() => {
+			}}>
 				Đặt hàng
 			</CheckoutButton>
 		</div>

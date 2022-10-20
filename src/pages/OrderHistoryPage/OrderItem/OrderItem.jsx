@@ -74,7 +74,7 @@ export default function OrderItem({ orderData = {} }) {
 	];
 	const [products, setProducts] = useState(mockDataProducts);
 	return (
-		<Paper sx={{ margin: '1rem 0', padding: '1rem' }}>
+		<Paper sx={{ margin: '1rem 0', padding: '1rem', "boxShadow": "0px 0px 20px rgb(0 0 0 / 15%)" }}>
 			<Stack direction='row' justifyContent='space-between' alignItems='center' sx={{ marginBottom: '1rem' }}>
 				<Stack direction='row' spacing={2}>
 					<Typography variant='h6'>{orderData.SupplierStore.name}</Typography>
@@ -101,9 +101,7 @@ export default function OrderItem({ orderData = {} }) {
 						Thành tiền: <span className='order-price'>{vndCurrencyFormat(orderData.TotalAmout)}</span>
 					</Typography>
 				</Stack>
-				<Stack direction='row' justifyContent={'flex-end'}>
-					<StyledButton>Mua lại</StyledButton>
-				</Stack>
+
 			</Box>
 		</Paper>
 	);

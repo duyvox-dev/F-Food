@@ -150,7 +150,10 @@ export default function OrderPage() {
 	return (
 		<>
 			{/* Modals */}
-			<QuantityModal modalVisible={quantityModal} closeModal={closeQuantityModal} cartItem={selectedCart} />
+			<QuantityModal
+				modalVisible={quantityModal}
+				closeModal={closeQuantityModal}
+				cartItem={selectedCart} />
 			<LocationModal
 				modalVisible={locationModal}
 				closeModal={closeLocationModal}

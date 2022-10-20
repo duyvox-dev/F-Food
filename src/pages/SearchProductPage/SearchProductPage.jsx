@@ -6,7 +6,7 @@ import { vndCurrencyFormat, discountPercent } from '../../util/currency.util';
 import Button from '@mui/material/Button';
 import { styled } from '@mui/material/styles';
 import { useSelector } from 'react-redux';
-
+import CartBtn from "../../components/CartBtn/CartBtn"
 const CheckoutButton = styled(Button)({
 	display: 'block',
 	color: 'white',
@@ -28,6 +28,7 @@ export default function SearchProductPage() {
 				maxWidth='lg'
 				sx={{
 					padding: '1rem 0',
+					position: "relative"
 				}}>
 				<div className='searchpage'>
 					<div className='header-search-page'>
@@ -61,6 +62,7 @@ export default function SearchProductPage() {
 						))}
 					</div>
 				</div>
+				<CartBtn></CartBtn>
 			</Container>
 		</>
 	);

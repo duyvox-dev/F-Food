@@ -3,7 +3,7 @@ import Header from './header/Header';
 import Footer from './footer/Footer';
 export default function ThemeLayout({ Component }) {
 	return (
-		<div>
+		<div style={{ position: "relative" }}>
 			<Header />
 			<Component />
 			<Footer />

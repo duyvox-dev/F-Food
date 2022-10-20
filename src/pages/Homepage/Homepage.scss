@@ -232,11 +232,15 @@ $primaryColor: #f36522;
 }
 
 .titleOrder {
-	display: flex;
-	color: black;
-	font-weight: 700;
-	font-size: 20px;
-	line-height: 25px;
+	p {
+		display: flex;
+		align-items: center;
+
+		color: black;
+		font-weight: 700;
+		font-size: 20px;
+		line-height: 25px;
+	}
 	span {
 		color: $primaryColor;
 	}
