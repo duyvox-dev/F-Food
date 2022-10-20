@@ -39,10 +39,11 @@ function Header() {
 	const dispatch = useDispatch();
 
 	const [open, setOpen] = useState(false);
-
+	const [menuPos, setMenuPos] = useState(null);
 	const [searchText, setSearchText] = useState('');
-	const toggleMenu = () => {
+	const toggleMenu = (e) => {
 		setOpen(!open);
+		setMenuPos(e.currentTarget)
 	}
 	const handleChangeSearchText = (e) => {
 		setSearchText(e.target.value)
@@ -102,24 +103,28 @@ function Header() {
 							aria-controls={open ? 'user-menu' : undefined}
 							aria-haspopup="true"
 							aria-expanded={open ? 'true' : undefined}
-							onClick={() => { toggleMenu() }}>
+							onClick={(e) => { toggleMenu(e) }}>
 							<img src={user.imageUrl} alt='' className='profilePic' />
 						</div>
 						<Menu
 							id="user-menu"
 							aria-labelledby="menu-btn"
 
-							// anchorEl={open}
+							anchorEl={menuPos}
 							open={open}
 							onClose={toggleMenu}
 							anchorOrigin={{
+								vertical: 'bottom',
+								horizontal: 'center',
+							}}
+							transformOrigin={{
 								vertical: 'top',
-								horizontal: 'right',
+								horizontal: 'center',
 							}}
-							sx={{
-								top: '50px',
-								left: '-10px',
-							}}
+						// sx={{
+						// 	top: '50px',
+						// 	left: '-10px',
+						// }}
 						>
 							<Typography
 								variant='h5'
