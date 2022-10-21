@@ -1,4 +1,4 @@
-import React from 'react'
+import React from 'react';
 import ThemeLayout from '../HOC/ThemeLayout';
 import ProductDetailPage from '../pages/ProductDetailPage/ProductDetailPage';
 import OrderPage from '../pages/OrderPage/OrderPage';
@@ -8,6 +8,7 @@ import OrderHistoryPage from '../pages/OrderHistoryPage/OrderHistoryPage';
 import SearchProductPage from '../pages/SearchProductPage/SearchProductPage';
 
 import OrderDetailPage from '../pages/OrderDetailPage/OrderDetailPage';
+import DeliveryOrderPage from '../pages/DeliveryOrderPage/DeliveryOrderPage';
 import ProductByCategoryPage from '../pages/ProductByCategoryPage/ProductByCategoryPage';
 export const appRoutes = [
 	{
@@ -28,7 +29,7 @@ export const appRoutes = [
 	},
 	{
 		path: '/search',
-		component: <ThemeLayout Component={SearchProductPage} />
+		component: <ThemeLayout Component={SearchProductPage} />,
 	},
 	{
 		path: '/category/:id',
@@ -37,6 +38,10 @@ export const appRoutes = [
 	{
 		path: 'order-detail/:id',
 		component: <ThemeLayout Component={OrderDetailPage} />,
+	},
+	{
+		path: 'order-delivery',
+		component: <ThemeLayout Component={DeliveryOrderPage} />,
 	},
 	{
 		path: '*',

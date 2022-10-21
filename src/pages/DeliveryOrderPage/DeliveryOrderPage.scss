@@ -1,0 +1,106 @@
+$primaryColor: #f36522;
+.content-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 30px;
+    background-color: #4D4D4D;
+    color: #fff;
+    padding: 1rem;
+    font-weight: 600;
+    margin-top: 20px;
+    font-size: 20px;
+    line-height: 116.7%;
+}
+
+.pickup-content {
+    background-color: #fff;
+    padding: 1.5rem 1rem;
+    font-size: 18px;
+    line-height: 116.7%;
+}
+
+.main-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-bottom: 1rem;
+    font-weight: 600;
+    color: #808080;
+}
+
+
+.left-content {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 10px;
+}
+.style-price-pickup {
+    color: $primaryColor;
+}
+
+.address-content {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 10px;
+    font-weight: 600;
+}
+
+.logo7eleven {
+    width: 45px;
+}
+
+
+.drop-off-content {
+    background-color: #F7F7F7;
+    padding: 1.5rem 1rem;
+    font-size: 18px;
+    line-height: 116.7%;
+}
+
+.style-price-drop-off {
+    color: #00B386;
+}
+
+.delivery-address {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-weight: 600;
+}
+
+.sub-delivery-address {
+    display: flex;
+    gap: 10px;
+}
+
+.time-content {
+    display: flex;
+    gap: 10px;
+}
+
+.style-content {
+    font-weight: 700;
+}
+
+
+@media screen and (max-width: 768px) {
+	.main-content {
+        display: block;
+
+	}
+    .left-content {
+        padding-bottom: 1rem;
+    }
+    .delivery-address {
+        display: block;
+    }
+    .sub-delivery-address {
+        padding-bottom: 1rem;
+    }
+    .sub-content-header {
+        display: none;
+    }
+}
