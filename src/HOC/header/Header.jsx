@@ -56,6 +56,14 @@ function Header() {
 		navigate('/search')
 	}
 
+	const handleSearchEnter = (e) => {
+		if (e.keyCode === 13) {
+			const valueSearchText = e.target.value;
+			dispatch(searchProduct(valueSearchText))
+			navigate('/search')
+		}
+	}
+
 	const { accessToken, user } = useSelector((state) => state.auth)
 	useEffect(() => {
 	}, [])
@@ -82,6 +90,7 @@ function Header() {
 						value={searchText}
 						placeholder="Bạn đang thèm ăn gì?"
 						onChange={handleChangeSearchText}
+						onKeyDown={handleSearchEnter}
 						InputProps={{
 							endAdornment: (
 								<SearchBtn onClick={() => submitSearchText(searchText)}>
