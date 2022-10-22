@@ -1,9 +1,10 @@
 import React from 'react';
 import { Typography, Box, Paper } from '@mui/material';
 import { useSelector } from 'react-redux';
-import moment from "moment"
-export default function OrderLocation({ openLocationModal = () => { }, location = {} }) {
-	const { currentTimeSlot } = useSelector((state) => state.menu)
+import moment from 'moment';
+import { dayConstants } from '../../constansts/constants';
+export default function OrderLocation({ openLocationModal = () => {}, location = {} }) {
+	const { currentTimeSlot, dayString } = useSelector((state) => state.menu);
 	return (
 		<div className='order-section'>
 			<div className='heading-flex'>
@@ -20,9 +21,11 @@ export default function OrderLocation({ openLocationModal = () => { }, location 
 				<span className='box-content-heading'>{location?.label}</span>
 				<div>
 					<span className='box-content-title'>Thời gian giao hàng</span>
-					<span className='box-content-info'>{moment(`2015-06-17 ${currentTimeSlot.arriveTime}`).format('HH:mm')}
-						-
-						{moment(`2015-06-17 ${currentTimeSlot.checkoutTime}`).format('HH:mm')}</span>
+					<span className='box-content-info'>
+						{moment(`2015-06-17 ${currentTimeSlot.arriveTime}`).format('HH:mm')}-
+						{moment(`2015-06-17 ${currentTimeSlot.checkoutTime}`).format('HH:mm')}{' '}
+						<span className='highlight'>{dayString == dayConstants.NGAY_MAI ? dayString : ''}</span>
+					</span>
 				</div>
 			</div>
 		</div>
