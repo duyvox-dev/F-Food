@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { getProductByCategory } from '../../redux/product';
 import { Container, Menu, MenuItem, Typography } from '@mui/material';
 import Button from '@mui/material/Button';
@@ -126,23 +126,27 @@ function ProductByCategoryPage(props) {
                     </div>
                     {products.length === 0 ? (<div><h1>CHƯA CÓ DỮ LIỆU</h1></div>) : products.map((product, key) => (
                         <div className='content-product' key={key}>
-                            <div className='content-item'>
-                                <img src={product.image} alt='' className='image-product' />
-                                <div className='info-product'>
-                                    <div className='name-product'>{product.name}</div>
-                                    <div className='product-price-discount'>
-                                        <div className='product-new-price'>{vndCurrencyFormat(product.price)}</div>
-                                        {/* <div className='discount-percent'>-{discountPercent(43000, 49000)}%</div> */}
-                                    </div>
-                                    {/* <div className='product-bottom'>
+                            <Link to={`/detail/${product?.id}`} style={{ textDecoration: 'none', color: 'black' }}>
+                                <div className='content-item'>
+                                    <img src={product.image} alt='' className='image-product' />
+                                    <div className='info-product'>
+                                        <div className='name-product'>{product.name}</div>
+                                        <div className='product-price-discount'>
+                                            <div className='product-new-price'>{vndCurrencyFormat(product.price)}</div>
+                                            {/* <div className='discount-percent'>-{discountPercent(43000, 49000)}%</div> */}
+                                        </div>
+                                        {/* <div className='product-bottom'>
 											<div className='product-old-price'>{vndCurrencyFormat(49000)}</div>
 										</div> */}
+                                    </div>
                                 </div>
-                            </div>
+                            </Link>
                             <CheckoutButton size='large' variant='contained'>
                                 Thêm
                             </CheckoutButton>
                         </div>
+
+
                     ))}
                 </div>
             </div>
