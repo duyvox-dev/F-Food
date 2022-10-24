@@ -12,6 +12,9 @@ $primaryColor: #f36522;
 	padding: 0.5rem 0;
 	top: 0;
 	left: 0;
+	@media screen and (max-width: 767.98px) {
+		padding: 1rem 0;
+	}
 }
 .header {
 	display: flex;
@@ -77,6 +80,7 @@ $primaryColor: #f36522;
 }
 .mobile__searchbar {
 	display: none;
+	margin-top: 0.5rem;
 	@media screen and (max-width: 767.98px) {
 		display: block;
 	}

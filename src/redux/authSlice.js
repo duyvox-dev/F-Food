@@ -6,32 +6,25 @@ const initialState = {
 	accessToken: '',
 	user: {},
 	loginLoading: false,
-}
-
+};
 
 // async action
-const loginWithGoogle = createAsyncThunk(
-	'auth/loginWithGoogle',
-	async (token) => {
-		const result = await authService.login(token);
-		return result.data;
-	},
-);
-export const updateUserPhone = createAsyncThunk(
-	'auth/updateUserPhone',
-	async (data, thunkAPI) => {
-		try {
-			// console.log(data)
-			const res = await authService.updatePhoneNumber(data.user, data.currentPhone);
-			console.log(res)
-			return res.data.results;
-		} catch (error) {
-			// message.error(error.response.data.message);
-			return thunkAPI.rejectWithValue();
-		}
-
-	},
-);
+const loginWithGoogle = createAsyncThunk('auth/loginWithGoogle', async (token) => {
+	console.log(token);
+	const result = await authService.login(token);
+	return result.data;
+});
+export const updateUserPhone = createAsyncThunk('auth/updateUserPhone', async (data, thunkAPI) => {
+	try {
+		// console.log(data)
+		const res = await authService.updatePhoneNumber(data.user, data.currentPhone);
+		console.log(res);
+		return res.data.results;
+	} catch (error) {
+		// message.error(error.response.data.message);
+		return thunkAPI.rejectWithValue();
+	}
+});
 
 // normal action
 const logout = createAction('authSlice/logout', () => {
@@ -79,12 +72,9 @@ const authSlice = createSlice({
 			...state,
 			loginLoading: false,
 		}));
-
 	},
 });
 const { reducer, actions } = authSlice;
-export const { } = actions;
+export const {} = actions;
 export default reducer;
-export {
-	loginWithGoogle, logout
-}
+export { loginWithGoogle, logout };

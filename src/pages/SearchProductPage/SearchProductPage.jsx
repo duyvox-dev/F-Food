@@ -5,8 +5,9 @@ import NuocTao from '../../img/nuoctaoep.jpg';
 import { vndCurrencyFormat, discountPercent } from '../../util/currency.util';
 import Button from '@mui/material/Button';
 import { styled } from '@mui/material/styles';
-import { useSelector } from 'react-redux';
-import CartBtn from "../../components/CartBtn/CartBtn"
+import { useSelector, useDispatch } from 'react-redux';
+import CartBtn from '../../components/CartBtn/CartBtn';
+import { addToCart } from '../../redux/cartSlice';
 const CheckoutButton = styled(Button)({
 	display: 'block',
 	color: 'white',
@@ -18,17 +19,15 @@ const CheckoutButton = styled(Button)({
 });
 
 export default function SearchProductPage() {
-
-	const { searchProducts } = useSelector((state) => state.product)
-
-
+	const { searchProducts } = useSelector((state) => state.product);
+	const dispatch = useDispatch();
 	return (
 		<>
 			<Container
 				maxWidth='lg'
 				sx={{
 					padding: '1rem 0',
-					position: "relative"
+					position: 'relative',
 				}}>
 				<div className='searchpage'>
 					<div className='header-search-page'>
@@ -37,9 +36,7 @@ export default function SearchProductPage() {
 						</Typography>
 					</div>
 					<div className='listProductBySearch'>
-						<div className='titleCategoryBySearch'>
-							{/* <p>Đồ uống</p> */}
-						</div>
+						<div className='titleCategoryBySearch'>{/* <p>Đồ uống</p> */}</div>
 						{searchProducts.map((product, key) => (
 							<div className='content-product'>
 								<div className='content-item'>
@@ -55,7 +52,12 @@ export default function SearchProductPage() {
 										</div> */}
 									</div>
 								</div>
-								<CheckoutButton size='large' variant='contained'>
+								<CheckoutButton
+									size='large'
+									variant='contained'
+									onClick={() => {
+										dispatch(addToCart(product));
+									}}>
 									Thêm
 								</CheckoutButton>
 							</div>
