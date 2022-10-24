@@ -21,7 +21,7 @@ function TimeOrderBar() {
 		dispatch(updateCurrentTimeSlot(timeslot));
 	};
 	useEffect(() => {
-		dispatch(getListTimeSlot());
+		if (_.isEmpty(getTimeSlotRespone)) dispatch(getListTimeSlot());
 	}, []);
 	useEffect(() => {
 		let defaultTime = null;
@@ -41,7 +41,7 @@ function TimeOrderBar() {
 			<div className='timeOrderBar'>
 				<div className='titleOrder'>
 					<p>
-						Chọn khung giờ giao hàng cho <span style={{ margin: '0 5px' }}> {dayString}</span>{' '}
+						Chọn khung giờ giao hàng cho <span> {dayString}</span>{' '}
 						<Tooltip title={<span style={{ fontSize: '16px' }}>Vui lòng đặt trước khung giờ 20 phút.</span>}>
 							<IconButton>
 								<InfoIcon />

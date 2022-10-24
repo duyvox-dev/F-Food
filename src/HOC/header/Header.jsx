@@ -59,8 +59,10 @@ function Header() {
 	const handleSearchEnter = (e) => {
 		if (e.keyCode === 13) {
 			const valueSearchText = e.target.value;
-			dispatch(searchProduct(valueSearchText));
-			navigate('/search');
+			if (_.isEmpty(valueSearchText) == false) {
+				dispatch(searchProduct(valueSearchText));
+				navigate('/search');
+			}
 		}
 	};
 
@@ -90,6 +92,7 @@ function Header() {
 							value={searchText}
 							placeholder='Bạn đang thèm ăn gì?'
 							onChange={handleChangeSearchText}
+							onKeyDown={handleSearchEnter}
 							InputProps={{
 								endAdornment: (
 									<SearchBtn onClick={() => submitSearchText(searchText)}>
@@ -209,6 +212,7 @@ function Header() {
 						value={searchText}
 						placeholder='Bạn đang thèm ăn gì?'
 						onChange={handleChangeSearchText}
+						onKeyDown={handleSearchEnter}
 						InputProps={{
 							endAdornment: (
 								<SearchBtn onClick={() => submitSearchText(searchText)}>

@@ -7,13 +7,12 @@ import { discountPercent } from '../../util/currency.util';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
 function ProductCategory() {
-
 	return (
 		<>
 			<div className='productContainer'>
 				{ProductByCategory &&
 					ProductByCategory.map((item) => (
-						<Link to={`/detail/${item.id}`} state={item}>
+						<Link to={`/detail/${item.id}`}>
 							<div key={item.id} className='product-content'>
 								<img src={item.image} alt='' className='image-products' />
 								<div className='content-item'>

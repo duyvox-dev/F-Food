@@ -10,13 +10,14 @@ import MoreVertIcon from '@mui/icons-material/MoreVert';
 import IconButton from '@mui/material/IconButton';
 import CartBtn from '../../components/CartBtn/CartBtn';
 import { addToCart } from '../../redux/cartSlice';
-
+import { getCategoryList, setCurrentCategory } from '../../redux/categorySlice';
+import _ from 'lodash';
 const CheckoutButton = styled(Button)({
 	display: 'block',
 	color: 'white',
 	backgroundColor: 'rgba(243, 101, 34)',
 	width: '100px',
-	marginTop: '1rem',
+	// marginTop: '1rem',
 	boxShadow: 'inherit',
 	'&:hover': { backgroundColor: 'rgba(243, 101, 34)' },
 });
@@ -29,15 +30,18 @@ function ProductByCategoryPage(props) {
 	const dispatch = useDispatch();
 
 	const { products } = useSelector((state) => state.product);
-	const { categoryList } = useSelector((state) => state.category);
+	const { categoryList, currentCategory } = useSelector((state) => state.category);
 
-	const [currCategory, setCurrCategory] = useState();
+	// const [currCategory, setCurrCategory] = useState();
 
+	// useEffect(() => {
+	// 	console.log('categoryList: ', categoryList);
+	// }, [categoryList]);
 	useEffect(() => {
-		console.log('categoryList: ', categoryList);
-	}, [categoryList]);
-
+		if (_.isEmpty(categoryList)) dispatch(getCategoryList());
+	}, []);
 	useEffect(() => {
+		dispatch(setCurrentCategory(id));
 		dispatch(getProductByCategory(id));
 		//setCurrCategory(categoryList.find((item) => item.id === id))
 	}, [id]);
@@ -49,20 +53,22 @@ function ProductByCategoryPage(props) {
 		setAnchorEl(event.currentTarget);
 	};
 
-	const [categoryName, setCategoryName] = useState();
+	// const [categoryName, setCategoryName] = useState();
 
-	const categoryObj = categoryList.find((item) => item.categoryName === categoryName);
-	const categoryId = categoryObj?.id;
+	// const categoryObj = categoryList.find((item) => item.categoryName === categoryName);
+	// const categoryId = categoryObj?.id;
 
 	const handleClickOption = (event) => {
 		const { myValue } = event.currentTarget.dataset;
-		setCategoryName(myValue);
+		// console.log(event);
+		// setCategoryName(myValue);
+		dispatch(setCurrentCategory(myValue));
 		setAnchorEl(null);
 	};
 
 	useEffect(() => {
-		dispatch(getProductByCategory(categoryId));
-	}, [categoryId]);
+		if (_.isEmpty(currentCategory) == false) dispatch(getProductByCategory(currentCategory.id));
+	}, [currentCategory]);
 
 	const handleClose = () => {
 		setAnchorEl(null);
@@ -82,8 +88,14 @@ function ProductByCategoryPage(props) {
 						Tìm kiếm sản phẩm
 					</Typography>
 				</div>
-				<div style={{ textAlign: 'center', fontSize: '24px', fontWeight: 'bolder', color: 'rgba(243, 101, 34)' }}>
-					<span>{categoryName}</span>
+				<div
+					style={{
+						textAlign: 'center',
+						fontSize: '24px',
+						fontWeight: 'bolder',
+						color: 'rgba(243, 101, 34)',
+					}}>
+					<span>{currentCategory?.categoryName}</span>
 					<IconButton
 						aria-label='more'
 						id='long-button'
@@ -107,8 +119,8 @@ function ProductByCategoryPage(props) {
 								width: '20ch',
 							},
 						}}>
-						{categoryList.map((option) => (
-							<MenuItem key={option.id} data-my-value={option.categoryName} onClick={handleClickOption}>
+						{categoryList?.map((option) => (
+							<MenuItem key={option.id} data-my-value={option.id} onClick={handleClickOption}>
 								{option.categoryName}
 							</MenuItem>
 						))}
@@ -118,13 +130,17 @@ function ProductByCategoryPage(props) {
 				<div className='listProductBySearch'>
 					<div className='titleCategoryBySearch'>{/* <p>Đồ uống</p> */}</div>
 					{products.length === 0 ? (
-						<div>
-							<h1>CHƯA CÓ DỮ LIỆU</h1>
-						</div>
+						<h2 className='null_alert'>Hiện tại chưa có sản phẩm cho mục tìm kiếm này, vui lòng chọn danh mục khác.</h2>
 					) : (
 						products.map((product, key) => (
 							<div className='content-product' key={key}>
-								<Link to={`/detail/${product?.id}`} style={{ textDecoration: 'none', color: 'black' }}>
+								<Link
+									to={`/detail/${product?.id}`}
+									style={{
+										textDecoration: 'none',
+										color: 'black',
+										flex: '1',
+									}}>
 									<div className='content-item'>
 										<img src={product.image} alt='' className='image-product' />
 										<div className='info-product'>
@@ -139,7 +155,13 @@ function ProductByCategoryPage(props) {
 										</div>
 									</div>
 								</Link>
-								<CheckoutButton size='large' variant='contained'>
+
+								<CheckoutButton
+									// size={{ xs: 'medium', md: 'large' }}
+									variant='contained'
+									onClick={() => {
+										dispatch(addToCart(product));
+									}}>
 									Thêm
 								</CheckoutButton>
 							</div>
