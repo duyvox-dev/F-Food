@@ -10,6 +10,8 @@ import { getIsValidDate, getDayString } from './util/time.util';
 import { useSnackbar } from 'notistack';
 import { clearMessage } from './redux/messageSlice';
 import { dayConstants } from './constansts/constants';
+import Loading from './components/Loading/Loading';
+
 function App() {
 	const dispatch = useDispatch();
 	const { enqueueSnackbar } = useSnackbar();
@@ -52,6 +54,7 @@ function App() {
 			<Helmet>
 				<title>F-Food</title>
 			</Helmet>
+			<Loading />
 			<BrowserRouter>
 				<Routes>
 					{appRoutes.map((route, index) => {

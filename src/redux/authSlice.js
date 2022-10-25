@@ -10,9 +10,16 @@ const initialState = {
 };
 
 // async action
-const loginWithGoogle = createAsyncThunk('auth/loginWithGoogle', async (token) => {
-	const result = await authService.login(token);
-	return result.data;
+const loginWithGoogle = createAsyncThunk('auth/loginWithGoogle', async (token, thunkAPI) => {
+	try {
+		const result = await authService.login(token);
+		thunkAPI.dispatch(setSuccessMessage('Đăng nhập thành công.'));
+
+		return result.data;
+	} catch (error) {
+		// message.error(error.response.data.message);
+		return thunkAPI.rejectWithValue();
+	}
 });
 export const updateUserPhone = createAsyncThunk('auth/updateUserPhone', async (data, thunkAPI) => {
 	try {

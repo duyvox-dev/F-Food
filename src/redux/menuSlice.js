@@ -1,6 +1,5 @@
 import { createAction, createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import menuService from '../service/menu';
-import { getIsValidDate } from '../util/time.util';
 import { setSuccessMessage } from './messageSlice';
 const initialState = {
 	getTimeSlotRespone: {},
@@ -11,7 +10,7 @@ const initialState = {
 export const getListTimeSlot = createAsyncThunk('menu/getListTimeSlot', async (data, thunkAPI) => {
 	try {
 		const res = await menuService.getListTimeSlot();
-		return res.results;
+		return res.data.results;
 	} catch (error) {
 		// message.error(error.response.data.message);
 		return thunkAPI.rejectWithValue();
