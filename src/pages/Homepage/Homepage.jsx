@@ -15,16 +15,14 @@ import CartBtn from '../../components/CartBtn/CartBtn';
 
 export default function HomePage() {
 	const dispatch = useDispatch();
-	const { products } = useSelector((state) => state.product)
+	const { products } = useSelector((state) => state.product);
+
 	useEffect(() => {
-		console.log(products)
-	}, [products])
-	useEffect(() => {
-		dispatch(getAllProduct())
-	}, [])
+		dispatch(getAllProduct());
+	}, []);
 	return (
 		<>
-			<Container maxWidth='lg' sx={{ position: "relative" }}>
+			<Container maxWidth='lg' sx={{ position: 'relative' }}>
 				<div className='home'>
 					<HomeContainer products={products} />
 					<TimeOrderBar />
@@ -41,9 +39,7 @@ export default function HomePage() {
 								Xem thêm
 							</button>
 						</div>
-
 					</div>
-
 				</div>
 				<CartBtn></CartBtn>
 			</Container>

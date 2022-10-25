@@ -14,14 +14,18 @@ const CheckoutButton = styled(Button)({
 	boxShadow: 'inherit',
 	'&:hover': { backgroundColor: 'rgba(243, 101, 34)' },
 });
-export default function Checkout({ fees = {}, totalAmount = 0 }) {
+export default function Checkout({ fees = {}, totalAmount = 0, placeOrder = () => {} }) {
 	const dispatch = useDispatch();
-	const { user } = useSelector((state) => state.auth)
+	const { user } = useSelector((state) => state.auth);
 	return (
 		<div className='checkout'>
 			<Payment fees={fees} totalAmount={totalAmount}></Payment>
-			<CheckoutButton size='large' variant='contained' onClick={() => {
-			}}>
+			<CheckoutButton
+				size='large'
+				variant='contained'
+				onClick={() => {
+					placeOrder();
+				}}>
 				Đặt hàng
 			</CheckoutButton>
 		</div>

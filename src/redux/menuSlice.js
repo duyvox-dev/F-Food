@@ -1,16 +1,27 @@
 import { createAction, createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import menuService from '../service/menu';
 import { getIsValidDate } from '../util/time.util';
+import { setSuccessMessage } from './messageSlice';
 const initialState = {
 	getTimeSlotRespone: {},
 	currentTimeSlot: {},
 	dayString: 'hôm nay',
 };
 // async action
-export const getListTimeSlot = createAsyncThunk('auth/getListTimeSlot', async (data, thunkAPI) => {
+export const getListTimeSlot = createAsyncThunk('menu/getListTimeSlot', async (data, thunkAPI) => {
 	try {
 		const res = await menuService.getListTimeSlot();
 		return res.results;
+	} catch (error) {
+		// message.error(error.response.data.message);
+		return thunkAPI.rejectWithValue();
+	}
+});
+// async action
+export const updateCurrentTimeSlot = createAsyncThunk('auth/updateCurrentTimeSlot', async (data, thunkAPI) => {
+	try {
+		thunkAPI.dispatch(setSuccessMessage('Đổi khung giờ giao hàng thành công.'));
+		return data;
 	} catch (error) {
 		// message.error(error.response.data.message);
 		return thunkAPI.rejectWithValue();
@@ -22,9 +33,9 @@ const menuSlice = createSlice({
 	name: 'menuSlice',
 	initialState: initialState,
 	reducers: {
-		updateCurrentTimeSlot(state, { payload }) {
-			state.currentTimeSlot = payload;
-		},
+		// updateCurrentTimeSlot(state, { payload }) {
+		// 	state.currentTimeSlot = payload;
+		// },
 		setDayString(state, { payload }) {
 			state.dayString = payload;
 		},
@@ -41,8 +52,12 @@ const menuSlice = createSlice({
 		builder.addCase(getListTimeSlot.rejected, (state) => ({
 			...state,
 		}));
+		builder.addCase(updateCurrentTimeSlot.fulfilled, (state, { payload }) => ({
+			...state,
+			currentTimeSlot: payload,
+		}));
 	},
 });
 const { reducer, actions } = menuSlice;
-export const { updateCurrentTimeSlot, setDayString } = actions;
+export const { setDayString } = actions;
 export default reducer;

@@ -1,7 +1,7 @@
-import orderService from "../service/orderService"
+import orderService from '../service/orderService';
 import { createAction, createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-;
-
+import { removeCart } from './cartSlice';
+import { setSuccessMessage } from './messageSlice';
 // normal action
 // export const addToCart = createAsyncThunk('cartSlice/addToCart', (product, thunkAPI) => {
 //     console.log(product)
@@ -26,46 +26,41 @@ import { createAction, createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 //         payload: { newCart },
 //     };
 // });
-export const createOrder = createAsyncThunk(
-    'order/createOrder',
-    async (data, thunkAPI) => {
-        try {
-            const res = await orderService.createOrder(data);
-            console.log(res);
-            thunkAPI.dispatch(removeCart());
-            return res.data.results;
-        } catch (error) {
-            // message.error(error.response.data.message);
-            return thunkAPI.rejectWithValue();
-        }
-    },
-);
+export const createOrder = createAsyncThunk('order/createOrder', async (data, thunkAPI) => {
+	try {
+		// const res = await orderService.createOrder(data);
+		// console.log(res);
+
+		thunkAPI.dispatch(setSuccessMessage('Đặt hàng thành công.'));
+		thunkAPI.dispatch(removeCart());
+
+		return {};
+	} catch (error) {
+		// message.error(error.response.data.message);
+		return thunkAPI.rejectWithValue();
+	}
+});
 const orderSlice = createSlice({
-    name: 'orderSlice',
-    initialState: {
-        orderSuccess: false,
-        orderFail: false,
-    },
-    reducers: {
-
-    },
-    extraReducers: {
-        [createOrder.pending]: (state) => {
-            state.orderSuccess = false;
-            state.orderFail = false;
-
-        },
-        [createOrder.fulfilled]: (state, { payload }) => {
-            state.orderSuccess = true;
-
-        },
-        [createOrder.rejected]: (state) => {
-            state.orderSuccess = false;
-            state.orderFail = true;
-        },
-    }
-
+	name: 'orderSlice',
+	initialState: {
+		orderSuccess: false,
+		orderFail: false,
+	},
+	reducers: {},
+	extraReducers: {
+		[createOrder.pending]: (state) => {
+			state.orderSuccess = false;
+			state.orderFail = false;
+		},
+		[createOrder.fulfilled]: (state, { payload }) => {
+			state.orderSuccess = true;
+		},
+		[createOrder.rejected]: (state) => {
+			state.orderSuccess = false;
+			state.orderFail = true;
+		},
+	},
 });
 const { reducer, actions } = orderSlice;
-export const { } = actions;
+export const {} = actions;
 export default reducer;

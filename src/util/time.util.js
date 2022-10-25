@@ -6,7 +6,6 @@ const getDayString = (lastCheckoutTime) => {
 
 	const minutes = moment(now, 'HH:mm').minutes() - moment(newLastCheckoutTime, 'HH:mm').minutes();
 	const hours = moment(now, 'HH:mm').hours() - moment(newLastCheckoutTime, 'HH:mm').hours();
-	console.log(hours);
 	if (hours > 0) return dayConstants.NGAY_MAI;
 	else if (hours == 0 && minutes > 0) {
 		return dayConstants.NGAY_MAI;
