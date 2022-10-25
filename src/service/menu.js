@@ -1,17 +1,10 @@
-import httpClient from "../api/httpClient"
-import apiLinks from "../util/apiLink"
-
+import apiLinks from '../util/apiLink';
+import { httpService } from '../api/http.service';
 const getListTimeSlot = async (params) => {
-
-    const res = await httpClient.get({
-        url: apiLinks.menu.getListTimeSlot,
-        params: params,
-    })
-    return res.data
-}
-
+	return httpService.get(`${apiLinks.menu.getListTimeSlot}`);
+};
 
 const menuService = {
-    getListTimeSlot
-}
-export default menuService
+	getListTimeSlot,
+};
+export default menuService;
