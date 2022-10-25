@@ -9,9 +9,12 @@ import FeeList from './Fee/FeeList';
 import QuantityModal from '../../components/Modal/QuantityModal';
 import LocationModal from './Modal/LocationModal';
 import PersonalInfoModal from '../../components/Modal/PersonalInfoModal';
+import ConfirmModal from '../../components/Modal/ConfirmModal';
 import useModal from '../../hooks/useModal';
 import _ from 'lodash';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { setErrorMessage } from '../../redux/messageSlice';
+import { createOrder } from '../../redux/orderSlice';
 export default function OrderPage() {
 	const mockDataFee = {
 		originCost: {
@@ -88,8 +91,7 @@ export default function OrderPage() {
 	];
 
 	// -----------------------------------------
-	const { carts, totalAmount } = useSelector((state) => state.cart)
-	const { user } = useSelector((state) => state.auth)
+
 	const [fees, setFees] = useState(mockDataFee);
 	// const [cart, setCart] = useState(mockDataCart);
 	const [locationList, setLocationList] = useState(mockDataLocation);
@@ -98,8 +100,13 @@ export default function OrderPage() {
 	const [quantityModal, openQuantityModal, closeQuantityModal] = useModal();
 	const [locationModal, openLocationModal, closeLocationModal] = useModal();
 	const [userModal, openUserModal, closeUserModal] = useModal();
+	const [confirmModal, openConfirmModal, closeConfirmModal] = useModal();
 	const [selectedCart, setSelectedCart] = useState({});
+	const dispatch = useDispatch();
+	const { user } = useSelector((state) => state.auth);
+	const { carts, totalAmount } = useSelector((state) => state.cart);
 	// --------------------------------------------------
+
 	const calculateFee = (shippingFee) => {
 		let discountCost = 0;
 		let originCost = 0;
@@ -107,7 +114,7 @@ export default function OrderPage() {
 		carts.map((cartItem) => {
 			originCost += cartItem?.product.price * cartItem.quantity;
 		});
-		discountCost = originCost
+		discountCost = originCost;
 		return {
 			originCost: {
 				name: 'Tạm tính',
@@ -133,6 +140,29 @@ export default function OrderPage() {
 		closeLocationModal();
 	};
 
+	const handlePrePlaceOrder = () => {
+		if (_.isEmpty(user)) {
+			dispatch(setErrorMessage('Vui lòng đăng nhập.'));
+		} else if (_.isEmpty(user.phone)) {
+			dispatch(setErrorMessage('Vui lòng cập nhật số điện thoại.'));
+		} else {
+			openConfirmModal();
+			// const orderData = {
+			// 	carts,
+			// 	user,
+			// 	location: currentLocation,
+			// };
+			// dispatch(createOrder(orderData));
+		}
+	};
+	const handlePlaceOrder = () => {
+		// const orderData = {
+		// 	carts,
+		// 	user,
+		// 	location: currentLocation,
+		// };
+		dispatch(createOrder({}));
+	};
 	useEffect(() => {
 		const totalFee = calculateFee(shippingFee);
 		setFees(totalFee);
@@ -147,13 +177,11 @@ export default function OrderPage() {
 			setSelectedCart({});
 		}
 	}, [quantityModal]);
+
 	return (
 		<>
 			{/* Modals */}
-			<QuantityModal
-				modalVisible={quantityModal}
-				closeModal={closeQuantityModal}
-				cartItem={selectedCart} />
+			<QuantityModal modalVisible={quantityModal} closeModal={closeQuantityModal} cartItem={selectedCart} />
 			<LocationModal
 				modalVisible={locationModal}
 				closeModal={closeLocationModal}
@@ -161,11 +189,8 @@ export default function OrderPage() {
 				defaultLocation={currentLocation}
 				handleChangeLocation={handleChangeLocation}
 			/>
-			<PersonalInfoModal
-				modalVisible={userModal}
-				closeModal={closeUserModal}
-				user={user}
-			/>
+			<PersonalInfoModal modalVisible={userModal} closeModal={closeUserModal} user={user} />
+			<ConfirmModal modalVisible={confirmModal} closeModal={closeConfirmModal} confirm={handlePlaceOrder} />
 			{/* -------------------------------- */}
 			<Container
 				maxWidth='lg'
@@ -182,7 +207,7 @@ export default function OrderPage() {
 				<OrderInfo user={user} openUserModal={openUserModal} />
 				<CartList carts={carts} handleChangeQuantity={handleChangeQuantity} />
 				<FeeList fees={fees}></FeeList>
-				<Checkout fees={fees} totalAmount={totalAmount} />
+				<Checkout fees={fees} totalAmount={totalAmount} placeOrder={handlePrePlaceOrder} />
 			</Container>
 		</>
 	);

@@ -1,16 +1,16 @@
 import { createAction, createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import authService from '../service/authService';
 import { googleLogout } from '@react-oauth/google';
-
+import { setSuccessMessage } from './messageSlice';
 const initialState = {
 	accessToken: '',
 	user: {},
 	loginLoading: false,
+	updateUserInfoSuccess: false,
 };
 
 // async action
 const loginWithGoogle = createAsyncThunk('auth/loginWithGoogle', async (token) => {
-	console.log(token);
 	const result = await authService.login(token);
 	return result.data;
 });
@@ -19,6 +19,7 @@ export const updateUserPhone = createAsyncThunk('auth/updateUserPhone', async (d
 		// console.log(data)
 		const res = await authService.updatePhoneNumber(data.user, data.currentPhone);
 		console.log(res);
+		thunkAPI.dispatch(setSuccessMessage('Cập nhật thông tin cá nhân thành công.'));
 		return res.data.results;
 	} catch (error) {
 		// message.error(error.response.data.message);
@@ -43,6 +44,9 @@ const authSlice = createSlice({
 			state.accessToken = '';
 			state.user = {};
 		},
+		setUpdateUserInfoSuccess: (state, { payload }) => {
+			state.updateUserInfoSuccess = payload;
+		},
 	},
 	extraReducers: (builder) => {
 		// get user info
@@ -61,11 +65,14 @@ const authSlice = createSlice({
 		}));
 		builder.addCase(updateUserPhone.pending, (state) => ({
 			...state,
+			updateUserInfoSuccess: false,
 			loginLoading: true,
 		}));
 		builder.addCase(updateUserPhone.fulfilled, (state, { payload }) => ({
 			...state,
 			user: payload,
+			updateUserInfoSuccess: true,
+
 			loginLoading: false,
 		}));
 		builder.addCase(updateUserPhone.rejected, (state) => ({
@@ -75,6 +82,6 @@ const authSlice = createSlice({
 	},
 });
 const { reducer, actions } = authSlice;
-export const {} = actions;
+export const { setUpdateUserInfoSuccess } = actions;
 export default reducer;
 export { loginWithGoogle, logout };

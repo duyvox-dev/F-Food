@@ -12,11 +12,14 @@ import { useDispatch, useSelector } from 'react-redux';
 import { searchProduct } from '../../redux/product';
 import { useEffect } from 'react';
 import _ from 'lodash';
+import LocalMallIcon from '@mui/icons-material/LocalMall';
+
 import { logout } from '../../redux/authSlice';
 import GoogleLoginBtn from '../../components/GoogleLoginBtn/GoogleLoginBtn';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
-
+import PersonalInfoModal from '../../components/Modal/PersonalInfoModal';
+import useModal from '../../hooks/useModal';
 const CustomBorderTextField = styled(TextField)({
 	border: 'none',
 	input: {
@@ -40,6 +43,8 @@ function Header() {
 	const [open, setOpen] = useState(false);
 	const [menuPos, setMenuPos] = useState(null);
 	const [searchText, setSearchText] = useState('');
+	const [userInfoModal, openUserInfoModal, closeUserInfoModal] = useModal();
+
 	const toggleMenu = (e) => {
 		setOpen(!open);
 		setMenuPos(e.currentTarget);
@@ -73,109 +78,121 @@ function Header() {
 	};
 
 	return (
-		<div className='header__wrapper'>
-			<Container
-				maxWidth='lg'
-				//  style={{ position: "sticky", zIndex: "999", margin: "0 auto", boxShadow: " 0px 0px 20px rgb(0 0 0 / 15%)" }}
-			>
-				<div className='header'>
-					<Link to='/' className='logo-page'>
-						<img src={Logo} alt='' className='logo' />
-						<p className='nameApp'>F-Food</p>
-					</Link>
-					<div className='inputBox'>
-						{/* <SearchRounded className='searchIcon' /> */}
-						{/* <input type='text' placeholder='Bạn đang thèm ăn gì?' /> */}
-						<CustomBorderTextField
-							fullWidth
-							type='search'
-							value={searchText}
-							placeholder='Bạn đang thèm ăn gì?'
-							onChange={handleChangeSearchText}
-							onKeyDown={handleSearchEnter}
-							InputProps={{
-								endAdornment: (
-									<SearchBtn onClick={() => submitSearchText(searchText)}>
-										<SearchRounded className='searchIcon' />
-									</SearchBtn>
-								),
-							}}
-						/>
-					</div>
-					{_.isEmpty(user) ? (
-						<div>
-							<GoogleLoginBtn />{' '}
+		<>
+			<PersonalInfoModal modalVisible={userInfoModal} closeModal={closeUserInfoModal} user={user} />
+			<div className='header__wrapper'>
+				<Container
+					maxWidth='lg'
+					//  style={{ position: "sticky", zIndex: "999", margin: "0 auto", boxShadow: " 0px 0px 20px rgb(0 0 0 / 15%)" }}
+				>
+					<div className='header'>
+						<Link to='/' className='logo-page'>
+							<img src={Logo} alt='' className='logo' />
+							<p className='nameApp'>F-Food</p>
+						</Link>
+						<div className='inputBox'>
+							{/* <SearchRounded className='searchIcon' /> */}
+							{/* <input type='text' placeholder='Bạn đang thèm ăn gì?' /> */}
+							<CustomBorderTextField
+								fullWidth
+								type='search'
+								value={searchText}
+								placeholder='Bạn đang thèm ăn gì?'
+								onChange={handleChangeSearchText}
+								onKeyDown={handleSearchEnter}
+								InputProps={{
+									endAdornment: (
+										<SearchBtn onClick={() => submitSearchText(searchText)}>
+											<SearchRounded className='searchIcon' />
+										</SearchBtn>
+									),
+								}}
+							/>
 						</div>
-					) : (
-						<div className='profileContainer' style={{ position: 'relative' }}>
-							<div
-								id='menu-btn'
-								className='imgBox'
-								aria-controls={open ? 'user-menu' : undefined}
-								aria-haspopup='true'
-								aria-expanded={open ? 'true' : undefined}
-								onClick={(e) => {
-									toggleMenu(e);
-								}}>
-								<img src={user.imageUrl} alt='' className='profilePic' />
+						{_.isEmpty(user) ? (
+							<div>
+								<GoogleLoginBtn />{' '}
 							</div>
-							<Menu
-								id='user-menu'
-								aria-labelledby='menu-btn'
-								anchorEl={menuPos}
-								open={open}
-								onClose={toggleMenu}
-								anchorOrigin={{
-									vertical: 'bottom',
-									horizontal: 'center',
-								}}
-								transformOrigin={{
-									vertical: 'top',
-									horizontal: 'center',
-								}}
-								// sx={{
-								// 	top: '50px',
-								// 	left: '-10px',
-								// }}
-							>
-								<Typography
-									variant='h5'
-									sx={{
-										width: '100%',
-										textAlign: 'center',
-										padding: '1rem 0',
-										fontWeight: '500',
-										fontSize: '16px',
-										lineHeight: '1rem',
-										boxSizing: 'border-box',
-										padding: '1rem',
+						) : (
+							<div className='profileContainer' style={{ position: 'relative' }}>
+								<div
+									id='menu-btn'
+									className='imgBox'
+									aria-controls={open ? 'user-menu' : undefined}
+									aria-haspopup='true'
+									aria-expanded={open ? 'true' : undefined}
+									onClick={(e) => {
+										toggleMenu(e);
 									}}>
-									{user.name}
-								</Typography>
-								<MenuItem onClick={toggleMenu} sx={{ padding: '1rem' }}>
-									<Link to='/profile' className='dropdownItem'>
-										<AccountCircleIcon />
-										<div className='nameItem'>Tài khoản của tôi</div>
-									</Link>
-								</MenuItem>
-								<MenuItem onClick={toggleMenu} sx={{ padding: '1rem' }}>
-									<Link to='/order-history' className='dropdownItem'>
-										<InventoryOutlinedIcon />
-										<div className='nameItem'>Đơn mua</div>
-									</Link>
-								</MenuItem>
-								<MenuItem onClick={toggleMenu} sx={{ padding: '1rem' }}>
-									<div
-										className='dropdownItem'
-										onClick={() => {
-											handleLogout();
+									<img src={user.imageUrl} alt='' className='profilePic' />
+								</div>
+								<Menu
+									id='user-menu'
+									aria-labelledby='menu-btn'
+									anchorEl={menuPos}
+									open={open}
+									onClose={toggleMenu}
+									anchorOrigin={{
+										vertical: 'bottom',
+										horizontal: 'center',
+									}}
+									transformOrigin={{
+										vertical: 'top',
+										horizontal: 'center',
+									}}
+									// sx={{
+									// 	top: '50px',
+									// 	left: '-10px',
+									// }}
+								>
+									<Typography
+										variant='h5'
+										sx={{
+											width: '100%',
+											textAlign: 'center',
+											padding: '1rem 0',
+											fontWeight: '500',
+											fontSize: '16px',
+											lineHeight: '1rem',
+											boxSizing: 'border-box',
+											padding: '1rem',
 										}}>
-										<LogoutIcon />
-										<div className='nameItem'>Đăng xuất</div>
-									</div>
-								</MenuItem>
-							</Menu>
-							{/* <div className={`dropdown-menu ${open ? 'active' : 'inactive'}`}>
+										{user.name}
+									</Typography>
+									<MenuItem onClick={toggleMenu} sx={{ padding: '1rem' }}>
+										<div
+											className='dropdownItem'
+											onClick={() => {
+												openUserInfoModal();
+											}}>
+											<AccountCircleIcon />
+											<div className='nameItem'>Tài khoản của tôi</div>
+										</div>
+									</MenuItem>
+									<MenuItem onClick={toggleMenu} sx={{ padding: '1rem' }}>
+										<Link to='/order' className='dropdownItem'>
+											<LocalMallIcon />
+											<div className='nameItem'>Giỏ hàng</div>
+										</Link>
+									</MenuItem>
+									<MenuItem onClick={toggleMenu} sx={{ padding: '1rem' }}>
+										<Link to='/order-history' className='dropdownItem'>
+											<InventoryOutlinedIcon />
+											<div className='nameItem'>Đơn mua</div>
+										</Link>
+									</MenuItem>
+									<MenuItem onClick={toggleMenu} sx={{ padding: '1rem' }}>
+										<div
+											className='dropdownItem'
+											onClick={() => {
+												handleLogout();
+											}}>
+											<LogoutIcon />
+											<div className='nameItem'>Đăng xuất</div>
+										</div>
+									</MenuItem>
+								</Menu>
+								{/* <div className={`dropdown-menu ${open ? 'active' : 'inactive'}`}>
 							<Typography
 								variant='h5'
 								sx={{
@@ -201,29 +218,30 @@ function Header() {
 								<div className='nameItem'>Đăng xuất</div>
 							</div>
 						</div> */}
-						</div>
-					)}
-				</div>
-				<div className='mobile__searchbar'>
-					<CustomBorderTextField
-						size='small'
-						fullWidth
-						type='search'
-						value={searchText}
-						placeholder='Bạn đang thèm ăn gì?'
-						onChange={handleChangeSearchText}
-						onKeyDown={handleSearchEnter}
-						InputProps={{
-							endAdornment: (
-								<SearchBtn onClick={() => submitSearchText(searchText)}>
-									<SearchRounded className='searchIcon' />
-								</SearchBtn>
-							),
-						}}
-					/>
-				</div>
-			</Container>
-		</div>
+							</div>
+						)}
+					</div>
+					<div className='mobile__searchbar'>
+						<CustomBorderTextField
+							size='small'
+							fullWidth
+							type='search'
+							value={searchText}
+							placeholder='Bạn đang thèm ăn gì?'
+							onChange={handleChangeSearchText}
+							onKeyDown={handleSearchEnter}
+							InputProps={{
+								endAdornment: (
+									<SearchBtn onClick={() => submitSearchText(searchText)}>
+										<SearchRounded className='searchIcon' />
+									</SearchBtn>
+								),
+							}}
+						/>
+					</div>
+				</Container>
+			</div>
+		</>
 	);
 }
 

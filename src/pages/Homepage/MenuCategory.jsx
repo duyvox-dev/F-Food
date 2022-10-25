@@ -3,21 +3,19 @@ import './Homepage.scss';
 import { DataMenuCategory } from '../../util/data';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { getAllProduct } from '../../redux/product'
+import { getAllProduct } from '../../redux/product';
 import { getCategoryList } from '../../redux/categorySlice';
 
 function MenuCategory() {
-
-	const dispatch = useDispatch()
-	const { categoryList } = useSelector((state) => state.category)
+	const dispatch = useDispatch();
+	const { categoryList } = useSelector((state) => state.category);
 	const getData = useCallback(() => {
-		dispatch(getCategoryList())
-	}, [])
+		dispatch(getCategoryList());
+	}, []);
 
-	useEffect(() => { getData() }, [])
 	useEffect(() => {
-		console.log(categoryList)
-	}, [categoryList])
+		getData();
+	}, []);
 	return (
 		<>
 			<div className='menuCategory'>
@@ -27,8 +25,8 @@ function MenuCategory() {
 				<div className='contentCategory'>
 					{categoryList &&
 						categoryList.map((n, index) => (
-							<Link to={`/category/${n?.id}`} className="category">
-								<div key={n.id} className='itemsCategory'>
+							<Link to={`/category/${n?.id}`} className='category' key={n.id}>
+								<div className='itemsCategory'>
 									<img src={DataMenuCategory[index]} alt='' className='image-category' />
 									<p className='name-category'>{n.categoryName}</p>
 								</div>
