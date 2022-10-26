@@ -142,7 +142,9 @@ function ProductByCategoryPage(props) {
 										flex: '1',
 									}}>
 									<div className='content-item'>
-										<img src={product.image} alt='' className='image-product' />
+										<div className='image-product'>
+											<img src={product.image} alt='' />
+										</div>
 										<div className='info-product'>
 											<div className='name-product'>{product.name}</div>
 											<div className='product-price-discount'>
