@@ -2,32 +2,9 @@ import orderService from '../service/orderService';
 import { createAction, createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { removeCart } from './cartSlice';
 import { setSuccessMessage } from './messageSlice';
-// normal action
-// export const addToCart = createAsyncThunk('cartSlice/addToCart', (product, thunkAPI) => {
-//     console.log(product)
-
-//     let existed = false;
-//     const curCart = state.cart
-//     console.log(state)
-//     const newCart = curCart.forEach((cart) => {
-//         if (product.id == cart.product.id) {
-//             existed = true;
-//             return cart.product.quantity + 1;
-//         }
-//     })
-//     if (!existed) {
-//         newCart.push({
-//             product,
-//             quantity: 1
-//         })
-//     }
-//     thunkAPI.dispatch(calculateToTalAmount(newCart))
-//     return {
-//         payload: { newCart },
-//     };
-// });
 export const createOrder = createAsyncThunk('order/createOrder', async (data, thunkAPI) => {
 	try {
+		console.log(data);
 		// const res = await orderService.createOrder(data);
 		// console.log(res);
 
@@ -46,7 +23,12 @@ const orderSlice = createSlice({
 		orderSuccess: false,
 		orderFail: false,
 	},
-	reducers: {},
+	reducers: {
+		resetOrderState: (state, action) => {
+			state.orderSuccess = false;
+			state.orderFail = false;
+		},
+	},
 	extraReducers: {
 		[createOrder.pending]: (state) => {
 			state.orderSuccess = false;
@@ -62,5 +44,5 @@ const orderSlice = createSlice({
 	},
 });
 const { reducer, actions } = orderSlice;
-export const {} = actions;
+export const { resetOrderState } = actions;
 export default reducer;

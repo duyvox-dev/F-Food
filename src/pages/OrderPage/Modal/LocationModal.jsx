@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
 import TextField from '@mui/material/TextField';
 import Autocomplete from '@mui/material/Autocomplete';
@@ -26,6 +26,11 @@ export default function LocationModal({
 	const handleSubmitNewLocation = () => {
 		if (_.isEmpty(currentLocation) == false) handleChangeLocation(currentLocation);
 	};
+	useEffect(() => {
+		if (_.isEmpty(defaultLocation)) {
+			setCurrenLocation(locationList[0]);
+		}
+	}, []);
 	return (
 		<BasicModal modalVisible={modalVisible} closeModal={closeModal}>
 			<span className='modal-heading'>Giao đến</span>

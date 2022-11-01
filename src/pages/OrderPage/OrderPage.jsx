@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import './OrderPage.scss';
-import { Container, Typography } from '@mui/material';
+import { Container, Typography, Button } from '@mui/material';
+import { styled } from '@mui/material/styles';
+
 import CartList from './Cart/CartList';
 import OrderInfo from './OrderInfo';
 import Checkout from './Checkout/Checkout';
@@ -14,7 +16,31 @@ import useModal from '../../hooks/useModal';
 import _ from 'lodash';
 import { useDispatch, useSelector } from 'react-redux';
 import { setErrorMessage } from '../../redux/messageSlice';
-import { createOrder } from '../../redux/orderSlice';
+import { createOrder, resetOrderState } from '../../redux/orderSlice';
+import { calculateShippingFee, ORDER_TYPE_ENUM, groupCarts } from '../../util/order.util';
+import { changeRoom, getRoomList } from '../../redux/roomSlice';
+import { Link } from 'react-router-dom';
+import { setTotalQuantity } from '../../redux/cartSlice';
+import Lottie from 'react-lottie';
+import orderSuccessAnimation from '../../assets/animations/order-success.json';
+const StyledButton = styled(Button)({
+	background: '#fcf6f6',
+	border: '2px solid rgba(243, 101, 34)',
+	color: 'rgba(243, 101, 34)',
+	// backgroundColor: 'rgba(243, 101, 34)',
+	padding: '0.5rem 3rem',
+	'&:hover': { backgroundColor: 'rgba(243, 101, 34)', color: 'white' },
+	'&:disabled': {
+		// backgroundColor: "gray",
+		background: '#fcf6f6',
+		border: '2px solid rgba(243, 101, 34)',
+		color: 'rgba(243, 101, 34)',
+		opacity: 0.3,
+	},
+	'&:active': {
+		backgroundColor: 'rgba(243, 101, 34)',
+	},
+});
 export default function OrderPage() {
 	const mockDataFee = {
 		originCost: {
@@ -31,80 +57,30 @@ export default function OrderPage() {
 			cost: 8000,
 		},
 	};
-	const mockDataCart = [
-		{
-			id: 1,
-			name: 'Bánh chuối',
-			quantity: 10,
-			status: 'available',
-			image:
-				'https://7rewards-images-s3-ap-southeast-1-amazonaws.cdn.vccloud.vn/production/product_uoms/images/5042_1627615937_original.jpg?1650293797',
-			price: 10000,
-		},
-		{
-			id: 2,
-			name: 'Combo chuối nho',
-			quantity: 10,
-			status: 'available',
-			price: 50000,
-			discountPrice: 40000,
-
-			image:
-				'https://image.sevensystem.vn/crop?width=1043&height=1043&type=jpeg&url=https://ceph-external.sevensystem.vn/promotion-image/promo_5564_1664357789659.jpg?1664357789709',
-		},
-		{
-			id: 3,
-			name: 'Nho',
-			quantity: 5,
-			status: '',
-			price: 20000,
-			discountPrice: 10000,
-			image:
-				'https://image.sevensystem.vn/crop?width=1043&height=1042&type=jpeg&url=https://ceph-external.sevensystem.vn/promotion-image/promo_5408_1664186009325.jpg?1664186009396',
-		},
-	];
-	const mockDataLocation = [
-		{
-			id: 1,
-			label: 'Phòng 202',
-		},
-		{
-			id: 2,
-			label: 'Phòng 301',
-		},
-		{
-			id: 3,
-			label: 'Phòng 101',
-		},
-		{
-			id: 4,
-			label: 'Sảnh trống đồng',
-		},
-		{
-			id: 5,
-			label: 'Sân bóng',
-		},
-		{
-			id: 6,
-			label: 'Phòng 102',
-		},
-	];
 
 	// -----------------------------------------
-
-	const [fees, setFees] = useState(mockDataFee);
-	// const [cart, setCart] = useState(mockDataCart);
-	const [locationList, setLocationList] = useState(mockDataLocation);
-	const [currentLocation, setCurrenLocation] = useState(mockDataLocation[2]);
-	const [shippingFee, setShippingFee] = useState(5000);
+	const dispatch = useDispatch();
+	// modals
 	const [quantityModal, openQuantityModal, closeQuantityModal] = useModal();
 	const [locationModal, openLocationModal, closeLocationModal] = useModal();
 	const [userModal, openUserModal, closeUserModal] = useModal();
 	const [confirmModal, openConfirmModal, closeConfirmModal] = useModal();
+	//
+	// Room
+	const { roomList, currentRoom } = useSelector((state) => state.room);
+	// Cost/ fees
+	const [fees, setFees] = useState(mockDataFee);
+	const [shippingFee, setShippingFee] = useState(0);
+	const [numOfStoresInCart, setNumOfStoresInCart] = useState(1);
+	//
 	const [selectedCart, setSelectedCart] = useState({});
-	const dispatch = useDispatch();
-	const { user } = useSelector((state) => state.auth);
 	const { carts, totalAmount } = useSelector((state) => state.cart);
+	const { orderSuccess } = useSelector((state) => state.order);
+	const [orderType, setOrderType] = useState(ORDER_TYPE_ENUM[2]);
+	const [ableToChangeOrderType, setAbleToChangeOrderType] = useState(true);
+	const { user } = useSelector((state) => state.auth);
+	const { currentTimeSlot } = useSelector((state) => state.menu);
+	const roomInfo = useSelector((state) => state.room.value);
 	// --------------------------------------------------
 
 	const calculateFee = (shippingFee) => {
@@ -135,8 +111,8 @@ export default function OrderPage() {
 	const handleChangeQuantity = (cart) => {
 		setSelectedCart(cart);
 	};
-	const handleChangeLocation = (location) => {
-		setCurrenLocation(location);
+	const handleChangeRoom = (location) => {
+		dispatch(changeRoom(location));
 		closeLocationModal();
 	};
 
@@ -155,18 +131,9 @@ export default function OrderPage() {
 			// dispatch(createOrder(orderData));
 		}
 	};
-	const handlePlaceOrder = () => {
-		// const orderData = {
-		// 	carts,
-		// 	user,
-		// 	location: currentLocation,
-		// };
-		dispatch(createOrder({}));
+	const handleChangeOrderType = (newOrderType) => {
+		setOrderType(newOrderType);
 	};
-	useEffect(() => {
-		const totalFee = calculateFee(shippingFee);
-		setFees(totalFee);
-	}, [carts]);
 	useEffect(() => {
 		if (_.isEmpty(selectedCart) === false) {
 			openQuantityModal();
@@ -177,7 +144,120 @@ export default function OrderPage() {
 			setSelectedCart({});
 		}
 	}, [quantityModal]);
+	const calculateToTalAmount = (carts) => {
+		return carts?.reduce((sum, cart) => {
+			return sum + cart.quantity;
+		}, 0);
+	};
+	useEffect(() => {
+		if (carts.length > 0) {
+			dispatch(setTotalQuantity(calculateToTalAmount(carts)));
+		}
+	}, [carts]);
+	// iplementting
+	const handlePlaceOrder = () => {
+		const orderData = {
+			totalAmount: fees.originCost,
+			shippingFee: shippingFee,
+			orderType: orderType.id,
+			deliveryPhone: user.phone,
+			timeSlotId: currentTimeSlot.id,
+			roomInfo: roomInfo,
+			customerInfo: {
+				customerName: user.name,
+				customerPhone: user.phone,
+				customerEmail: user.email,
+			},
+			orderDetails: [],
+		};
+		dispatch(createOrder(orderData));
+	};
 
+	useEffect(() => {
+		// calculate number of stores/
+		if (numOfStoresInCart > 1) {
+			setOrderType(ORDER_TYPE_ENUM[2]);
+		}
+		setShippingFee(calculateShippingFee(numOfStoresInCart, orderType?.id));
+		const totalFee = calculateFee(shippingFee);
+		setFees(totalFee);
+	}, [carts]);
+
+	useEffect(() => {
+		setShippingFee(calculateShippingFee(numOfStoresInCart, orderType?.id));
+	}, [orderType]);
+	useEffect(() => {
+		const totalFee = calculateFee(shippingFee);
+		setFees(totalFee);
+	}, [shippingFee]);
+	useEffect(() => {
+		if (_.isEmpty(roomList) == false && _.isEmpty(currentRoom)) {
+			dispatch(changeRoom(roomList[0]));
+		}
+	}, [roomList]);
+	useEffect(() => {
+		if (numOfStoresInCart > 1) {
+			setAbleToChangeOrderType(false);
+		} else setAbleToChangeOrderType(true);
+	}, [numOfStoresInCart]);
+	useEffect(() => {
+		dispatch(resetOrderState());
+		dispatch(getRoomList());
+	}, []);
+	if (orderSuccess == true)
+		return (
+			<Container
+				maxWidth='lg'
+				sx={{
+					// background: '#F7F7F7',
+
+					display: 'flex',
+					justifyContent: 'center',
+					alignItems: 'center',
+					padding: '1rem 0',
+				}}>
+				<div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'column' }}>
+					<Lottie
+						height={300}
+						width={300}
+						maxWidth={300}
+						maxHeight={300}
+						options={{
+							loop: false,
+							autoplay: true,
+							animationData: orderSuccessAnimation,
+							rendererSettings: {
+								preserveAspectRatio: 'xMidYMid slice',
+							},
+						}}
+					/>
+					<h1>Đặt hàng thành công.</h1>
+					<Link to='/order-history' style={{ textDecoration: 'none' }}>
+						<StyledButton>Xem đơn hàng</StyledButton>
+					</Link>
+				</div>
+			</Container>
+		);
+	else if (_.isEmpty(carts))
+		return (
+			<Container
+				maxWidth='lg'
+				sx={{
+					// background: '#F7F7F7',
+
+					display: 'flex',
+					justifyContent: 'center',
+					alignItems: 'center',
+					padding: '1rem 0',
+				}}>
+				<div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'column' }}>
+					<h1>Giỏ hàng trống</h1>
+					<Link to='/' style={{ textDecoration: 'none' }}>
+						<StyledButton>Tiếp tục mua sắm</StyledButton>
+					</Link>
+				</div>
+			</Container>
+		);
 	return (
 		<>
 			{/* Modals */}
@@ -185,9 +265,9 @@ export default function OrderPage() {
 			<LocationModal
 				modalVisible={locationModal}
 				closeModal={closeLocationModal}
-				locationList={locationList}
-				defaultLocation={currentLocation}
-				handleChangeLocation={handleChangeLocation}
+				locationList={roomList}
+				defaultLocation={currentRoom}
+				handleChangeLocation={handleChangeRoom}
 			/>
 			<PersonalInfoModal modalVisible={userModal} closeModal={closeUserModal} user={user} />
 			<ConfirmModal modalVisible={confirmModal} closeModal={closeConfirmModal} confirm={handlePlaceOrder} />
@@ -203,11 +283,18 @@ export default function OrderPage() {
 				<Typography variant='h4' align='center' fontWeight='bold'>
 					Đơn hàng của bạn
 				</Typography>
-				<OrderLocation openLocationModal={openLocationModal} location={currentLocation} />
+				<OrderLocation openLocationModal={openLocationModal} location={currentRoom} />
 				<OrderInfo user={user} openUserModal={openUserModal} />
 				<CartList carts={carts} handleChangeQuantity={handleChangeQuantity} />
 				<FeeList fees={fees}></FeeList>
-				<Checkout fees={fees} totalAmount={totalAmount} placeOrder={handlePrePlaceOrder} />
+				<Checkout
+					fees={fees}
+					totalAmount={totalAmount}
+					placeOrder={handlePrePlaceOrder}
+					handleChangeOrderType={handleChangeOrderType}
+					currentOrderType={orderType}
+					ableToChangeOrderType={ableToChangeOrderType}
+				/>
 			</Container>
 		</>
 	);

@@ -1,0 +1,12 @@
+.ordertype {
+	margin-bottom: 1rem;
+	display: FLEX;
+	gap: 0.5rem;
+	align-items: center;
+	&__name {
+		font-size: 1.2rem;
+		display: flex;
+		align-items: center;
+		gap: 0.5rem;
+	}
+}

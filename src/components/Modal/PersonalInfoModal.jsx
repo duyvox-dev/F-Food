@@ -40,6 +40,10 @@ export default function PersonalInfoModal({ modalVisible = false, closeModal = (
 			closeModal();
 		}
 	}, [updateUserInfoSuccess]);
+	useEffect(() => {
+		if (isValidPhone(user?.phone)) setIsValidPhoneNumber(true);
+		else setIsValidPhoneNumber(false);
+	}, [user]);
 	return (
 		<BasicModal modalVisible={modalVisible} closeModal={closeModal}>
 			<span className='modal-heading'>Thay đổi thông tin cá nhân</span>

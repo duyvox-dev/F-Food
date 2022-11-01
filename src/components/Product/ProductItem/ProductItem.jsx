@@ -17,10 +17,10 @@ const AddToCartButton = styled(IconButton)({
 	height: '25px',
 	padding: 0,
 	fontSize: '17px',
-	position: "absolute",
-	right: "1rem",
-	bottom: "1rem",
-	zIndex: "99",
+	position: 'absolute',
+	right: '1rem',
+	bottom: '1rem',
+	zIndex: '99',
 	'&:hover': { backgroundColor: 'rgba(243, 101, 34)' },
 });
 const ProductItem = ({ product }) => {
@@ -36,9 +36,10 @@ const ProductItem = ({ product }) => {
 					{/* <div className='addToCart'>
 						<AddRounded />
 					</div> */}
-					<AddToCartButton onClick={() => {
-						dispatch(addToCart(product))
-					}}>
+					<AddToCartButton
+						onClick={() => {
+							dispatch(addToCart(product));
+						}}>
 						<AddRounded />
 					</AddToCartButton>
 				</div>

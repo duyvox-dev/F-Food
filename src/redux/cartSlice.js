@@ -1,6 +1,7 @@
 import { localStorageService } from '../util/localStorage.util';
 import { createAction, createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { setErrorMessage, setSuccessMessage } from './messageSlice';
+import { groupCarts } from '../util/order.util';
 const LIMIT_ITEM_QUANTITY = 10;
 const getInitState = () => {
 	const data = localStorageService.getCartLocal();
@@ -171,6 +172,7 @@ const cartSlice = createSlice({
 		[addToCart.fulfilled]: (state, { payload }) => {
 			state.carts = payload;
 			localStorageService.setCartLocal(state);
+			console.log(groupCarts(state.carts));
 		},
 		[addToCart.rejected]: (state, { payload }) => {
 			// state.carts = payload;

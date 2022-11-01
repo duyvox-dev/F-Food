@@ -27,7 +27,7 @@ export const updateUserPhone = createAsyncThunk('auth/updateUserPhone', async (d
 		const res = await authService.updatePhoneNumber(data.user, data.currentPhone);
 		console.log(res);
 		thunkAPI.dispatch(setSuccessMessage('Cập nhật thông tin cá nhân thành công.'));
-		return res.data.results;
+		return res.data;
 	} catch (error) {
 		// message.error(error.response.data.message);
 		return thunkAPI.rejectWithValue();
