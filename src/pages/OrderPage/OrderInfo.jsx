@@ -1,7 +1,7 @@
 import React from 'react';
 import { Typography, Box, Paper } from '@mui/material';
 import { formatPhoneNumber } from '../../util/string.util';
-export default function OrderLocation({ user = {}, openUserModal = () => { } }) {
+export default function OrderLocation({ user = {}, openUserModal = () => {} }) {
 	return (
 		<div className='order-section'>
 			<div className='heading-flex'>
@@ -19,7 +19,10 @@ export default function OrderLocation({ user = {}, openUserModal = () => { } }) 
 					<span className='box-content-title'>Họ tên</span>
 					<span className='box-content-info'>{user?.name}</span>
 				</div>
-				<div>
+				<div
+					onClick={() => {
+						openUserModal();
+					}}>
 					<span className='box-content-title'>Số điện thoại</span>
 					<span className='box-content-info'>{formatPhoneNumber(user?.phone)}</span>
 				</div>

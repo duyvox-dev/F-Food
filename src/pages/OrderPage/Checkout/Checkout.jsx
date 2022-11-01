@@ -4,7 +4,8 @@ import Button from '@mui/material/Button';
 import { styled } from '@mui/material/styles';
 
 import './Checkout.scss';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
+import OrderType from '../OrderType/OrderType';
 const CheckoutButton = styled(Button)({
 	display: 'block',
 	color: 'white',
@@ -14,11 +15,22 @@ const CheckoutButton = styled(Button)({
 	boxShadow: 'inherit',
 	'&:hover': { backgroundColor: 'rgba(243, 101, 34)' },
 });
-export default function Checkout({ fees = {}, totalAmount = 0, placeOrder = () => {} }) {
-	const dispatch = useDispatch();
+export default function Checkout({
+	fees = {},
+	totalAmount = 0,
+	placeOrder = () => {},
+	handleChangeOrderType = () => {},
+	currentOrderType = {},
+	ableToChangeOrderType = true,
+}) {
 	const { user } = useSelector((state) => state.auth);
 	return (
 		<div className='checkout'>
+			<OrderType
+				handleChangeOrderType={handleChangeOrderType}
+				defaultOrderType={currentOrderType}
+				ableToChangeOrderType={ableToChangeOrderType}
+			/>
 			<Payment fees={fees} totalAmount={totalAmount}></Payment>
 			<CheckoutButton
 				size='large'

@@ -6,6 +6,8 @@ import categorySice from '../redux/categorySlice';
 import cartSlice from '../redux/cartSlice';
 import messageSlice from '../redux/messageSlice';
 import miscSlice from '../redux/miscSlice';
+import roomSlice from '../redux/roomSlice';
+import orderSlice from '../redux/orderSlice';
 export const store = configureStore({
 	reducer: {
 		auth: authSlice,
@@ -15,5 +17,7 @@ export const store = configureStore({
 		cart: cartSlice,
 		message: messageSlice,
 		misc: miscSlice,
+		room: roomSlice,
+		order: orderSlice,
 	},
 });

@@ -33,9 +33,9 @@ function BtnTime({ time = {}, state, handleChooseTime = () => {} }) {
 						<span>
 							<StyledButton
 								sx={{
-									fontSize: {
-										xs: '12px',
-										md: '14px',
+									padding: {
+										xs: '0.5rem 1rem',
+										md: '0.5rem 3rem',
 									},
 								}}
 								onClick={() => {
@@ -53,9 +53,9 @@ function BtnTime({ time = {}, state, handleChooseTime = () => {} }) {
 					{state == 'choosable' ? (
 						<StyledButton
 							sx={{
-								fontSize: {
-									xs: '12px',
-									md: '14px',
+								padding: {
+									xs: '0.5rem 1rem',
+									md: '0.5rem 3rem',
 								},
 							}}
 							onClick={() => {
@@ -69,9 +69,10 @@ function BtnTime({ time = {}, state, handleChooseTime = () => {} }) {
 							sx={{
 								background: 'rgba(243, 101, 34)',
 								color: 'white',
-								fontSize: {
-									xs: '12px',
-									md: '14px',
+
+								padding: {
+									xs: '0.5rem 1rem',
+									md: '0.5rem 3rem',
 								},
 							}}
 							onClick={() => {
