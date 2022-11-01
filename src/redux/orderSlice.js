@@ -4,7 +4,7 @@ import { removeCart } from './cartSlice';
 import { setSuccessMessage } from './messageSlice';
 export const createOrder = createAsyncThunk('order/createOrder', async (data, thunkAPI) => {
 	try {
-		console.log(data);
+		// console.log(data);
 		// const res = await orderService.createOrder(data);
 		// console.log(res);
 

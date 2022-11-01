@@ -21,7 +21,8 @@ import { calculateShippingFee, ORDER_TYPE_ENUM, groupCarts } from '../../util/or
 import { changeRoom, getRoomList } from '../../redux/roomSlice';
 import { Link } from 'react-router-dom';
 import { setTotalQuantity } from '../../redux/cartSlice';
-import Lottie from 'react-lottie';
+import { Player } from '@lottiefiles/react-lottie-player';
+
 import orderSuccessAnimation from '../../assets/animations/order-success.json';
 const StyledButton = styled(Button)({
 	background: '#fcf6f6',
@@ -217,20 +218,7 @@ export default function OrderPage() {
 					padding: '1rem 0',
 				}}>
 				<div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'column' }}>
-					<Lottie
-						height={300}
-						width={300}
-						maxWidth={300}
-						maxHeight={300}
-						options={{
-							loop: false,
-							autoplay: true,
-							animationData: orderSuccessAnimation,
-							rendererSettings: {
-								preserveAspectRatio: 'xMidYMid slice',
-							},
-						}}
-					/>
+					<Player autoplay loop src={orderSuccessAnimation} style={{ height: '300px', width: '300px' }}></Player>
 					<h1>Đặt hàng thành công.</h1>
 					<Link to='/order-history' style={{ textDecoration: 'none' }}>
 						<StyledButton>Xem đơn hàng</StyledButton>
