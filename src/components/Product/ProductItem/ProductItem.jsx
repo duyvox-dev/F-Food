@@ -26,10 +26,10 @@ const AddToCartButton = styled(IconButton)({
 const ProductItem = ({ product }) => {
 	const dispatch = useDispatch();
 	return (
-		<Link to={`/detail/${product?.id}`} className='product'>
+		<Link to={`/detail/${product?.productMenuId}`} className='product'>
 			<img src={product?.image} alt='' className='product-image' />
 			<div className='product-info'>
-				<p className='product-name'>{product?.name}</p>
+				<p className='product-name'>{product?.productName}</p>
 
 				<div className='product-bottom'>
 					<p className='product-price'>{vndCurrencyFormat(product?.price)}</p>

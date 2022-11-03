@@ -7,13 +7,14 @@ const apiLinks = {
 		update: `${baseURL}/customer`,
 	},
 	product: {
-		getAllProduct: `${baseURL}/product`,
-		getProductDetail: `${baseURL}/product/GetById`,
-		getProductByCategory: `${baseURL}/product/GetProductByCategory`,
-		searchProduct: `${baseURL}/product/SearchProduct`,
+		getAllProduct: `${baseURL}/product-in-menu/GetProductInMenuByTimeSlot`,
+		getProductDetail: `${baseURL}/product-in-menu/GetProductInMenuById`,
+		getProductByCategory: `${baseURL}/product-in-menu/GetProductByCategory`,
+		getProductByMenu: `${baseURL}/product-in-menu/GetProductInMenuByMenu`,
+		searchProduct: `${baseURL}/product-in-menu/SearchProduct`,
 	},
 	menu: {
-		getListTimeSlot: `${baseURL}/menu/GetListTimeslot`,
+		getMenuByTimeSlot: `${baseURL}/menu/GetMenuByTimeSlot`,
 	},
 	category: {
 		getAllCategory: `${baseURL}/category/GetListCategory`,
@@ -21,8 +22,10 @@ const apiLinks = {
 	order: {
 		createOrder: `${baseURL}/order/CreateOrder`,
 	},
-	room: {
-		getAllRoom: `${baseURL}/room/CreateOrder`,
+
+	settings: {
+		getListTimeSlot: `${baseURL}/settings/GetListTimeslot`,
+		getRoomList: `${baseURL}/settings/GetRoomList`,
 	},
 };
 export default apiLinks;

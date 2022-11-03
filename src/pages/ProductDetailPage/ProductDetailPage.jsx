@@ -1,24 +1,17 @@
 import React from 'react';
 import './ProductDetailPage.scss';
-import banhmi from '../../assets/image/banhmi.jpg';
-
-// or
-import { Grid, Paper, Card, CardContent, Typography, CardActions, CardMedia, Container } from '@mui/material';
-import { Box } from '@mui/system';
-
-import AddCircleIcon from '@mui/icons-material/AddCircle';
-import { ORANGE_COLOR } from '../../constansts/constants';
-import { useLocation, useParams } from 'react-router-dom';
-import { discountPercent, vndCurrencyFormat } from '../../util/currency.util';
-import { ProductByCategory } from '../../util/data';
-import { useEffect, useState } from 'react';
+import { Container } from '@mui/material';
+import { useParams } from 'react-router-dom';
+import { vndCurrencyFormat } from '../../util/currency.util';
+import { useEffect } from 'react';
 import Button from '@mui/material/Button';
 import { styled } from '@mui/material/styles';
 import ProductList from '../../components/Product/ProductList/ProductList';
 import { useDispatch, useSelector } from 'react-redux';
-import { getAllProduct, getProductDetail } from '../../redux/product';
+import { getProductByMenu, getProductDetail } from '../../redux/product';
 import CartBtn from '../../components/CartBtn/CartBtn';
 import { addToCart } from '../../redux/cartSlice';
+import _ from 'lodash';
 const AddToCartButton = styled(Button)({
 	display: 'block',
 	color: 'white',
@@ -28,65 +21,30 @@ const AddToCartButton = styled(Button)({
 	'&:hover': { backgroundColor: 'rgba(243, 101, 34)' },
 });
 export default function ProductDetailPage() {
-	let vendor = '7Eleven';
-
 	// Prepare for get product Id detail from Homepage
 	const { id } = useParams();
 	const dispatch = useDispatch();
-	const { currentProduct, products } = useSelector((state) => state.product)
+	const { currentProduct, productInMenu } = useSelector((state) => state.product);
 	// const data = useLocation();
 
 	// console.log('data: ', data);
 
-	// Data mock
-	// const productsDataMock = [
-	// 	{
-	// 		id: 1,
-	// 		productName: 'Bánh Bò',
-	// 		productPrice: 20000,
-	// 		image: 'https://cdn.beptruong.edu.vn/wp-content/uploads/2013/09/banh-bo-men-ruou.jpg',
-	// 	},
-	// 	{
-	// 		id: 2,
-	// 		productName: 'Bánh Bao',
-	// 		productPrice: 20000,
-	// 		image: 'https://brandpartner.vn/wp-content/uploads/2020/06/B%C3%A1nh-Bao.jpg',
-	// 	},
-	// 	{
-	// 		id: 3,
-	// 		productName: 'Bánh Giò',
-	// 		productPrice: 15000,
-	// 		image: 'https://cdn.daylambanh.edu.vn/wp-content/uploads/2022/02/cach-lam-banh-gio.jpg',
-	// 	},
-	// 	{
-	// 		id: 4,
-	// 		productName: 'Bánh Sandwich',
-	// 		productPrice: 15000,
-	// 		image: 'https://monngonmoingay.com/wp-content/uploads/2020/12/sandwich-kep-cha-tom-880.webp',
-	// 	},
-	// 	{
-	// 		id: 5,
-	// 		productName: 'Bánh Bông Lan',
-	// 		productPrice: 15000,
-	// 		image: 'https://cdn.tgdd.vn/2020/11/CookProduct/thumb-1200x676-2.jpg',
-	// 	},
-	// ];
 	useEffect(() => {
 		window.scrollTo(0, 0);
-		dispatch(getProductDetail(id))
-
+		console.log(id);
+		dispatch(getProductDetail(id));
 	}, [id]);
 	useEffect(() => {
-		dispatch(getAllProduct())
-	}, [])
+		if (_.isEmpty(currentProduct) == false) dispatch(getProductByMenu(currentProduct.menuId));
+	}, [currentProduct]);
 	return (
 		<>
-			<Container maxWidth='lg' sx={{ position: "relative" }}>
+			<Container maxWidth='lg' sx={{ position: 'relative' }}>
 				<div className='product-detail-image'>
 					<img src={currentProduct?.image} alt='' />
 				</div>
 				<div className='product-detail-detail'>
-					<h1 className='product-detail-name'>{currentProduct?.name}</h1>
+					<h1 className='product-detail-name'>{currentProduct?.productName}</h1>
 					<div className='line'></div>
 					<div className='product-detail-price'>
 						<span className='price'>{vndCurrencyFormat(currentProduct?.price)} </span>
@@ -97,21 +55,29 @@ export default function ProductDetailPage() {
 					</div>
 				</div>
 
-				<AddToCartButton onClick={() => {
-					dispatch(addToCart(currentProduct))
-				}} size='large'>
+				<AddToCartButton
+					onClick={() => {
+						dispatch(addToCart(currentProduct));
+					}}
+					size='large'>
 					Thêm
 				</AddToCartButton>
 
 				<div className='product-detail-vendor'>
 					<p>
-						Đơn hàng đang được xử lý bởi <span className='vendor-name'> {vendor}</span>
+						Đơn hàng đang được xử lý bởi <span className='vendor-name'> {currentProduct.storeName}</span>
 					</p>
 				</div>
 
 				{/* Product Components */}
 				<div>
-					<ProductList products={products}></ProductList>
+					<div style={{ marginBottom: '1rem' }}>
+						<h2 className='product-detail-name' style={{ marginBottom: '0.5rem' }}>
+							{currentProduct?.menuName}
+						</h2>
+						<div className='line'></div>
+					</div>
+					<ProductList products={productInMenu}></ProductList>
 				</div>
 				<CartBtn></CartBtn>
 			</Container>

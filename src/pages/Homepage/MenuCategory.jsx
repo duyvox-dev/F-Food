@@ -3,7 +3,6 @@ import './Homepage.scss';
 import { DataMenuCategory } from '../../util/data';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { getAllProduct } from '../../redux/product';
 import { getCategoryList } from '../../redux/categorySlice';
 
 function MenuCategory() {

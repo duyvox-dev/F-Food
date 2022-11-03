@@ -30,9 +30,9 @@ function HomeContainer({ products = [] }) {
 					<div className='menu-items'>
 						<Grid2 container spacing={2} justifyContent='center'>
 							{products &&
-								products.slice(0, 4).map((product) => {
+								products.slice(0, 4).map((product, index) => {
 									return (
-										<Grid2 item xs={5} key={product.id}>
+										<Grid2 item xs={5} key={index}>
 											<ProductItem product={product}></ProductItem>
 										</Grid2>
 									);

@@ -135,7 +135,7 @@ function ProductByCategoryPage(props) {
 						products.map((product, key) => (
 							<div className='content-product' key={key}>
 								<Link
-									to={`/detail/${product?.id}`}
+									to={`/detail/${product?.productMenuId}`}
 									style={{
 										textDecoration: 'none',
 										color: 'black',
@@ -146,7 +146,7 @@ function ProductByCategoryPage(props) {
 											<img src={product.image} alt='' />
 										</div>
 										<div className='info-product'>
-											<div className='name-product'>{product.name}</div>
+											<div className='name-product'>{product.productName}</div>
 											<div className='product-price-discount'>
 												<div className='product-new-price'>{vndCurrencyFormat(product.price)}</div>
 												{/* <div className='discount-percent'>-{discountPercent(43000, 49000)}%</div> */}

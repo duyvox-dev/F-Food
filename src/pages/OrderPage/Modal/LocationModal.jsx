@@ -31,15 +31,20 @@ export default function LocationModal({
 			setCurrenLocation(locationList[0]);
 		}
 	}, []);
+	const defaultProps = {
+		options: locationList,
+		getOptionLabel: (option) => option.roomNumber,
+	};
 	return (
 		<BasicModal modalVisible={modalVisible} closeModal={closeModal}>
 			<span className='modal-heading'>Giao đến</span>
 			<div className='modal-content'>
 				<Autocomplete
+					{...defaultProps}
 					value={currentLocation}
 					disablePortal
 					id='combo-box-demo'
-					options={locationList}
+					// options={locationList}
 					sx={{ width: '100%' }}
 					renderInput={(params) => (
 						<TextField

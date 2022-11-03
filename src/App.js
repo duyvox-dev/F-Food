@@ -5,7 +5,7 @@ import { appRoutes } from './routes/appRoutes';
 import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import _ from 'lodash';
-import { updateCurrentTimeSlot, getListTimeSlot, setDayString } from './redux/menuSlice';
+import { updateCurrentTimeSlot, getListTimeSlot, setDayString } from './redux/settingSlice';
 import { getIsValidDate, getDayString } from './util/time.util';
 import { useSnackbar } from 'notistack';
 import { clearMessage } from './redux/messageSlice';
@@ -16,7 +16,7 @@ function App() {
 	const dispatch = useDispatch();
 	const { enqueueSnackbar } = useSnackbar();
 	const { message, variant } = useSelector((state) => state.message);
-	const { getTimeSlotRespone, currentTimeSlot } = useSelector((state) => state.menu);
+	const { timeSlotList, currentTimeSlot } = useSelector((state) => state.setting);
 
 	// init time slot
 	useEffect(() => {
@@ -24,11 +24,11 @@ function App() {
 	}, []);
 	useEffect(() => {
 		let defaultTime = null;
-		if (getTimeSlotRespone.length > 0 && _.isEmpty(currentTimeSlot)) {
-			const newDayString = getDayString(getTimeSlotRespone[getTimeSlotRespone.length - 1].checkoutTime);
+		if (timeSlotList.length > 0 && _.isEmpty(currentTimeSlot)) {
+			const newDayString = getDayString(timeSlotList[timeSlotList.length - 1].arriveTime);
 			dispatch(setDayString(newDayString));
 			if (newDayString == dayConstants.HOM_NAY) {
-				defaultTime = getTimeSlotRespone.find((timeslot) => {
+				defaultTime = timeSlotList.find((timeslot) => {
 					if (getIsValidDate(timeslot?.arriveTime, timeslot?.checkoutTime)) {
 						return timeslot;
 					}
@@ -37,10 +37,10 @@ function App() {
 					dispatch(updateCurrentTimeSlot(defaultTime));
 				}
 			} else {
-				dispatch(updateCurrentTimeSlot(getTimeSlotRespone[0]));
+				dispatch(updateCurrentTimeSlot(timeSlotList[0]));
 			}
 		}
-	}, [getTimeSlotRespone]);
+	}, [timeSlotList]);
 	// show message
 	useEffect(() => {
 		if (_.isEmpty(message) == false) {

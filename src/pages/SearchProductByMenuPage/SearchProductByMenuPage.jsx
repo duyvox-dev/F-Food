@@ -1,13 +1,16 @@
 import React from 'react';
 import { Container, Typography } from '@mui/material';
-import './SearchProductPage.scss';
+import '../SearchProductPage/SearchProductPage.scss';
 import { vndCurrencyFormat, discountPercent } from '../../util/currency.util';
 import Button from '@mui/material/Button';
 import { styled } from '@mui/material/styles';
 import { useSelector, useDispatch } from 'react-redux';
 import CartBtn from '../../components/CartBtn/CartBtn';
 import { addToCart } from '../../redux/cartSlice';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
+import { useEffect } from 'react';
+import { getProductByMenu } from '../../redux/product';
+
 const CheckoutButton = styled(Button)({
 	display: 'block',
 	color: 'white',
@@ -17,9 +20,14 @@ const CheckoutButton = styled(Button)({
 	'&:hover': { backgroundColor: 'rgba(243, 101, 34)' },
 });
 
-export default function SearchProductPage() {
-	const { searchProducts } = useSelector((state) => state.product);
+export default function SearchProductByMenuPage() {
+	const { id } = useParams();
+
+	const { productInMenu } = useSelector((state) => state.product);
 	const dispatch = useDispatch();
+	useEffect(() => {
+		dispatch(getProductByMenu(id));
+	}, [id]);
 	return (
 		<>
 			<Container
@@ -36,12 +44,12 @@ export default function SearchProductPage() {
 					</div>
 					<div className='listProductBySearch'>
 						<div className='titleCategoryBySearch'>{/* <p>Đồ uống</p> */}</div>
-						{searchProducts.length === 0 ? (
+						{productInMenu.length === 0 ? (
 							<h2 className='null_alert'>
 								Hiện tại chưa có sản phẩm cho mục tìm kiếm này, vui lòng chọn danh mục khác.
 							</h2>
 						) : (
-							searchProducts.map((product, index) => (
+							productInMenu.map((product, index) => (
 								<div className='content-product' key={index}>
 									<Link
 										to={`/detail/${product?.productMenuId}`}

@@ -1,11 +1,11 @@
 import moment from 'moment';
 import { dayConstants } from '../constansts/constants';
-const getDayString = (lastCheckoutTime) => {
-	const newLastCheckoutTime = moment(lastCheckoutTime, 'HH:mm').format('HH:mm');
+const getDayString = (lastArriveTime) => {
+	const newLastArriveTime = moment(lastArriveTime, 'HH:mm').format('HH:mm');
 	const now = moment().format('HH:mm');
 
-	const minutes = moment(now, 'HH:mm').minutes() - moment(newLastCheckoutTime, 'HH:mm').minutes();
-	const hours = moment(now, 'HH:mm').hours() - moment(newLastCheckoutTime, 'HH:mm').hours();
+	const minutes = moment(now, 'HH:mm').minutes() - moment(newLastArriveTime, 'HH:mm').minutes();
+	const hours = moment(now, 'HH:mm').hours() - moment(newLastArriveTime, 'HH:mm').hours();
 	if (hours > 0) return dayConstants.NGAY_MAI;
 	else if (hours == 0 && minutes > 0) {
 		return dayConstants.NGAY_MAI;
