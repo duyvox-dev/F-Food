@@ -16,16 +16,17 @@
 		}
 	}
 }
+.line {
+	width: 50px;
+	height: 10px;
+	background: var(--ORANGE_COLOR);
+}
 .product-detail-detail {
 	.product-detail-name {
 		margin-bottom: 5px;
 		font-size: 25px;
 	}
-	.line {
-		width: 50px;
-		height: 10px;
-		background: var(--ORANGE_COLOR);
-	}
+
 	.product-detail-price {
 		margin-top: 15px;
 		width: 320px;

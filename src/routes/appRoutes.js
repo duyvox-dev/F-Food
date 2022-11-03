@@ -1,4 +1,4 @@
-import React from 'react'
+import React from 'react';
 import ThemeLayout from '../HOC/ThemeLayout';
 import ProductDetailPage from '../pages/ProductDetailPage/ProductDetailPage';
 import OrderPage from '../pages/OrderPage/OrderPage';
@@ -9,6 +9,7 @@ import SearchProductPage from '../pages/SearchProductPage/SearchProductPage';
 
 import OrderDetailPage from '../pages/OrderDetailPage/OrderDetailPage';
 import ProductByCategoryPage from '../pages/ProductByCategoryPage/ProductByCategoryPage';
+import SearchProductByMenuPage from '../pages/SearchProductByMenuPage/SearchProductByMenuPage';
 export const appRoutes = [
 	{
 		path: '/',
@@ -28,11 +29,15 @@ export const appRoutes = [
 	},
 	{
 		path: '/search',
-		component: <ThemeLayout Component={SearchProductPage} />
+		component: <ThemeLayout Component={SearchProductPage} />,
 	},
 	{
 		path: '/category/:id',
 		component: <ThemeLayout Component={ProductByCategoryPage} />,
+	},
+	{
+		path: '/menu/:id',
+		component: <ThemeLayout Component={SearchProductByMenuPage} />,
 	},
 	{
 		path: 'order-detail/:id',

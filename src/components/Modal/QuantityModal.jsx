@@ -19,49 +19,60 @@ const DisabledButton = styled(Button)({
 		borderColor: 'primary',
 	},
 });
-export default function QuantityModal(
-	{ modalVisible = false,
-		closeModal = () => { },
-		cartItem = {},
-
-	}) {
+export default function QuantityModal({ modalVisible = false, closeModal = () => {}, cartItem = {} }) {
 	const dispatch = useDispatch();
-	const [currentQuantity, setCurrentQuantity] = useState(cartItem?.quantity)
+	const [currentQuantity, setCurrentQuantity] = useState(cartItem?.quantity);
 	const decQuantity = () => {
 		const newQuantity = Math.max(0, currentQuantity - 1);
-		setCurrentQuantity(newQuantity)
-	}
+		setCurrentQuantity(newQuantity);
+	};
 	useEffect(() => {
-		setCurrentQuantity(cartItem?.quantity)
-	}, [cartItem?.quantity])
+		setCurrentQuantity(cartItem?.quantity);
+	}, [cartItem?.quantity]);
 	const incQuantity = () => {
-		const newQuantity = Math.min(currentQuantity + 1, cartItem?.product.quantity);
-		setCurrentQuantity(newQuantity)
-	}
+		const newQuantity = currentQuantity + 1;
+		setCurrentQuantity(newQuantity);
+	};
 	const handleChangeQuantity = () => {
-		dispatch(changeQuantityCart({
-			id: cartItem?.product.id,
-			quantity: currentQuantity
-		}))
-		closeModal()
-	}
+		dispatch(
+			changeQuantityCart({
+				productMenuId: cartItem?.product.productMenuId,
+				quantity: currentQuantity,
+			})
+		);
+		closeModal();
+	};
 	return (
 		<BasicModal modalVisible={modalVisible} closeModal={closeModal}>
 			<span className='modal-heading'>Cập nhật giỏ hàng</span>
 			<div className='modal-content'>
 				<span className='modal-title'>{cartItem?.product?.name}</span>
 				<ButtonGroup>
-					<Button variant='outlined' onClick={() => {
-						decQuantity()
-					}} disabled={currentQuantity <= 0 ? true : false}>-</Button>
+					<Button
+						variant='outlined'
+						onClick={() => {
+							decQuantity();
+						}}
+						disabled={currentQuantity <= 0 ? true : false}>
+						-
+					</Button>
 					<DisabledButton variant='outlined' disabled>
 						{currentQuantity}
 					</DisabledButton>
-					<Button variant='outlined' onClick={() => {
-						incQuantity()
-					}}>+</Button>
+					<Button
+						variant='outlined'
+						onClick={() => {
+							incQuantity();
+						}}>
+						+
+					</Button>
 				</ButtonGroup>
-				<ModalButton variant='contained' sx={{ width: { xs: '80%', sm: '50%' } }} onClick={() => { handleChangeQuantity() }}>
+				<ModalButton
+					variant='contained'
+					sx={{ width: { xs: '80%', sm: '50%' } }}
+					onClick={() => {
+						handleChangeQuantity();
+					}}>
 					Cập nhật số lượng
 				</ModalButton>
 			</div>

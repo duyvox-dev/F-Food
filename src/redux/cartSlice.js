@@ -23,12 +23,12 @@ export const changeQuantityCart = createAsyncThunk('cartSlice/changeQuantityCart
 	try {
 		const { cart } = thunkAPI.getState();
 		const { carts } = cart;
-
+		console.log(cartItem);
 		let indexToDelete = -1;
 		let newCart = [];
 		if (cartItem.quantity <= LIMIT_ITEM_QUANTITY) {
 			newCart = carts?.map((cart, index) => {
-				if (cartItem.id == cart.product.id) {
+				if (cartItem.productMenuId == cart.product.productMenuId) {
 					if (cartItem.quantity <= 0) indexToDelete = index;
 					return {
 						...cart,
@@ -57,7 +57,7 @@ export const addToCart = createAsyncThunk('cartSlice/addToCart', (product, thunk
 		const { carts } = cart;
 		let newCart = [];
 		newCart = carts?.map((cartItem, index) => {
-			if (product.id == cartItem.product.id) {
+			if (product.productMenuId == cartItem.product.productMenuId) {
 				existed = true;
 				const newQuantity = cartItem.quantity + 1;
 				if (newQuantity <= LIMIT_ITEM_QUANTITY)

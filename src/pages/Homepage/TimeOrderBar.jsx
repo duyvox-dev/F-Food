@@ -3,7 +3,7 @@ import './Homepage.scss';
 import { useDispatch, useSelector } from 'react-redux';
 import BtnTime from '../../components/BtnTime/BtnTime';
 import Grid2 from '@mui/material/Unstable_Grid2'; // Grid version 2
-import { updateCurrentTimeSlot, getListTimeSlot } from '../../redux/menuSlice';
+import { updateCurrentTimeSlot, getListTimeSlot } from '../../redux/settingSlice';
 import _ from 'lodash';
 import InfoIcon from '@mui/icons-material/Info';
 import Tooltip from '@mui/material/Tooltip';
@@ -12,7 +12,7 @@ import { dayConstants } from '../../constansts/constants';
 import { getIsValidDate } from '../../util/time.util';
 function TimeOrderBar() {
 	const dispatch = useDispatch();
-	const { getTimeSlotRespone, dayString, currentTimeSlot } = useSelector((state) => state.menu);
+	const { timeSlotList, dayString, currentTimeSlot } = useSelector((state) => state.setting);
 
 	// useEffect(() => {
 	// 	console.log(currentTimeSlot);
@@ -21,21 +21,23 @@ function TimeOrderBar() {
 		dispatch(updateCurrentTimeSlot(timeslot));
 	};
 	useEffect(() => {
-		if (_.isEmpty(getTimeSlotRespone)) dispatch(getListTimeSlot());
+		if (_.isEmpty(timeSlotList)) dispatch(getListTimeSlot());
 	}, []);
-	useEffect(() => {
-		let defaultTime = null;
-		if (getTimeSlotRespone.length > 0 && _.isEmpty(currentTimeSlot)) {
-			defaultTime = getTimeSlotRespone.find((timeslot) => {
-				if (getIsValidDate(timeslot?.arriveTime, timeslot?.checkoutTime)) {
-					return timeslot;
-				}
-			});
-			if (defaultTime) {
-				dispatch(updateCurrentTimeSlot(defaultTime));
-			}
-		}
-	}, [getTimeSlotRespone]);
+	// useEffect(() => {
+	// 	let defaultTime = null;
+	// 	if (timeSlotList.length > 0 && _.isEmpty(currentTimeSlot)) {
+	// 		// console.log({ timeSlotList });
+	// 		defaultTime = timeSlotList.find((timeslot) => {
+	// 			if (getIsValidDate(timeslot?.arriveTime, timeslot?.checkoutTime)) {
+	// 				return timeslot;
+	// 			}
+	// 		});
+	// 		console.log({ defaultTime });
+	// 		if (defaultTime) {
+	// 			dispatch(updateCurrentTimeSlot(defaultTime));
+	// 		}
+	// 	}
+	// }, [timeSlotList]);
 	return (
 		<>
 			<div className='timeOrderBar'>
@@ -50,9 +52,9 @@ function TimeOrderBar() {
 					</p>
 				</div>
 				<Grid2 container spacing={{ xs: 2, md: 4 }}>
-					{getTimeSlotRespone &&
-						getTimeSlotRespone.length > 0 &&
-						getTimeSlotRespone.map((n) => (
+					{timeSlotList &&
+						timeSlotList.length > 0 &&
+						timeSlotList.map((n) => (
 							<Grid2
 								key={n.id}
 								item
