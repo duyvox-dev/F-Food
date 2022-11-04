@@ -48,7 +48,13 @@ export const hotMenuData = [
 export const DataMenuCategory = [
 	// Uudai, Com, Doanvat, Banh, Douong, Thucuong, Monkhac,
 
-	Thucuong, Banh, Dodonglanh, Doanvat, Douongcocon, Douong, PassioCoffe,
+	Thucuong,
+	Banh,
+	Dodonglanh,
+	Doanvat,
+	Douongcocon,
+	Douong,
+	PassioCoffe,
 	// {
 	// 	id: 1,
 	// 	name: 'Ưu Đãi Hấp Dẫn',
