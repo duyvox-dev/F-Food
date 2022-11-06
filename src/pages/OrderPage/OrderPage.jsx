@@ -25,6 +25,7 @@ import { Player } from '@lottiefiles/react-lottie-player';
 
 import orderSuccessAnimation from '../../assets/animations/order-success.json';
 import orderFailAnimation from '../../assets/animations/order-fail.json';
+import OrderType from './OrderType/OrderType';
 const StyledButton = styled(Button)({
 	background: '#fcf6f6',
 	border: '2px solid rgba(243, 101, 34)',
@@ -296,14 +297,13 @@ export default function OrderPage() {
 				<OrderInfo user={user} openUserModal={openUserModal} />
 				<CartList carts={carts} handleChangeQuantity={handleChangeQuantity} />
 				<FeeList fees={fees}></FeeList>
-				<Checkout
-					fees={fees}
-					totalAmount={totalAmount}
-					placeOrder={handlePrePlaceOrder}
+				<OrderType
 					handleChangeOrderType={handleChangeOrderType}
-					currentOrderType={orderType}
+					ordertype={orderType}
 					ableToChangeOrderType={ableToChangeOrderType}
+					// ableToChangeOrderType={false}
 				/>
+				<Checkout fees={fees} totalAmount={totalAmount} placeOrder={handlePrePlaceOrder} />
 			</Container>
 		</>
 	);

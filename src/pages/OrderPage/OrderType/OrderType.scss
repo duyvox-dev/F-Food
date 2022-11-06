@@ -1,12 +1,18 @@
 .ordertype {
 	margin-bottom: 1rem;
-	display: FLEX;
-	gap: 0.5rem;
-	align-items: center;
-	&__name {
-		font-size: 1.2rem;
+	&__list {
+		background: white;
+		display: grid;
+		grid-template-columns: repeat(4, 1fr);
+		gap: 1rem;
+		padding: 1rem 1rem;
+		@media screen and (max-width: 767.98px) {
+			grid-template-columns: repeat(2, 1fr);
+		}
+	}
+	&__inner {
 		display: flex;
 		align-items: center;
-		gap: 0.5rem;
+		gap: 1rem;
 	}
 }
