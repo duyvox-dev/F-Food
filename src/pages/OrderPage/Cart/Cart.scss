@@ -41,8 +41,12 @@ $blue: #1976d2;
 		flex: 1;
 		display: flex;
 		flex-direction: column;
-		gap: 5px;
+		gap: 0.5rem;
 		padding-right: 2rem;
+		padding-left: 3rem;
+		@media screen and (max-width: 767.98px) {
+			padding-left: 2rem;
+		}
 	}
 	&-name {
 		font-size: 18px;
@@ -54,14 +58,23 @@ $blue: #1976d2;
 	&-outstock-message {
 		color: $orange;
 	}
-	&-change {
-		color: $blue;
-		cursor: pointer;
-		display: inline;
+	// &-change {
+	// 	color: red;
+	// 	cursor: pointer;
+	// 	display: inline;
+	// }
+	.price-cost {
+		// margin-left: auto;
+		// margin-right: 0.5rem;
+		// font-weight: 600;
+		display: flex;
+		flex-direction: column;
+		// justify-content: end;
+		align-items: end;
+		padding-right: 0.5rem;
 	}
-	&-price {
-		margin-left: auto;
-		margin-right: 0.5rem;
-		font-weight: 600;
+	&-delete {
+		color: red;
+		cursor: pointer;
 	}
 }
