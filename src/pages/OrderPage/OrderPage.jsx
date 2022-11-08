@@ -15,7 +15,7 @@ import ConfirmModal from '../../components/Modal/ConfirmModal';
 import useModal from '../../hooks/useModal';
 import _ from 'lodash';
 import { useDispatch, useSelector } from 'react-redux';
-import { setErrorMessage } from '../../redux/messageSlice';
+import { setErrorMessage, setSuccessMessage } from '../../redux/messageSlice';
 import { createOrder, resetOrderState } from '../../redux/orderSlice';
 import { calculateShippingFee, ORDER_TYPE_ENUM, groupCarts } from '../../util/order.util';
 import { setCurrentRoom, getRoomList } from '../../redux/settingSlice';
@@ -82,6 +82,7 @@ export default function OrderPage() {
 	const [orderType, setOrderType] = useState(ORDER_TYPE_ENUM[2]);
 	const [ableToChangeOrderType, setAbleToChangeOrderType] = useState(true);
 	const { user } = useSelector((state) => state.auth);
+	const [groupedCarts, setGroupedCarts] = useState({});
 	// --------------------------------------------------
 
 	const calculateFee = (shippingFee) => {
@@ -124,16 +125,11 @@ export default function OrderPage() {
 			dispatch(setErrorMessage('Vui lòng cập nhật số điện thoại.'));
 		} else {
 			openConfirmModal();
-			// const orderData = {
-			// 	carts,
-			// 	user,
-			// 	location: currentLocation,
-			// };
-			// dispatch(createOrder(orderData));
 		}
 	};
 	const handleChangeOrderType = (newOrderType) => {
 		setOrderType(newOrderType);
+		dispatch(setSuccessMessage('Đổi hình thức giao hàng thành công'));
 	};
 	useEffect(() => {
 		if (_.isEmpty(selectedCart) === false) {
@@ -185,7 +181,10 @@ export default function OrderPage() {
 	};
 
 	useEffect(() => {
-		// calculate number of stores/
+		const newGroupedCart = groupCarts(carts);
+		setGroupedCarts(newGroupedCart);
+		const newNumberOfStoresInCart = Object.keys(newGroupedCart).length;
+		setNumOfStoresInCart(newNumberOfStoresInCart);
 		if (numOfStoresInCart > 1) {
 			setOrderType(ORDER_TYPE_ENUM[2]);
 		}
@@ -286,8 +285,7 @@ export default function OrderPage() {
 				maxWidth='lg'
 				sx={{
 					background: '#F7F7F7',
-					// height: '90vh',
-					// overflow: 'scroll',
+
 					padding: '1rem 0',
 				}}>
 				<Typography variant='h4' align='center' fontWeight='bold'>
@@ -295,13 +293,12 @@ export default function OrderPage() {
 				</Typography>
 				<OrderLocation openLocationModal={openLocationModal} location={currentRoom} orderType={orderType.id} />
 				<OrderInfo user={user} openUserModal={openUserModal} />
-				<CartList carts={carts} handleChangeQuantity={handleChangeQuantity} />
+				<CartList groupedCarts={groupedCarts} handleChangeQuantity={handleChangeQuantity} />
 				<FeeList fees={fees}></FeeList>
 				<OrderType
 					handleChangeOrderType={handleChangeOrderType}
 					ordertype={orderType}
 					ableToChangeOrderType={ableToChangeOrderType}
-					// ableToChangeOrderType={false}
 				/>
 				<Checkout fees={fees} totalAmount={totalAmount} placeOrder={handlePrePlaceOrder} />
 			</Container>

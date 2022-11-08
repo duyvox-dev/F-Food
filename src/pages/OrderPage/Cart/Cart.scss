@@ -2,6 +2,20 @@ $orange-light: rgba(243, 101, 34, 0.5);
 $orange: rgba(243, 101, 34);
 $blue: #1976d2;
 .cart {
+	&__store {
+		margin-bottom: 0.5rem;
+	}
+	&__store-name {
+		display: block;
+		background-color: white;
+		display: flex;
+		gap: 10px;
+		align-items: center;
+		font-size: 1.5rem;
+		margin: 0;
+		padding: 0.5rem;
+		// color: $orange-light;
+	}
 	&-item {
 		padding: 1rem 0.5rem;
 		box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
@@ -58,19 +72,11 @@ $blue: #1976d2;
 	&-outstock-message {
 		color: $orange;
 	}
-	// &-change {
-	// 	color: red;
-	// 	cursor: pointer;
-	// 	display: inline;
-	// }
+
 	.price-cost {
-		// margin-left: auto;
-		// margin-right: 0.5rem;
-		// font-weight: 600;
 		display: flex;
 		flex-direction: column;
-		// justify-content: end;
-		align-items: end;
+		align-items: flex-end;
 		padding-right: 0.5rem;
 	}
 	&-delete {

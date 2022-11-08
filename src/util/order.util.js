@@ -27,11 +27,7 @@ const calculateShippingFee = (numOfStores = 0, orderType = 1) => {
 };
 
 const groupCarts = (rawCarts = []) => {
-	const grouppedCarts = rawCarts.reduce(function (r, a) {
-		r[a.product.supplierStoreId] = r[a.product.supplierStoreId] || [];
-		r[a.product.supplierStoreId].push(a);
-		return r;
-	}, Object.create(null));
+	const grouppedCarts = _.groupBy(rawCarts, 'product.storeName');
 	return grouppedCarts;
 };
 export { groupCarts, ORDER_TYPE_ENUM, calculateShippingFee };

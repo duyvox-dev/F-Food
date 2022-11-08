@@ -43,9 +43,7 @@ export default function OrderType({ handleChangeOrderType = () => {}, ordertype 
 	const handleClickOption = (orderTypeId) => {
 		handleChangeOrderType(ORDER_TYPE_ENUM[orderTypeId]);
 	};
-	useEffect(() => {
-		console.log(ordertype);
-	}, [ordertype]);
+
 	return (
 		<div className='ordertype order-section'>
 			<h3 className='heading-title'>Hình thức giao hàng</h3>

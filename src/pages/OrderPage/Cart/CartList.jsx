@@ -5,7 +5,8 @@ import { removeCart } from '../../../redux/cartSlice';
 import { useDispatch } from 'react-redux';
 import { useConfirm } from 'material-ui-confirm';
 import { setSuccessMessage } from '../../../redux/messageSlice';
-export default function CartList({ carts = [] }) {
+import StoreIcon from '@mui/icons-material/Store';
+export default function CartList({ groupedCarts = {} }) {
 	const dispatch = useDispatch();
 	const confirm = useConfirm();
 	const handleRemoveAllCart = async () => {
@@ -33,8 +34,18 @@ export default function CartList({ carts = [] }) {
 			</div>
 
 			<div className='cart-list'>
-				{carts.map((cart, index) => {
-					return <CartItem key={index} cart={cart}></CartItem>;
+				{Object.keys(groupedCarts).map((key, index) => {
+					return (
+						<div key={index} className='cart__store'>
+							<h3 className='cart__store-name'>
+								<StoreIcon sx={{ color: 'rgba(243, 101, 34)' }}></StoreIcon>
+								<span>{key}</span>
+							</h3>
+							{groupedCarts[key]?.map((cart, index) => {
+								return <CartItem key={index} cart={cart}></CartItem>;
+							})}
+						</div>
+					);
 				})}
 			</div>
 		</div>

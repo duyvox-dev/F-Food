@@ -65,14 +65,16 @@ export default function CartItem({ cart = {} }) {
 					{cart.quantity <= 1 ? (
 						<>
 							<Tooltip title={<span style={{ fontSize: '16px' }}>Số lượng ít nhất là 1</span>}>
-								<Button
-									variant='outlined'
-									onClick={() => {
-										decQuantity();
-									}}
-									disabled>
-									-
-								</Button>
+								<span>
+									<Button
+										variant='outlined'
+										onClick={() => {
+											decQuantity();
+										}}
+										disabled>
+										-
+									</Button>
+								</span>
 							</Tooltip>
 						</>
 					) : (
