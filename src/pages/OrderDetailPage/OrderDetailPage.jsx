@@ -212,7 +212,9 @@ export default function OrderDetailPage() {
 
 	// get status from store
 	let status = 'shipping';
-
+	useEffect(() => {
+		window.scrollTo(0, 0);
+	}, []);
 	return (
 		<Container maxWidth='lg'>
 			<Stack sx={{ width: '100%' }} spacing={4}>

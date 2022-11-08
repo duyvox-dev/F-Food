@@ -7,6 +7,8 @@ import { styled } from '@mui/material/styles';
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { changeQuantityCart } from '../../redux/cartSlice';
+import Tooltip from '@mui/material/Tooltip';
+
 const ModalButton = styled(Button)({
 	display: 'block',
 	color: 'white',
@@ -23,7 +25,7 @@ export default function QuantityModal({ modalVisible = false, closeModal = () =>
 	const dispatch = useDispatch();
 	const [currentQuantity, setCurrentQuantity] = useState(cartItem?.quantity);
 	const decQuantity = () => {
-		const newQuantity = Math.max(0, currentQuantity - 1);
+		const newQuantity = Math.max(1, currentQuantity - 1);
 		setCurrentQuantity(newQuantity);
 	};
 	useEffect(() => {
@@ -48,24 +50,59 @@ export default function QuantityModal({ modalVisible = false, closeModal = () =>
 			<div className='modal-content'>
 				<span className='modal-title'>{cartItem?.product?.name}</span>
 				<ButtonGroup>
-					<Button
-						variant='outlined'
-						onClick={() => {
-							decQuantity();
-						}}
-						disabled={currentQuantity <= 0 ? true : false}>
-						-
-					</Button>
+					{currentQuantity <= 1 ? (
+						<>
+							<Tooltip title={<span style={{ fontSize: '16px' }}>Số lượng ít nhất là 1</span>}>
+								<Button
+									variant='outlined'
+									onClick={() => {
+										decQuantity();
+									}}
+									disabled>
+									-
+								</Button>
+							</Tooltip>
+						</>
+					) : (
+						<>
+							<Button
+								variant='outlined'
+								onClick={() => {
+									decQuantity();
+								}}>
+								-
+							</Button>
+						</>
+					)}
+
 					<DisabledButton variant='outlined' disabled>
 						{currentQuantity}
 					</DisabledButton>
-					<Button
-						variant='outlined'
-						onClick={() => {
-							incQuantity();
-						}}>
-						+
-					</Button>
+
+					{currentQuantity >= 10 ? (
+						<>
+							<Tooltip title={<span style={{ fontSize: '16px' }}>Giới hạn 10 sản phẩm</span>}>
+								<Button
+									variant='outlined'
+									disabled
+									onClick={() => {
+										incQuantity();
+									}}>
+									+
+								</Button>
+							</Tooltip>
+						</>
+					) : (
+						<>
+							<Button
+								variant='outlined'
+								onClick={() => {
+									incQuantity();
+								}}>
+								+
+							</Button>
+						</>
+					)}
 				</ButtonGroup>
 				<ModalButton
 					variant='contained'

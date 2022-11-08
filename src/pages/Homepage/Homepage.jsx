@@ -21,6 +21,9 @@ export default function HomePage() {
 			dispatch(getAllProduct(currentTimeSlot));
 		}
 	}, [currentTimeSlot]);
+	useEffect(() => {
+		window.scrollTo(0, 0);
+	}, []);
 	return (
 		<>
 			<Container maxWidth='lg' sx={{ position: 'relative' }}>

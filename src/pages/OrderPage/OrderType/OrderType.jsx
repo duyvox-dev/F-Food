@@ -1,16 +1,32 @@
-import React, { useState } from 'react';
-import { Menu, MenuItem, IconButton } from '@mui/material';
+import React, { useEffect, useState } from 'react';
 import DeliveryDiningIcon from '@mui/icons-material/DeliveryDining';
 import AssistWalkerIcon from '@mui/icons-material/AssistWalker';
-import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import { ORDER_TYPE_ENUM } from '../../../util/order.util';
+import Button from '@mui/material/Button';
+import Tooltip from '@mui/material/Tooltip';
+import { styled } from '@mui/material/styles';
 import './OrderType.scss';
-const ITEM_HEIGHT = 48;
-export default function OrderType({
-	handleChangeOrderType = () => {},
-	defaultOrderType = {},
-	ableToChangeOrderType = true,
-}) {
+
+const StyledButton = styled(Button)({
+	background: '#fcf6f6',
+	border: '2px solid rgba(243, 101, 34)',
+	color: 'rgba(243, 101, 34)',
+	// backgroundColor: 'rgba(243, 101, 34)',
+	padding: '1rem 3rem',
+	width: '100%',
+	'&:hover': { backgroundColor: 'rgba(243, 101, 34)', color: 'white' },
+	'&:disabled': {
+		// backgroundColor: "gray",
+		background: '#fcf6f6',
+		border: '2px solid rgba(243, 101, 34)',
+		color: 'rgba(243, 101, 34)',
+		opacity: 0.3,
+	},
+	'&:active': {
+		backgroundColor: 'rgba(243, 101, 34)',
+	},
+});
+export default function OrderType({ handleChangeOrderType = () => {}, ordertype = {}, ableToChangeOrderType = true }) {
 	const orderTypeList = [
 		{
 			...ORDER_TYPE_ENUM[0],
@@ -24,83 +40,111 @@ export default function OrderType({
 			icon: <DeliveryDiningIcon sx={{ color: 'rgba(243, 101, 34)' }} />,
 		},
 	];
-	const [currentOrderType, setCurrentOrderType] = useState(orderTypeList[defaultOrderType.id]);
-	const [anchorEl, setAnchorEl] = useState(null);
-	const open = Boolean(anchorEl);
-	const handleClick = (event) => {
-		setAnchorEl(event.currentTarget);
-	};
-
-	const handleClickOption = (event) => {
-		const { myValue } = event.currentTarget.dataset;
-		setCurrentOrderType(orderTypeList[myValue]);
-		handleChangeOrderType(ORDER_TYPE_ENUM[myValue]);
-		setAnchorEl(null);
-	};
-	const handleClose = () => {
-		setAnchorEl(null);
+	const handleClickOption = (orderTypeId) => {
+		handleChangeOrderType(ORDER_TYPE_ENUM[orderTypeId]);
 	};
 
 	return (
-		<div className='ordertype'>
-			<span className='ordertype__name'>
-				{currentOrderType.icon}
-				<span>{currentOrderType.name}</span>
-			</span>
-			<div>
-				{ableToChangeOrderType ? (
-					<>
-						<IconButton
-							aria-label='more'
-							id='long-button'
-							aria-controls={open ? 'long-menu' : undefined}
-							aria-expanded={open ? 'true' : undefined}
-							aria-haspopup='true'
-							onClick={handleClick}>
-							<KeyboardArrowDownIcon />
-						</IconButton>
-						<Menu
-							id='long-menu'
-							MenuListProps={{
-								'aria-labelledby': 'long-button',
-							}}
-							anchorEl={anchorEl}
-							open={open}
-							onClose={handleClose}
-							PaperProps={{
-								style: {
-									maxHeight: ITEM_HEIGHT * 4.5,
-									width: '20ch',
-								},
-							}}>
-							<MenuItem key={orderTypeList[1].id} data-my-value={orderTypeList[1].id} onClick={handleClickOption}>
-								<span
-									style={{
-										display: 'flex',
-										width: '100%',
-										height: '100%',
-										gap: '10px',
-									}}>
-									{orderTypeList[1].icon}
+		<div className='ordertype order-section'>
+			<h3 className='heading-title'>Hình thức giao hàng</h3>
+			<div className='ordertype__list'>
+				{ordertype.id != 2 ? (
+					<StyledButton
+						sx={{
+							padding: {
+								xs: '0.5rem 5px',
+								md: '0.5rem 3rem',
+							},
+						}}
+						onClick={() => {
+							handleClickOption(2);
+						}}>
+						<span className='ordertype__inner'>
+							<span>{orderTypeList[2].name}</span>
+						</span>
+					</StyledButton>
+				) : (
+					<StyledButton
+						sx={{
+							background: 'rgba(243, 101, 34)',
+							color: 'white',
+							padding: {
+								xs: '0.5rem 5px',
+
+								md: '0.5rem 3rem',
+							},
+						}}
+						onClick={() => {
+							// handleClickOption(2);
+						}}>
+						<span className='ordertype__inner'>
+							<span>{orderTypeList[2].name}</span>
+						</span>
+					</StyledButton>
+				)}
+
+				{!ableToChangeOrderType ? (
+					<Tooltip
+						title={<span style={{ fontSize: '16px' }}>Chỉ áp dụng cho đơn hàng có sản phẩm thuộc 1 cửa hàng</span>}
+						placement='top'
+						arrow>
+						<span>
+							<StyledButton
+								sx={{
+									padding: {
+										xs: '0.5rem 5px',
+
+										md: '0.5rem 3rem',
+									},
+								}}
+								onClick={() => {
+									// handleClickOption(1);
+								}}
+								disabled>
+								<span className='ordertype__inner'>
 									<span>{orderTypeList[1].name}</span>
 								</span>
-							</MenuItem>
-							<MenuItem key={orderTypeList[2].id} data-my-value={orderTypeList[2].id} onClick={handleClickOption}>
-								<span
-									style={{
-										display: 'flex',
-										width: '100%',
-										height: '100%',
-										gap: '10px',
-									}}>
-									{orderTypeList[2].icon}
-									<span>{orderTypeList[2].name}</span>
-								</span>
-							</MenuItem>
-						</Menu>
-					</>
+							</StyledButton>
+						</span>
+					</Tooltip>
 				) : (
-					<></>
+					<>
+						{ordertype.id != 1 ? (
+							<StyledButton
+								sx={{
+									padding: {
+										xs: '0.5rem 5px',
+
+										md: '0.5rem 3rem',
+									},
+								}}
+								onClick={() => {
+									handleClickOption(1);
+								}}>
+								<span className='ordertype__inner'>
+									<span>{orderTypeList[1].name}</span>
+								</span>
+							</StyledButton>
+						) : (
+							<StyledButton
+								sx={{
+									background: 'rgba(243, 101, 34)',
+									color: 'white',
+									padding: {
+										xs: '0.5rem 5px',
+
+										md: '0.5rem 3rem',
+									},
+								}}
+								onClick={() => {
+									// handleClickOption(1);
+								}}>
+								<span className='ordertype__inner'>
+									<span>{orderTypeList[1].name}</span>
+								</span>
+							</StyledButton>
+						)}
+					</>
 				)}
 			</div>
 		</div>

@@ -31,7 +31,7 @@ export default function ProductDetailPage() {
 
 	useEffect(() => {
 		window.scrollTo(0, 0);
-		console.log(id);
+		// console.log(id);
 		dispatch(getProductDetail(id));
 	}, [id]);
 	useEffect(() => {

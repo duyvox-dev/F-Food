@@ -5,6 +5,7 @@ import './index.css';
 import { store } from './redux/store';
 import { Provider } from 'react-redux';
 import { SnackbarProvider } from 'notistack';
+import { ConfirmProvider } from 'material-ui-confirm';
 
 import App from './App';
 
@@ -17,7 +18,9 @@ root.render(
 				vertical: 'top',
 				horizontal: 'center',
 			}}>
-			<App />
+			<ConfirmProvider>
+				<App />
+			</ConfirmProvider>
 		</SnackbarProvider>
 	</Provider>
 );

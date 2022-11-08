@@ -15,7 +15,7 @@ import ConfirmModal from '../../components/Modal/ConfirmModal';
 import useModal from '../../hooks/useModal';
 import _ from 'lodash';
 import { useDispatch, useSelector } from 'react-redux';
-import { setErrorMessage } from '../../redux/messageSlice';
+import { setErrorMessage, setSuccessMessage } from '../../redux/messageSlice';
 import { createOrder, resetOrderState } from '../../redux/orderSlice';
 import { calculateShippingFee, ORDER_TYPE_ENUM, groupCarts } from '../../util/order.util';
 import { setCurrentRoom, getRoomList } from '../../redux/settingSlice';
@@ -25,6 +25,7 @@ import { Player } from '@lottiefiles/react-lottie-player';
 
 import orderSuccessAnimation from '../../assets/animations/order-success.json';
 import orderFailAnimation from '../../assets/animations/order-fail.json';
+import OrderType from './OrderType/OrderType';
 const StyledButton = styled(Button)({
 	background: '#fcf6f6',
 	border: '2px solid rgba(243, 101, 34)',
@@ -81,6 +82,8 @@ export default function OrderPage() {
 	const [orderType, setOrderType] = useState(ORDER_TYPE_ENUM[2]);
 	const [ableToChangeOrderType, setAbleToChangeOrderType] = useState(true);
 	const { user } = useSelector((state) => state.auth);
+	const [groupedCarts, setGroupedCarts] = useState({});
+	const [isValidCartItem, setIsValidCartItem] = useState(true);
 	// --------------------------------------------------
 
 	const calculateFee = (shippingFee) => {
@@ -121,18 +124,15 @@ export default function OrderPage() {
 			dispatch(setErrorMessage('Vui lòng đăng nhập.'));
 		} else if (_.isEmpty(user.phone)) {
 			dispatch(setErrorMessage('Vui lòng cập nhật số điện thoại.'));
+		} else if (!isValidCartItem) {
+			dispatch(setErrorMessage('Vui lòng xoá những sản phẩm không khả dụng.'));
 		} else {
 			openConfirmModal();
-			// const orderData = {
-			// 	carts,
-			// 	user,
-			// 	location: currentLocation,
-			// };
-			// dispatch(createOrder(orderData));
 		}
 	};
 	const handleChangeOrderType = (newOrderType) => {
 		setOrderType(newOrderType);
+		dispatch(setSuccessMessage('Đổi hình thức giao hàng thành công'));
 	};
 	useEffect(() => {
 		if (_.isEmpty(selectedCart) === false) {
@@ -159,10 +159,11 @@ export default function OrderPage() {
 		const orderDetails = carts.map((cart) => {
 			const finalAmount = cart.product.price * cart.quantity;
 			return {
-				productInMenuId: cart.product.productInMenuId,
+				productInMenuId: cart.product.productMenuId,
 				quantity: cart.quantity,
 				finalAmount: finalAmount,
 				supplierStoreId: cart.product.storeId,
+				timeSlotId: cart.product.timeSlotId,
 			};
 		});
 		return orderDetails;
@@ -184,13 +185,23 @@ export default function OrderPage() {
 	};
 
 	useEffect(() => {
-		// calculate number of stores/
+		//
+		const newGroupedCart = groupCarts(carts);
+		setGroupedCarts(newGroupedCart);
+		const newNumberOfStoresInCart = Object.keys(newGroupedCart).length;
+		setNumOfStoresInCart(newNumberOfStoresInCart);
 		if (numOfStoresInCart > 1) {
 			setOrderType(ORDER_TYPE_ENUM[2]);
 		}
+		//
 		setShippingFee(calculateShippingFee(numOfStoresInCart, orderType?.id));
 		const totalFee = calculateFee(shippingFee);
 		setFees(totalFee);
+		//
+		setIsValidCartItem(true);
+		carts.forEach((cart) => {
+			if (cart.product.timeSlotId != currentTimeSlot.id) setIsValidCartItem(false);
+		});
 	}, [carts]);
 
 	useEffect(() => {
@@ -211,6 +222,7 @@ export default function OrderPage() {
 		} else setAbleToChangeOrderType(true);
 	}, [numOfStoresInCart]);
 	useEffect(() => {
+		window.scrollTo(0, 0);
 		dispatch(resetOrderState());
 		dispatch(getRoomList());
 	}, []);
@@ -285,8 +297,7 @@ export default function OrderPage() {
 				maxWidth='lg'
 				sx={{
 					background: '#F7F7F7',
-					// height: '90vh',
-					// overflow: 'scroll',
+
 					padding: '1rem 0',
 				}}>
 				<Typography variant='h4' align='center' fontWeight='bold'>
@@ -294,16 +305,14 @@ export default function OrderPage() {
 				</Typography>
 				<OrderLocation openLocationModal={openLocationModal} location={currentRoom} orderType={orderType.id} />
 				<OrderInfo user={user} openUserModal={openUserModal} />
-				<CartList carts={carts} handleChangeQuantity={handleChangeQuantity} />
+				<CartList groupedCarts={groupedCarts} handleChangeQuantity={handleChangeQuantity} />
 				<FeeList fees={fees}></FeeList>
-				<Checkout
-					fees={fees}
-					totalAmount={totalAmount}
-					placeOrder={handlePrePlaceOrder}
+				<OrderType
 					handleChangeOrderType={handleChangeOrderType}
-					currentOrderType={orderType}
+					ordertype={orderType}
 					ableToChangeOrderType={ableToChangeOrderType}
 				/>
+				<Checkout fees={fees} totalAmount={totalAmount} placeOrder={handlePrePlaceOrder} />
 			</Container>
 		</>
 	);
