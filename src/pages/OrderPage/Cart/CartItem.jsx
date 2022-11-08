@@ -2,7 +2,7 @@ import React from 'react';
 import { vndCurrencyFormat } from '../../../util/currency.util';
 import { styled } from '@mui/material/styles';
 import { useEffect, useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import Tooltip from '@mui/material/Tooltip';
 import Button from '@mui/material/Button';
 import ButtonGroup from '@mui/material/ButtonGroup';
@@ -18,7 +18,8 @@ const DisabledButton = styled(Button)({
 export default function CartItem({ cart = {} }) {
 	const dispatch = useDispatch();
 	const confirm = useConfirm();
-
+	const { currentTimeSlot } = useSelector((state) => state.setting);
+	const [isValid, setIsValid] = useState(true);
 	const handleChangeQuantity = (quantity) => {
 		dispatch(
 			changeQuantityCart({
@@ -46,21 +47,18 @@ export default function CartItem({ cart = {} }) {
 			dispatch(deleteCart(cart));
 		} catch (err) {}
 	};
+	useState(() => {
+		if (currentTimeSlot.id != cart.product.timeSlotId) setIsValid(false);
+		else setIsValid(true);
+	}, [cart]);
 	return (
-		<div className={`cart-item`}>
+		<div className={`${!isValid ? 'disabled ' : ' '}cart-item`}>
 			<div className='cart-image'>
 				<img src={cart?.product.image} alt='' />
 			</div>
-			{/* <div className='cart-quantity'>
-				<span
-					onClick={() => {
-						// handleChangeQuantity(cart);
-					}}>
-					{cart?.quantity}x
-				</span>
-			</div> */}
 			<div className='cart-info'>
 				<span className='cart-name'>{cart?.product.productName}</span>
+				{!isValid ? <span className='cart-message'>Sản phẩm không khả dụng trong khung giờ này</span> : <></>}
 				<ButtonGroup>
 					{cart.quantity <= 1 ? (
 						<>
@@ -79,13 +77,24 @@ export default function CartItem({ cart = {} }) {
 						</>
 					) : (
 						<>
-							<Button
-								variant='outlined'
-								onClick={() => {
-									decQuantity();
-								}}>
-								-
-							</Button>
+							{!isValid ? (
+								<Button
+									variant='outlined'
+									onClick={() => {
+										decQuantity();
+									}}
+									disabled>
+									-
+								</Button>
+							) : (
+								<Button
+									variant='outlined'
+									onClick={() => {
+										decQuantity();
+									}}>
+									-
+								</Button>
+							)}
 						</>
 					)}
 
@@ -93,13 +102,24 @@ export default function CartItem({ cart = {} }) {
 						{cart.quantity}
 					</DisabledButton>
 
-					<Button
-						variant='outlined'
-						onClick={() => {
-							incQuantity();
-						}}>
-						+
-					</Button>
+					{!isValid ? (
+						<Button
+							variant='outlined'
+							disabled
+							onClick={() => {
+								incQuantity();
+							}}>
+							+
+						</Button>
+					) : (
+						<Button
+							variant='outlined'
+							onClick={() => {
+								incQuantity();
+							}}>
+							+
+						</Button>
+					)}
 				</ButtonGroup>
 			</div>
 			<div className='price-cost'>

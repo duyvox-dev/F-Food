@@ -83,6 +83,7 @@ export default function OrderPage() {
 	const [ableToChangeOrderType, setAbleToChangeOrderType] = useState(true);
 	const { user } = useSelector((state) => state.auth);
 	const [groupedCarts, setGroupedCarts] = useState({});
+	const [isValidCartItem, setIsValidCartItem] = useState(true);
 	// --------------------------------------------------
 
 	const calculateFee = (shippingFee) => {
@@ -123,6 +124,8 @@ export default function OrderPage() {
 			dispatch(setErrorMessage('Vui lòng đăng nhập.'));
 		} else if (_.isEmpty(user.phone)) {
 			dispatch(setErrorMessage('Vui lòng cập nhật số điện thoại.'));
+		} else if (!isValidCartItem) {
+			dispatch(setErrorMessage('Vui lòng xoá những sản phẩm không khả dụng.'));
 		} else {
 			openConfirmModal();
 		}
@@ -156,10 +159,11 @@ export default function OrderPage() {
 		const orderDetails = carts.map((cart) => {
 			const finalAmount = cart.product.price * cart.quantity;
 			return {
-				productInMenuId: cart.product.productInMenuId,
+				productInMenuId: cart.product.productMenuId,
 				quantity: cart.quantity,
 				finalAmount: finalAmount,
 				supplierStoreId: cart.product.storeId,
+				timeSlotId: cart.product.timeSlotId,
 			};
 		});
 		return orderDetails;
@@ -181,6 +185,7 @@ export default function OrderPage() {
 	};
 
 	useEffect(() => {
+		//
 		const newGroupedCart = groupCarts(carts);
 		setGroupedCarts(newGroupedCart);
 		const newNumberOfStoresInCart = Object.keys(newGroupedCart).length;
@@ -188,9 +193,15 @@ export default function OrderPage() {
 		if (numOfStoresInCart > 1) {
 			setOrderType(ORDER_TYPE_ENUM[2]);
 		}
+		//
 		setShippingFee(calculateShippingFee(numOfStoresInCart, orderType?.id));
 		const totalFee = calculateFee(shippingFee);
 		setFees(totalFee);
+		//
+		setIsValidCartItem(true);
+		carts.forEach((cart) => {
+			if (cart.product.timeSlotId != currentTimeSlot.id) setIsValidCartItem(false);
+		});
 	}, [carts]);
 
 	useEffect(() => {
@@ -211,6 +222,7 @@ export default function OrderPage() {
 		} else setAbleToChangeOrderType(true);
 	}, [numOfStoresInCart]);
 	useEffect(() => {
+		window.scrollTo(0, 0);
 		dispatch(resetOrderState());
 		dispatch(getRoomList());
 	}, []);

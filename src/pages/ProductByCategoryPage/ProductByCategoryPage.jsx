@@ -38,6 +38,7 @@ function ProductByCategoryPage(props) {
 	// 	console.log('categoryList: ', categoryList);
 	// }, [categoryList]);
 	useEffect(() => {
+		window.scrollTo(0, 0);
 		if (_.isEmpty(categoryList)) dispatch(getCategoryList());
 	}, []);
 	useEffect(() => {
