@@ -160,6 +160,7 @@ export default function OrderPage() {
 			const finalAmount = cart.product.price * cart.quantity;
 			return {
 				productInMenuId: cart.product.productMenuId,
+				productName: cart.product.productName,
 				quantity: cart.quantity,
 				finalAmount: finalAmount,
 				supplierStoreId: cart.product.storeId,
@@ -305,7 +306,11 @@ export default function OrderPage() {
 				</Typography>
 				<OrderLocation openLocationModal={openLocationModal} location={currentRoom} orderType={orderType.id} />
 				<OrderInfo user={user} openUserModal={openUserModal} />
-				<CartList groupedCarts={groupedCarts} handleChangeQuantity={handleChangeQuantity} />
+				<CartList
+					groupedCarts={groupedCarts}
+					handleChangeQuantity={handleChangeQuantity}
+					isValidCartItem={isValidCartItem}
+				/>
 				<FeeList fees={fees}></FeeList>
 				<OrderType
 					handleChangeOrderType={handleChangeOrderType}

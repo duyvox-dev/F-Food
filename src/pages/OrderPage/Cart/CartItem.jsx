@@ -15,7 +15,7 @@ const DisabledButton = styled(Button)({
 		borderColor: 'primary',
 	},
 });
-export default function CartItem({ cart = {} }) {
+export default function CartItem({ cart = {}, isValidCartItem = true }) {
 	const dispatch = useDispatch();
 	const confirm = useConfirm();
 	const { currentTimeSlot } = useSelector((state) => state.setting);
@@ -48,9 +48,9 @@ export default function CartItem({ cart = {} }) {
 		} catch (err) {}
 	};
 	useState(() => {
+		setIsValid(true);
 		if (currentTimeSlot.id != cart.product.timeSlotId) setIsValid(false);
-		else setIsValid(true);
-	}, [cart]);
+	}, [cart, isValidCartItem]);
 	return (
 		<div className={`${!isValid ? 'disabled ' : ' '}cart-item`}>
 			<div className='cart-image'>
