@@ -6,7 +6,7 @@ import { useDispatch } from 'react-redux';
 import { useConfirm } from 'material-ui-confirm';
 import { setSuccessMessage } from '../../../redux/messageSlice';
 import StoreIcon from '@mui/icons-material/Store';
-export default function CartList({ groupedCarts = {} }) {
+export default function CartList({ groupedCarts = {}, isValidCartItem = true }) {
 	const dispatch = useDispatch();
 	const confirm = useConfirm();
 	const handleRemoveAllCart = async () => {
@@ -42,7 +42,7 @@ export default function CartList({ groupedCarts = {} }) {
 								<span>{key}</span>
 							</h3>
 							{groupedCarts[key]?.map((cart, index) => {
-								return <CartItem key={index} cart={cart}></CartItem>;
+								return <CartItem key={index} cart={cart} isValidCartItem={isValidCartItem}></CartItem>;
 							})}
 						</div>
 					);
