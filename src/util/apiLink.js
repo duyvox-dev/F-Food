@@ -21,6 +21,7 @@ const apiLinks = {
 	},
 	order: {
 		createOrder: `${baseURL}/order/CreateOrder`,
+		getListOrderByOrderStatus: `${baseURL}/order/GetListOrderByOrderStatus`,
 	},
 
 	settings: {

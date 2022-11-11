@@ -19,6 +19,29 @@ const ORDER_TYPE_ENUM = [
 		name: 'Giao hàng tận nơi',
 	},
 ];
+const ORDER_STATUS_ENUM = [
+	{
+		id: 0,
+		name: 'lorem',
+	},
+
+	{
+		id: 1,
+		name: 'Đã huỷ',
+	},
+	{
+		id: 2,
+		name: 'Chờ xác nhận',
+	},
+	{
+		id: 3,
+		name: 'Chờ lấy hàng',
+	},
+	{
+		id: 4,
+		name: 'Đã giao',
+	},
+];
 const calculateShippingFee = (numOfStores = 0, orderType = 1) => {
 	if (numOfStores !== 0 && orderType == 2) {
 		return SHIPPING_FEE_CATALOG.firstFee + (numOfStores - 1) * SHIPPING_FEE_CATALOG.nextFee;
@@ -30,4 +53,4 @@ const groupCarts = (rawCarts = []) => {
 	const grouppedCarts = _.groupBy(rawCarts, 'product.storeName');
 	return grouppedCarts;
 };
-export { groupCarts, ORDER_TYPE_ENUM, calculateShippingFee };
+export { groupCarts, ORDER_TYPE_ENUM, ORDER_STATUS_ENUM, calculateShippingFee };

@@ -7,6 +7,7 @@ import Tooltip from '@mui/material/Tooltip';
 import Button from '@mui/material/Button';
 import ButtonGroup from '@mui/material/ButtonGroup';
 import { changeQuantityCart, deleteCart } from '../../../redux/cartSlice';
+import _ from 'lodash';
 import { useConfirm } from 'material-ui-confirm';
 
 const DisabledButton = styled(Button)({
@@ -47,10 +48,13 @@ export default function CartItem({ cart = {}, isValidCartItem = true }) {
 			dispatch(deleteCart(cart));
 		} catch (err) {}
 	};
-	useState(() => {
-		setIsValid(true);
-		if (currentTimeSlot.id != cart.product.timeSlotId) setIsValid(false);
-	}, [cart, isValidCartItem]);
+	useEffect(() => {
+		if (currentTimeSlot?.id != cart.product?.timeSlotId) setIsValid(false);
+		else {
+			setIsValid(true);
+		}
+	}, [cart, currentTimeSlot]);
+
 	return (
 		<div className={`${!isValid ? 'disabled ' : ' '}cart-item`}>
 			<div className='cart-image'>
