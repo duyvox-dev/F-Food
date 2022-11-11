@@ -17,11 +17,51 @@ export const createOrder = createAsyncThunk('order/createOrder', async (data, th
 		return thunkAPI.rejectWithValue();
 	}
 });
+export const getListOrderByOrderStatus = createAsyncThunk(
+	'order/getListOrderByOrderStatus',
+	async (statusId, thunkAPI) => {
+		try {
+			const { auth } = await thunkAPI.getState();
+			console.log(auth);
+			const res = await orderService.getListOrderByOrderStatus(auth.user.id, statusId);
+			return res.data.results;
+		} catch (error) {
+			// message.error(error.response.data.message);
+			return thunkAPI.rejectWithValue();
+		}
+	}
+);
+export const getOrderDetail = createAsyncThunk('order/getOrderDetail', async (orderId, thunkAPI) => {
+	try {
+		const { order } = await thunkAPI.getState();
+		const { orderDetailList } = order;
+		const orderDetail = orderDetailList.find((order) => order.id == orderId);
+		return orderDetail;
+	} catch (error) {
+		// message.error(error.response.data.message);
+		return thunkAPI.rejectWithValue();
+	}
+});
+export const updateOrderStatus = createAsyncThunk('order/updateOrderStatus', async (orderId, thunkAPI) => {
+	try {
+		const { auth } = await thunkAPI.getState();
+
+		const res = orderService.updateOrderStatus(orderId, auth.user.id);
+		thunkAPI.getState(getOrderDetail(orderId));
+		return {};
+	} catch (error) {
+		// message.error(error.response.data.message);
+		return thunkAPI.rejectWithValue();
+	}
+});
+
 const orderSlice = createSlice({
 	name: 'orderSlice',
 	initialState: {
 		orderSuccess: false,
 		orderFail: false,
+		orderDetailList: [],
+		currentOrder: {},
 	},
 	reducers: {
 		resetOrderState: (state, action) => {
@@ -41,6 +81,30 @@ const orderSlice = createSlice({
 			state.orderSuccess = false;
 			state.orderFail = true;
 		},
+		//
+		[getListOrderByOrderStatus.pending]: (state) => {
+			state.orderDetailList = [];
+		},
+		[getListOrderByOrderStatus.fulfilled]: (state, { payload }) => {
+			state.orderDetailList = payload;
+		},
+		[getListOrderByOrderStatus.rejected]: (state) => {},
+		//
+		[getOrderDetail.pending]: (state) => {
+			state.currentOrder = {};
+		},
+		[getOrderDetail.fulfilled]: (state, { payload }) => {
+			state.currentOrder = payload;
+		},
+		[getOrderDetail.rejected]: (state) => {},
+		//
+		[updateOrderStatus.pending]: (state) => {
+			state.currentOrder = {};
+		},
+		[updateOrderStatus.fulfilled]: (state, { payload }) => {
+			state.currentOrder = payload;
+		},
+		[updateOrderStatus.rejected]: (state) => {},
 	},
 });
 const { reducer, actions } = orderSlice;

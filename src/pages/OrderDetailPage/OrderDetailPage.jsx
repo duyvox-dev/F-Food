@@ -2,9 +2,7 @@ import * as React from 'react';
 import PropTypes from 'prop-types';
 import { styled } from '@mui/material/styles';
 import Stack from '@mui/material/Stack';
-import Stepper from '@mui/material/Stepper';
-import Step from '@mui/material/Step';
-import StepLabel from '@mui/material/StepLabel';
+import moment from 'moment/moment';
 import Check from '@mui/icons-material/Check';
 import { Box, Container, Typography } from '@mui/material';
 import Inventory2Icon from '@mui/icons-material/Inventory2';
@@ -21,7 +19,12 @@ import { vndCurrencyFormat } from '../../util/currency.util';
 import Divider from '@mui/material/Divider';
 import { useState } from 'react';
 import { useEffect } from 'react';
-
+import { useDispatch, useSelector } from 'react-redux';
+import { getOrderDetail, updateOrderStatus } from '../../redux/orderSlice';
+import { useParams } from 'react-router-dom';
+import { setSuccessMessage } from '../../redux/messageSlice';
+import { useConfirm } from 'material-ui-confirm';
+import _ from 'lodash';
 const QontoConnector = styled(StepConnector)(({ theme }) => ({
 	[`&.${stepConnectorClasses.alternativeLabel}`]: {
 		top: 10,
@@ -166,59 +169,86 @@ ColorlibStepIcon.propTypes = {
 };
 
 const StyledButton = styled(Button)({
-	color: 'white',
-	backgroundColor: 'rgba(243, 101, 34)',
+	color: 'gray',
+	background: 'white',
 	padding: '0.5rem 2rem',
-	'&:hover': { backgroundColor: 'rgba(243, 101, 34)' },
+	border: '1px solid gray',
+	'&:hover': { backgroundColor: '' },
 	width: '100%',
 });
 
 const steps = ['Đã đặt hàng', 'Đang giao hàng', 'Đã nhận hàng'];
 
 export default function OrderDetailPage() {
-	const mockDataProducts = [
-		{
-			id: 1,
-			name: 'Bánh chuối',
-			quantity: 10,
-			status: 'available',
-			image:
-				'https://7rewards-images-s3-ap-southeast-1-amazonaws.cdn.vccloud.vn/production/product_uoms/images/5042_1627615937_original.jpg?1650293797',
-			price: 10000,
-		},
-		{
-			id: 2,
-			name: 'Combo chuối nho',
-			quantity: 10,
-			status: 'available',
-			price: 50000,
-			discountPrice: 40000,
+	// const mockDataProducts = [
+	// 	{
+	// 		id: 1,
+	// 		name: 'Bánh chuối',
+	// 		quantity: 10,
+	// 		status: 'available',
+	// 		image:
+	// 			'https://7rewards-images-s3-ap-southeast-1-amazonaws.cdn.vccloud.vn/production/product_uoms/images/5042_1627615937_original.jpg?1650293797',
+	// 		price: 10000,
+	// 	},
+	// 	{
+	// 		id: 2,
+	// 		name: 'Combo chuối nho',
+	// 		quantity: 10,
+	// 		status: 'available',
+	// 		price: 50000,
+	// 		discountPrice: 40000,
 
-			image:
-				'https://image.sevensystem.vn/crop?width=1043&height=1043&type=jpeg&url=https://ceph-external.sevensystem.vn/promotion-image/promo_5564_1664357789659.jpg?1664357789709',
-		},
-		{
-			id: 3,
-			name: 'Nho',
-			quantity: 5,
-			status: '',
-			price: 20000,
-			discountPrice: 10000,
-			image:
-				'https://image.sevensystem.vn/crop?width=1043&height=1042&type=jpeg&url=https://ceph-external.sevensystem.vn/promotion-image/promo_5408_1664186009325.jpg?1664186009396',
-		},
-	];
-	const [products, setProducts] = useState(mockDataProducts);
+	// 		image:
+	// 			'https://image.sevensystem.vn/crop?width=1043&height=1043&type=jpeg&url=https://ceph-external.sevensystem.vn/promotion-image/promo_5564_1664357789659.jpg?1664357789709',
+	// 	},
+	// 	{
+	// 		id: 3,
+	// 		name: 'Nho',
+	// 		quantity: 5,
+	// 		status: '',
+	// 		price: 20000,
+	// 		discountPrice: 10000,
+	// 		image:
+	// 			'https://image.sevensystem.vn/crop?width=1043&height=1042&type=jpeg&url=https://ceph-external.sevensystem.vn/promotion-image/promo_5408_1664186009325.jpg?1664186009396',
+	// 	},
+	// ];
+	// const [products, setProducts] = useState(mockDataProducts);
+	const { id } = useParams();
+	const dispatch = useDispatch();
+	const { currentOrder } = useSelector((state) => state.order);
+	const { user } = useSelector((state) => state.auth);
+	const { timeSlotList } = useSelector((state) => state.setting);
+	const confirm = useConfirm();
+	const [mappedTimeSlot, setMappedTimeSlot] = useState({});
+	const [isAbleToCancel, setIsAbleToCancel] = useState(false);
 
-	// get status from store
-	let status = 'shipping';
+	const handleCancel = async () => {
+		try {
+			const res = await confirm({
+				title: 'Xác nhận huỷ đơn',
+				description: `Bạn có thực sự muốn huỷ đơn`,
+			});
+			dispatch(updateOrderStatus(currentOrder.orderStatus));
+			dispatch(setSuccessMessage('Huỷ đơn thành công'));
+		} catch (err) {}
+	};
+
 	useEffect(() => {
 		window.scrollTo(0, 0);
+		dispatch(getOrderDetail(id));
 	}, []);
+	useEffect(() => {
+		const timeSlot = timeSlotList.find((time) => time.id == currentOrder.timeSlotId);
+		setMappedTimeSlot(timeSlot);
+		if (currentOrder.orderStatus == 2) {
+			setIsAbleToCancel(true);
+		}
+	}, [currentOrder]);
+
 	return (
 		<Container maxWidth='lg'>
 			<Stack sx={{ width: '100%' }} spacing={4}>
-				<div style={{ textAlign: 'center' }}>
+				{/* <div style={{ textAlign: 'center' }}>
 					<h2>Chi tiết đơn hàng</h2>
 					<Stepper
 						alternativeLabel
@@ -230,70 +260,71 @@ export default function OrderDetailPage() {
 							</Step>
 						))}
 					</Stepper>
-				</div>
+				</div> */}
 				<div style={{ width: '100%', margin: '0 auto', marginTop: '20px' }}>
-					<h1 style={{ color: 'grey' }}>Địa chỉ nhận hàng</h1>
+					<h2 style={{ color: 'grey' }}>Địa chỉ nhận hàng</h2>
 					<div>
-						<div style={{ fontWeight: 'bolder' }}>
-							<span>Nguyễn Quốc Nam</span> - <span>012345678</span>
+						<div style={{ fontWeight: 'bolder', fontSize: '2rem' }}>
+							<span>{user.name}</span> - <span>{currentOrder.deliveryPhone}</span>
 						</div>
 					</div>
 					<div style={{ marginTop: '15px' }}>
 						<span>
 							<FmdGoodOutlinedIcon style={{ width: '15px', height: '15px' }} />
-							Giao hàng tại: <b>Phòng 202</b>
+							Giao hàng tại: <b>{currentOrder?.roomNumber}</b>
 						</span>
 						<span style={{ marginLeft: '100px' }}>
 							<CalendarTodayOutlinedIcon style={{ width: '15px', height: '15px' }} />
-							Nhận hàng: <b>16h, thứ 7 (8/10)</b>
+							Nhận hàng:{' '}
+							<b>
+								{moment(`2015-06-17 ${mappedTimeSlot.arriveTime}`).format('HH:mm')}-
+								{moment(`2015-06-17 ${mappedTimeSlot.checkoutTime}`).format('HH:mm')}
+							</b>
 						</span>
 					</div>
 				</div>
 				<div style={{ backgroundColor: 'pink', width: '100%', height: '20px', padding: '10px' }}>
-					Đơn hàng được xử lý bởi 7Eleven
+					Đơn hàng được xử lý bởi {currentOrder?.supplierStoreName}
 				</div>
 				<Box>
-					<ProductInOrder product={products[0]}></ProductInOrder>
-
-					{products.length > 1 ? (
-						<div className='see-more'>
-							<span className='see-more-text'>
-								<span>Xem thêm </span>
-								<KeyboardArrowDownIcon />
-							</span>
-						</div>
-					) : (
-						<></>
-					)}
+					{currentOrder?.orderDetails?.map((product) => {
+						return <ProductInOrder product={product}></ProductInOrder>;
+					})}
 					<Stack direction='row' justifyContent='space-between' sx={{ padding: '1rem' }}>
 						<div>
 							<p>Tiền hàng</p>
 							<p>Phí vận chuyển</p>
 						</div>
-						<div style={{ fontWeight: 'bolder' }}>
-							<p>{vndCurrencyFormat(92000)} </p>
-							<p>{vndCurrencyFormat(20000)}</p>
+						<div style={{ fontWeight: 'bolder', textAlign: 'right' }}>
+							<p>{vndCurrencyFormat(currentOrder?.totalAmount)} </p>
+							<p>{vndCurrencyFormat(currentOrder?.shippingFee)}</p>
 						</div>
 					</Stack>
 					<Divider />
-					<Stack>
-						<div style={{ marginLeft: '15px', marginTop: '15px' }}>
-							<span style={{ marginRight: '15px' }}>$</span>
-							<span>Tiền mặt</span>
-						</div>
-					</Stack>
+
 					<Stack direction='row' justifyContent='space-between' mt={5}>
 						<div>
 							<Typography variant='h6'>Tổng thanh toán:</Typography>
 						</div>
 						<div>
 							<Typography variant='h6'>
-								<span className='order-price'>{vndCurrencyFormat(102000)}</span>
+								<span className='order-price'>
+									{_.isEmpty(currentOrder.finalAmount) == false
+										? vndCurrencyFormat(currentOrder?.finalAmount)
+										: vndCurrencyFormat(currentOrder?.totalAmount + currentOrder?.shippingFee)}
+								</span>
 							</Typography>
 						</div>
 					</Stack>
-					<Stack direction='row' justifyContent={'flex-end'}>
-						<StyledButton>Mua lại</StyledButton>
+					<Stack direction='row' justifyContent={'flex-end'} sx={{ marginTop: '1rem' }}>
+						{isAbleToCancel && (
+							<StyledButton
+								onClick={() => {
+									handleCancel();
+								}}>
+								Huỷ
+							</StyledButton>
+						)}
 					</Stack>
 				</Box>
 			</Stack>

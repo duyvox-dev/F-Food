@@ -14,14 +14,17 @@ function HomeContainer({ products = [] }) {
 			<div className='homeContainer'>
 				<div className='bannerName'>
 					<div className='banner-tittle'>
-						<p className='header-title'>Delivery</p>
+						<p className='header-title'>Giao hàng</p>
 						<div className='imageDelivery'>
 							<img src={Delivery} className='pictureDeli' alt='delivery' />
 						</div>
 					</div>
 					<p className='content-title'>
-						The Fastest Delivery in
-						<span className='sub-content'> Your University</span>
+						Đặt hàng giao ngay
+						<span className='sub-content' style={{ display: 'block' }}>
+							{' '}
+							không phải xếp hàng
+						</span>
 					</p>
 				</div>
 				<div className='hotMenu'>
