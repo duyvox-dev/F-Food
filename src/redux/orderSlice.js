@@ -22,7 +22,6 @@ export const getListOrderByOrderStatus = createAsyncThunk(
 	async (statusId, thunkAPI) => {
 		try {
 			const { auth } = await thunkAPI.getState();
-			console.log(auth);
 			const res = await orderService.getListOrderByOrderStatus(auth.user.id, statusId);
 			return res.data.results;
 		} catch (error) {
@@ -33,10 +32,8 @@ export const getListOrderByOrderStatus = createAsyncThunk(
 );
 export const getOrderDetail = createAsyncThunk('order/getOrderDetail', async (orderId, thunkAPI) => {
 	try {
-		const { order } = await thunkAPI.getState();
-		const { orderDetailList } = order;
-		const orderDetail = orderDetailList.find((order) => order.id == orderId);
-		return orderDetail;
+		const res = await orderService.getOrderDetail(orderId);
+		return res.data;
 	} catch (error) {
 		// message.error(error.response.data.message);
 		return thunkAPI.rejectWithValue();
@@ -45,9 +42,11 @@ export const getOrderDetail = createAsyncThunk('order/getOrderDetail', async (or
 export const updateOrderStatus = createAsyncThunk('order/updateOrderStatus', async (orderId, thunkAPI) => {
 	try {
 		const { auth } = await thunkAPI.getState();
-
-		const res = orderService.updateOrderStatus(orderId, auth.user.id);
-		thunkAPI.getState(getOrderDetail(orderId));
+		// console.log(orderId);
+		const res = await orderService.updateOrderStatus(orderId, 1);
+		// thunkAPI.dispatch(setSuccessMessage('Huỷ đơn hàng thành công.'));
+		thunkAPI.dispatch(getOrderDetail(orderId));
+		// await thunkAPI.getState(getListOrderByOrderStatus(1));
 		return {};
 	} catch (error) {
 		// message.error(error.response.data.message);

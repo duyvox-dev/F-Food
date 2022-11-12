@@ -190,12 +190,13 @@ export default function OrderPage() {
 		const newGroupedCart = groupCarts(carts);
 		setGroupedCarts(newGroupedCart);
 		const newNumberOfStoresInCart = Object.keys(newGroupedCart).length;
-		setNumOfStoresInCart(newNumberOfStoresInCart);
-		if (numOfStoresInCart > 1) {
+		if (newNumberOfStoresInCart > 1) {
 			setOrderType(ORDER_TYPE_ENUM[2]);
 		}
+		setNumOfStoresInCart(newNumberOfStoresInCart);
 		//
-		setShippingFee(calculateShippingFee(numOfStoresInCart, orderType?.id));
+		console.log(newNumberOfStoresInCart);
+		setShippingFee(calculateShippingFee(newNumberOfStoresInCart, orderType?.id));
 		const totalFee = calculateFee(shippingFee);
 		setFees(totalFee);
 		//
@@ -218,6 +219,7 @@ export default function OrderPage() {
 		}
 	}, [roomList]);
 	useEffect(() => {
+		setShippingFee(calculateShippingFee(numOfStoresInCart, orderType?.id));
 		if (numOfStoresInCart > 1) {
 			setAbleToChangeOrderType(false);
 		} else setAbleToChangeOrderType(true);

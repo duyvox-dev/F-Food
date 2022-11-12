@@ -25,148 +25,149 @@ import { useParams } from 'react-router-dom';
 import { setSuccessMessage } from '../../redux/messageSlice';
 import { useConfirm } from 'material-ui-confirm';
 import _ from 'lodash';
-const QontoConnector = styled(StepConnector)(({ theme }) => ({
-	[`&.${stepConnectorClasses.alternativeLabel}`]: {
-		top: 10,
-		left: 'calc(-50% + 16px)',
-		right: 'calc(50% + 16px)',
-	},
-	[`&.${stepConnectorClasses.active}`]: {
-		[`& .${stepConnectorClasses.line}`]: {
-			borderColor: ORANGE_COLOR,
-		},
-	},
-	[`&.${stepConnectorClasses.completed}`]: {
-		[`& .${stepConnectorClasses.line}`]: {
-			borderColor: ORANGE_COLOR,
-		},
-	},
-	[`& .${stepConnectorClasses.line}`]: {
-		borderColor: theme.palette.mode === 'dark' ? theme.palette.grey[800] : '#eaeaf0',
-		borderTopWidth: 3,
-		borderRadius: 1,
-	},
-}));
+import { ORDER_TYPE_ENUM } from '../../util/order.util';
+// const QontoConnector = styled(StepConnector)(({ theme }) => ({
+// 	[`&.${stepConnectorClasses.alternativeLabel}`]: {
+// 		top: 10,
+// 		left: 'calc(-50% + 16px)',
+// 		right: 'calc(50% + 16px)',
+// 	},
+// 	[`&.${stepConnectorClasses.active}`]: {
+// 		[`& .${stepConnectorClasses.line}`]: {
+// 			borderColor: ORANGE_COLOR,
+// 		},
+// 	},
+// 	[`&.${stepConnectorClasses.completed}`]: {
+// 		[`& .${stepConnectorClasses.line}`]: {
+// 			borderColor: ORANGE_COLOR,
+// 		},
+// 	},
+// 	[`& .${stepConnectorClasses.line}`]: {
+// 		borderColor: theme.palette.mode === 'dark' ? theme.palette.grey[800] : '#eaeaf0',
+// 		borderTopWidth: 3,
+// 		borderRadius: 1,
+// 	},
+// }));
 
-const QontoStepIconRoot = styled('div')(({ theme, ownerState }) => ({
-	color: theme.palette.mode === 'dark' ? theme.palette.grey[700] : '#eaeaf0',
-	display: 'flex',
-	height: 22,
-	alignItems: 'center',
-	...(ownerState.active && {
-		color: '#784af4',
-	}),
-	'& .QontoStepIcon-completedIcon': {
-		color: '#784af4',
-		zIndex: 1,
-		fontSize: 18,
-	},
-	'& .QontoStepIcon-circle': {
-		width: 8,
-		height: 8,
-		borderRadius: '50%',
-		backgroundColor: 'currentColor',
-	},
-}));
+// const QontoStepIconRoot = styled('div')(({ theme, ownerState }) => ({
+// 	color: theme.palette.mode === 'dark' ? theme.palette.grey[700] : '#eaeaf0',
+// 	display: 'flex',
+// 	height: 22,
+// 	alignItems: 'center',
+// 	...(ownerState.active && {
+// 		color: '#784af4',
+// 	}),
+// 	'& .QontoStepIcon-completedIcon': {
+// 		color: '#784af4',
+// 		zIndex: 1,
+// 		fontSize: 18,
+// 	},
+// 	'& .QontoStepIcon-circle': {
+// 		width: 8,
+// 		height: 8,
+// 		borderRadius: '50%',
+// 		backgroundColor: 'currentColor',
+// 	},
+// }));
 
-function QontoStepIcon(props) {
-	const { active, completed, className } = props;
+// function QontoStepIcon(props) {
+// 	const { active, completed, className } = props;
 
-	return (
-		<QontoStepIconRoot ownerState={{ active }} className={className}>
-			{completed ? <Check className='QontoStepIcon-completedIcon' /> : <div className='QontoStepIcon-circle' />}
-		</QontoStepIconRoot>
-	);
-}
+// 	return (
+// 		<QontoStepIconRoot ownerState={{ active }} className={className}>
+// 			{completed ? <Check className='QontoStepIcon-completedIcon' /> : <div className='QontoStepIcon-circle' />}
+// 		</QontoStepIconRoot>
+// 	);
+// }
 
-QontoStepIcon.propTypes = {
-	/**
-	 * Whether this step is active.
-	 * @default false
-	 */
-	active: PropTypes.bool,
-	className: PropTypes.string,
-	/**
-	 * Mark the step as completed. Is passed to child components.
-	 * @default false
-	 */
-	completed: PropTypes.bool,
-};
+// QontoStepIcon.propTypes = {
+// 	/**
+// 	 * Whether this step is active.
+// 	 * @default false
+// 	 */
+// 	active: PropTypes.bool,
+// 	className: PropTypes.string,
+// 	/**
+// 	 * Mark the step as completed. Is passed to child components.
+// 	 * @default false
+// 	 */
+// 	completed: PropTypes.bool,
+// };
 
-const ColorlibConnector = styled(StepConnector)(({ theme }) => ({
-	[`&.${stepConnectorClasses.alternativeLabel}`]: {
-		top: 22,
-	},
-	[`&.${stepConnectorClasses.active}`]: {
-		[`& .${stepConnectorClasses.line}`]: {
-			backgroundColor: ORANGE_COLOR,
-		},
-	},
-	[`&.${stepConnectorClasses.completed}`]: {
-		[`& .${stepConnectorClasses.line}`]: {
-			backgroundColor: ORANGE_COLOR,
-		},
-	},
-	[`& .${stepConnectorClasses.line}`]: {
-		height: 3,
-		border: 0,
-		backgroundColor: theme.palette.mode === 'dark' ? theme.palette.grey[800] : '#eaeaf0',
-		borderRadius: 1,
-	},
-}));
+// const ColorlibConnector = styled(StepConnector)(({ theme }) => ({
+// 	[`&.${stepConnectorClasses.alternativeLabel}`]: {
+// 		top: 22,
+// 	},
+// 	[`&.${stepConnectorClasses.active}`]: {
+// 		[`& .${stepConnectorClasses.line}`]: {
+// 			backgroundColor: ORANGE_COLOR,
+// 		},
+// 	},
+// 	[`&.${stepConnectorClasses.completed}`]: {
+// 		[`& .${stepConnectorClasses.line}`]: {
+// 			backgroundColor: ORANGE_COLOR,
+// 		},
+// 	},
+// 	[`& .${stepConnectorClasses.line}`]: {
+// 		height: 3,
+// 		border: 0,
+// 		backgroundColor: theme.palette.mode === 'dark' ? theme.palette.grey[800] : '#eaeaf0',
+// 		borderRadius: 1,
+// 	},
+// }));
 
-const ColorlibStepIconRoot = styled('div')(({ theme, ownerState }) => ({
-	backgroundColor: theme.palette.mode === 'dark' ? theme.palette.grey[700] : '#ccc',
-	zIndex: 1,
-	color: '#fff',
-	width: 50,
-	height: 50,
-	display: 'flex',
-	borderRadius: '50%',
-	justifyContent: 'center',
-	alignItems: 'center',
-	...(ownerState.active && {
-		backgroundColor: ORANGE_COLOR,
-		boxShadow: '0 4px 10px 0 rgba(0,0,0,.25)',
-	}),
-	...(ownerState.completed && {
-		backgroundColor: ORANGE_COLOR,
-	}),
-}));
+// const ColorlibStepIconRoot = styled('div')(({ theme, ownerState }) => ({
+// 	backgroundColor: theme.palette.mode === 'dark' ? theme.palette.grey[700] : '#ccc',
+// 	zIndex: 1,
+// 	color: '#fff',
+// 	width: 50,
+// 	height: 50,
+// 	display: 'flex',
+// 	borderRadius: '50%',
+// 	justifyContent: 'center',
+// 	alignItems: 'center',
+// 	...(ownerState.active && {
+// 		backgroundColor: ORANGE_COLOR,
+// 		boxShadow: '0 4px 10px 0 rgba(0,0,0,.25)',
+// 	}),
+// 	...(ownerState.completed && {
+// 		backgroundColor: ORANGE_COLOR,
+// 	}),
+// }));
 
-function ColorlibStepIcon(props) {
-	const { active, completed, className } = props;
+// function ColorlibStepIcon(props) {
+// 	const { active, completed, className } = props;
 
-	const icons = {
-		1: <Inventory2Icon />,
-		2: <HailIcon />,
-		3: <AssignmentTurnedInIcon />,
-	};
+// 	const icons = {
+// 		1: <Inventory2Icon />,
+// 		2: <HailIcon />,
+// 		3: <AssignmentTurnedInIcon />,
+// 	};
 
-	return (
-		<ColorlibStepIconRoot ownerState={{ completed, active }} className={className}>
-			{icons[String(props.icon)]}
-		</ColorlibStepIconRoot>
-	);
-}
+// 	return (
+// 		<ColorlibStepIconRoot ownerState={{ completed, active }} className={className}>
+// 			{icons[String(props.icon)]}
+// 		</ColorlibStepIconRoot>
+// 	);
+// }
 
-ColorlibStepIcon.propTypes = {
-	/**
-	 * Whether this step is active.
-	 * @default false
-	 */
-	active: PropTypes.bool,
-	className: PropTypes.string,
-	/**
-	 * Mark the step as completed. Is passed to child components.
-	 * @default false
-	 */
-	completed: PropTypes.bool,
-	/**
-	 * The label displayed in the step icon.
-	 */
-	icon: PropTypes.node,
-};
+// ColorlibStepIcon.propTypes = {
+// 	/**
+// 	 * Whether this step is active.
+// 	 * @default false
+// 	 */
+// 	active: PropTypes.bool,
+// 	className: PropTypes.string,
+// 	/**
+// 	 * Mark the step as completed. Is passed to child components.
+// 	 * @default false
+// 	 */
+// 	completed: PropTypes.bool,
+// 	/**
+// 	 * The label displayed in the step icon.
+// 	 */
+// 	icon: PropTypes.node,
+// };
 
 const StyledButton = styled(Button)({
 	color: 'gray',
@@ -177,7 +178,7 @@ const StyledButton = styled(Button)({
 	width: '100%',
 });
 
-const steps = ['Đã đặt hàng', 'Đang giao hàng', 'Đã nhận hàng'];
+// const steps = ['Đã đặt hàng', 'Đang giao hàng', 'Đã nhận hàng'];
 
 export default function OrderDetailPage() {
 	// const mockDataProducts = [
@@ -228,8 +229,7 @@ export default function OrderDetailPage() {
 				title: 'Xác nhận huỷ đơn',
 				description: `Bạn có thực sự muốn huỷ đơn`,
 			});
-			dispatch(updateOrderStatus(currentOrder.orderStatus));
-			dispatch(setSuccessMessage('Huỷ đơn thành công'));
+			dispatch(updateOrderStatus(currentOrder.id));
 		} catch (err) {}
 	};
 
@@ -242,6 +242,8 @@ export default function OrderDetailPage() {
 		setMappedTimeSlot(timeSlot);
 		if (currentOrder.orderStatus == 2) {
 			setIsAbleToCancel(true);
+		} else {
+			setIsAbleToCancel(false);
 		}
 	}, [currentOrder]);
 
@@ -271,20 +273,21 @@ export default function OrderDetailPage() {
 					<div style={{ marginTop: '15px' }}>
 						<span>
 							<FmdGoodOutlinedIcon style={{ width: '15px', height: '15px' }} />
-							Giao hàng tại: <b>{currentOrder?.roomNumber}</b>
+							Giao hàng tại:{' '}
+							<b>{_.isEmpty(currentOrder?.roomNumber) == false ? currentOrder?.roomNumber : 'Nhận tại cửa hàng'}</b>
 						</span>
 						<span style={{ marginLeft: '100px' }}>
 							<CalendarTodayOutlinedIcon style={{ width: '15px', height: '15px' }} />
 							Nhận hàng:{' '}
 							<b>
-								{moment(`2015-06-17 ${mappedTimeSlot.arriveTime}`).format('HH:mm')}-
-								{moment(`2015-06-17 ${mappedTimeSlot.checkoutTime}`).format('HH:mm')}
+								{moment(`2015-06-17 ${mappedTimeSlot?.arriveTime}`).format('HH:mm')}-
+								{moment(`2015-06-17 ${mappedTimeSlot?.checkoutTime}`).format('HH:mm')}
 							</b>
 						</span>
 					</div>
 				</div>
 				<div style={{ backgroundColor: 'pink', width: '100%', height: '20px', padding: '10px' }}>
-					Đơn hàng được xử lý bởi {currentOrder?.supplierStoreName}
+					Đơn hàng được xử lý bởi {currentOrder?.storeName}
 				</div>
 				<Box>
 					{currentOrder?.orderDetails?.map((product) => {
@@ -317,13 +320,15 @@ export default function OrderDetailPage() {
 						</div>
 					</Stack>
 					<Stack direction='row' justifyContent={'flex-end'} sx={{ marginTop: '1rem' }}>
-						{isAbleToCancel && (
+						{isAbleToCancel ? (
 							<StyledButton
 								onClick={() => {
 									handleCancel();
 								}}>
 								Huỷ
 							</StyledButton>
+						) : (
+							<></>
 						)}
 					</Stack>
 				</Box>
