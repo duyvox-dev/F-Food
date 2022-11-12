@@ -47,12 +47,9 @@ export const getOrderDetail = createAsyncThunk('order/getOrderDetail', async (or
 });
 export const updateOrderStatus = createAsyncThunk('order/updateOrderStatus', async (orderId, thunkAPI) => {
 	try {
-		const { auth } = await thunkAPI.getState();
-		// console.log(orderId);
 		const res = await orderService.updateOrderStatus(orderId, 1);
-		// thunkAPI.dispatch(setSuccessMessage('Huỷ đơn hàng thành công.'));
+		thunkAPI.dispatch(setSuccessMessage('Huỷ đơn hàng thành công.'));
 		thunkAPI.dispatch(getOrderDetail(orderId));
-		// await thunkAPI.getState(getListOrderByOrderStatus(1));
 		return {};
 	} catch (error) {
 		// message.error(error.response.data.message);
