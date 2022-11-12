@@ -274,7 +274,11 @@ export default function OrderDetailPage() {
 						<span>
 							<FmdGoodOutlinedIcon style={{ width: '15px', height: '15px' }} />
 							Giao hàng tại:{' '}
-							<b>{_.isEmpty(currentOrder?.roomNumber) == false ? currentOrder?.roomNumber : 'Nhận tại cửa hàng'}</b>
+							<b>
+								{_.isEmpty(currentOrder?.roomNumber) == false && currentOrder?.orderType == 2
+									? currentOrder?.roomNumber
+									: 'Nhận tại cửa hàng'}
+							</b>
 						</span>
 						<span style={{ marginLeft: '100px' }}>
 							<CalendarTodayOutlinedIcon style={{ width: '15px', height: '15px' }} />

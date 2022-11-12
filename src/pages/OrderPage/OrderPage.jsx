@@ -171,7 +171,7 @@ export default function OrderPage() {
 	};
 	const handlePlaceOrder = () => {
 		const orderDetails = getOrderDetails();
-		const roomId = orderType.id == 1 ? null : currentRoom.id;
+		const roomId = orderType.id == 1 ? roomList[0].id : currentRoom.id;
 
 		const orderData = {
 			totalAmount: fees.originCost.cost,

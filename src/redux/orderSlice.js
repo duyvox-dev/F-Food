@@ -23,7 +23,13 @@ export const getListOrderByOrderStatus = createAsyncThunk(
 		try {
 			const { auth } = await thunkAPI.getState();
 			const res = await orderService.getListOrderByOrderStatus(auth.user.id, statusId);
-			return res.data.results;
+			let sortedOrder = res.data.results;
+			sortedOrder.sort(function (a, b) {
+				// Turn your strings into dates, and then subtract them
+				// to get a value that is either negative, positive, or zero.
+				return new Date(b.checkInDate) - new Date(a.checkInDate);
+			});
+			return sortedOrder;
 		} catch (error) {
 			// message.error(error.response.data.message);
 			return thunkAPI.rejectWithValue();
