@@ -33,7 +33,7 @@ export default function OrderItem({ orderData = {} }) {
 				<Stack direction='row' justifyContent={'space-between'} sx={{ padding: '1rem' }}>
 					<span>{orderData.orderDetails.length} sản phẩm</span>
 					<Typography variant='h6'>
-						Thành tiền: <span className='order-price'>{vndCurrencyFormat(orderData.totalAmount)}</span>
+						Thành tiền: <span className='order-price'>{vndCurrencyFormat(orderData.finalAmount)}</span>
 					</Typography>
 				</Stack>
 			</Box>
