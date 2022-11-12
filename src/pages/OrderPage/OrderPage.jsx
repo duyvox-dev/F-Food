@@ -16,7 +16,7 @@ import useModal from '../../hooks/useModal';
 import _ from 'lodash';
 import { useDispatch, useSelector } from 'react-redux';
 import { setErrorMessage, setSuccessMessage } from '../../redux/messageSlice';
-import { createOrder, resetOrderState } from '../../redux/orderSlice';
+import { createOrder, preOrder, resetOrderState } from '../../redux/orderSlice';
 import { calculateShippingFee, ORDER_TYPE_ENUM, groupCarts } from '../../util/order.util';
 import { setCurrentRoom, getRoomList } from '../../redux/settingSlice';
 import { Link } from 'react-router-dom';
@@ -73,12 +73,12 @@ export default function OrderPage() {
 	const { roomList, currentRoom, currentTimeSlot } = useSelector((state) => state.setting);
 	// Cost/ fees
 	const [fees, setFees] = useState(mockDataFee);
-	const [shippingFee, setShippingFee] = useState(0);
+	// const [shippingFee, setShippingFee] = useState(0);
 	const [numOfStoresInCart, setNumOfStoresInCart] = useState(1);
 	//
 	const [selectedCart, setSelectedCart] = useState({});
 	const { carts, totalAmount } = useSelector((state) => state.cart);
-	const { orderSuccess, orderFail } = useSelector((state) => state.order);
+	const { orderSuccess, orderFail, shippingFee } = useSelector((state) => state.order);
 	const [orderType, setOrderType] = useState(ORDER_TYPE_ENUM[2]);
 	const [ableToChangeOrderType, setAbleToChangeOrderType] = useState(true);
 	const { user } = useSelector((state) => state.auth);
@@ -184,6 +184,21 @@ export default function OrderPage() {
 		};
 		dispatch(createOrder(orderData));
 	};
+	const getInfoShippingFee = () => {
+		const orderDetails = getOrderDetails();
+		const roomId = orderType.id == 1 ? roomList[0].id : currentRoom.id;
+
+		const orderData = {
+			totalAmount: fees.originCost.cost,
+			deliveryPhone: user.phone,
+			orderType: orderType.id,
+			timeSlotId: currentTimeSlot.id,
+			roomId: roomId,
+			customerId: user.id,
+			orderDetails: orderDetails,
+		};
+		return orderData;
+	};
 
 	useEffect(() => {
 		//
@@ -195,20 +210,22 @@ export default function OrderPage() {
 		}
 		setNumOfStoresInCart(newNumberOfStoresInCart);
 		//
-		console.log(newNumberOfStoresInCart);
-		setShippingFee(calculateShippingFee(newNumberOfStoresInCart, orderType?.id));
-		const totalFee = calculateFee(shippingFee);
-		setFees(totalFee);
+		// console.log(newNumberOfStoresInCart);
+		// setShippingFee(calculateShippingFee(newNumberOfStoresInCart, orderType?.id));
+		// const totalFee = calculateFee(shippingFee);
+		// setFees(totalFee);
+
 		//
+		dispatch(preOrder());
 		setIsValidCartItem(true);
 		carts.forEach((cart) => {
 			if (cart.product.timeSlotId != currentTimeSlot.id) setIsValidCartItem(false);
 		});
 	}, [carts]);
 
-	useEffect(() => {
-		setShippingFee(calculateShippingFee(numOfStoresInCart, orderType?.id));
-	}, [orderType]);
+	// useEffect(() => {
+	// 	// setShippingFee(calculateShippingFee(numOfStoresInCart, orderType?.id));
+	// }, [orderType]);
 	useEffect(() => {
 		const totalFee = calculateFee(shippingFee);
 		setFees(totalFee);
@@ -219,15 +236,21 @@ export default function OrderPage() {
 		}
 	}, [roomList]);
 	useEffect(() => {
-		setShippingFee(calculateShippingFee(numOfStoresInCart, orderType?.id));
+		// setShippingFee(calculateShippingFee(numOfStoresInCart, orderType?.id));
 		if (numOfStoresInCart > 1) {
 			setAbleToChangeOrderType(false);
 		} else setAbleToChangeOrderType(true);
 	}, [numOfStoresInCart]);
 	useEffect(() => {
+		const data = getInfoShippingFee();
+		dispatch(preOrder(data));
+	}, [carts, orderType]);
+	useEffect(() => {
 		window.scrollTo(0, 0);
 		dispatch(resetOrderState());
 		dispatch(getRoomList());
+		const data = getInfoShippingFee();
+		dispatch(preOrder(data));
 	}, []);
 	if (orderSuccess == true || orderFail == true)
 		return (

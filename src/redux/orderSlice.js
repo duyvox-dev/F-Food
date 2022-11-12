@@ -45,6 +45,15 @@ export const getOrderDetail = createAsyncThunk('order/getOrderDetail', async (or
 		return thunkAPI.rejectWithValue();
 	}
 });
+export const preOrder = createAsyncThunk('order/preOrder', async (data, thunkAPI) => {
+	try {
+		const res = await orderService.preOrder(data);
+		return res.data;
+	} catch (error) {
+		// message.error(error.response.data.message);
+		return thunkAPI.rejectWithValue();
+	}
+});
 export const updateOrderStatus = createAsyncThunk('order/updateOrderStatus', async (orderId, thunkAPI) => {
 	try {
 		const res = await orderService.updateOrderStatus(orderId, 1);
@@ -64,6 +73,7 @@ const orderSlice = createSlice({
 		orderFail: false,
 		orderDetailList: [],
 		currentOrder: {},
+		shippingFee: 0,
 	},
 	reducers: {
 		resetOrderState: (state, action) => {
@@ -107,6 +117,14 @@ const orderSlice = createSlice({
 			state.currentOrder = payload;
 		},
 		[updateOrderStatus.rejected]: (state) => {},
+		//
+		[preOrder.pending]: (state) => {
+			state.shippingFee = 0;
+		},
+		[preOrder.fulfilled]: (state, { payload }) => {
+			state.shippingFee = payload;
+		},
+		[preOrder.rejected]: (state) => {},
 	},
 });
 const { reducer, actions } = orderSlice;

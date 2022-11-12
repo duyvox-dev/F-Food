@@ -4,6 +4,9 @@ import { httpService } from '../api/http.service';
 const createOrder = (data) => {
 	return httpService.post(`${apiLinks.order.createOrder}`, data);
 };
+const preOrder = (data) => {
+	return httpService.post(`${apiLinks.order.preOrder}`, data);
+};
 const getListOrderByOrderStatus = (userId, statusId) => {
 	return httpService.get(
 		`${apiLinks.order.getListOrderByOrderStatus}?orderStatus=${statusId}&customerId=${userId}&Page=1&PageSize=999`
@@ -20,5 +23,6 @@ const orderService = {
 	getListOrderByOrderStatus,
 	updateOrderStatus,
 	getOrderDetail,
+	preOrder,
 };
 export default orderService;

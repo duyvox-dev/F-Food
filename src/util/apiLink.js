@@ -24,6 +24,7 @@ const apiLinks = {
 		getListOrderByOrderStatus: `${baseURL}/order/GetListOrderByOrderStatus`,
 		getOrderDetail: `${baseURL}/order/`,
 		updateOrderStatus: `${baseURL}/order/`,
+		preOrder: `${baseURL}/order/preOrder`,
 	},
 
 	settings: {
