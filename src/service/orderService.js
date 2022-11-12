@@ -10,7 +10,7 @@ const getListOrderByOrderStatus = (userId, statusId) => {
 	);
 };
 const updateOrderStatus = (orderId, statusId) => {
-	return httpService.put(`${apiLinks.order.updateOrderStatus}?orderStatus=${statusId}&orderId=${orderId}`);
+	return httpService.put(`${apiLinks.order.updateOrderStatus}${orderId}?orderStatus=${statusId}`);
 };
 const getOrderDetail = (orderId) => {
 	return httpService.get(`${apiLinks.order.getOrderDetail}${orderId}`);

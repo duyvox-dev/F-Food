@@ -26,6 +26,7 @@ import { setSuccessMessage } from '../../redux/messageSlice';
 import { useConfirm } from 'material-ui-confirm';
 import _ from 'lodash';
 import { ORDER_TYPE_ENUM } from '../../util/order.util';
+import { ORDER_STATUS_ENUM } from '../../util/order.util';
 // const QontoConnector = styled(StepConnector)(({ theme }) => ({
 // 	[`&.${stepConnectorClasses.alternativeLabel}`]: {
 // 		top: 10,
@@ -271,6 +272,15 @@ export default function OrderDetailPage() {
 						</div>
 					</div>
 					<div style={{ marginTop: '15px' }}>
+						<span
+							style={{
+								display: 'block',
+								fontSize: '1.5rem',
+								color: '#f36522',
+								margin: '0.5rem 0',
+							}}>
+							{_.isEmpty(currentOrder) == false ? ORDER_STATUS_ENUM[currentOrder?.orderStatus].name : ''}
+						</span>
 						<span>
 							<FmdGoodOutlinedIcon style={{ width: '15px', height: '15px' }} />
 							Giao hàng tại:{' '}
@@ -280,6 +290,7 @@ export default function OrderDetailPage() {
 									: 'Nhận tại cửa hàng'}
 							</b>
 						</span>
+
 						<span style={{ marginLeft: '100px' }}>
 							<CalendarTodayOutlinedIcon style={{ width: '15px', height: '15px' }} />
 							Nhận hàng:{' '}
