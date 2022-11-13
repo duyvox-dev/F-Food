@@ -27,6 +27,7 @@ const ProductItem = ({ product }) => {
 	const dispatch = useDispatch();
 	return (
 		<Link to={`/detail/${product?.productMenuId}`} className='product'>
+			<span className='product__store'>{product?.storeName}</span>
 			<img src={product?.image} alt='' className='product-image' />
 			<div className='product-info'>
 				<p className='product-name'>{product?.productName}</p>

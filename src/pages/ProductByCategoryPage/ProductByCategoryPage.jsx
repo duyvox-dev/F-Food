@@ -148,6 +148,8 @@ function ProductByCategoryPage(props) {
 										</div>
 										<div className='info-product'>
 											<div className='name-product'>{product.productName}</div>
+											<div className='store-product'>{product.storeName}</div>
+
 											<div className='product-price-discount'>
 												<div className='product-new-price'>{vndCurrencyFormat(product.price)}</div>
 												{/* <div className='discount-percent'>-{discountPercent(43000, 49000)}%</div> */}

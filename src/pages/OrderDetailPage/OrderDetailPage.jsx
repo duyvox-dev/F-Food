@@ -18,6 +18,8 @@ import Button from '@mui/material/Button';
 import { vndCurrencyFormat } from '../../util/currency.util';
 import Divider from '@mui/material/Divider';
 import { useState } from 'react';
+import StoreIcon from '@mui/icons-material/Store';
+
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getOrderDetail, updateOrderStatus } from '../../redux/orderSlice';
@@ -249,7 +251,11 @@ export default function OrderDetailPage() {
 	}, [currentOrder]);
 
 	return (
-		<Container maxWidth='lg'>
+		<Container
+			maxWidth='lg'
+			sx={{
+				padding: '1rem 0',
+			}}>
 			<Stack sx={{ width: '100%' }} spacing={4}>
 				{/* <div style={{ textAlign: 'center' }}>
 					<h2>Chi tiết đơn hàng</h2>
@@ -265,11 +271,32 @@ export default function OrderDetailPage() {
 					</Stepper>
 				</div> */}
 				<div style={{ width: '100%', margin: '0 auto', marginTop: '20px' }}>
-					<h2 style={{ color: 'grey' }}>Địa chỉ nhận hàng</h2>
+					<h2 style={{ color: 'grey' }}>Thông tin đơn hàng</h2>
 					<div>
-						<div style={{ fontWeight: 'bolder', fontSize: '2rem' }}>
-							<span>{user.name}</span> - <span>{currentOrder.deliveryPhone}</span>
-						</div>
+						<p
+							style={{
+								fontSize: '1.5rem',
+							}}>
+							<span>Họ tên: </span>
+							<span
+								style={{
+									fontWeight: 'bold',
+								}}>
+								{user.name}
+							</span>
+						</p>
+						<p
+							style={{
+								fontSize: '1.5rem',
+							}}>
+							<span>Số điện thoại: </span>
+							<span
+								style={{
+									fontWeight: 'bold',
+								}}>
+								{currentOrder?.deliveryPhone}
+							</span>
+						</p>
 					</div>
 					<div style={{ marginTop: '15px' }}>
 						<span
@@ -283,7 +310,7 @@ export default function OrderDetailPage() {
 						</span>
 						<span>
 							<FmdGoodOutlinedIcon style={{ width: '15px', height: '15px' }} />
-							Giao hàng tại:{' '}
+							Giao tại:{' '}
 							<b>
 								{_.isEmpty(currentOrder?.roomNumber) == false && currentOrder?.orderType == 2
 									? currentOrder?.roomNumber
@@ -301,10 +328,20 @@ export default function OrderDetailPage() {
 						</span>
 					</div>
 				</div>
-				<div style={{ backgroundColor: 'pink', width: '100%', height: '20px', padding: '10px' }}>
-					Đơn hàng được xử lý bởi {currentOrder?.storeName}
-				</div>
+
 				<Box>
+					<h3
+						style={{
+							display: 'flex',
+							alignItems: 'center',
+							gap: '1rem',
+							color: 'white',
+							background: 'rgba(243, 101, 34)',
+							padding: '0.5rem 0.5rem',
+						}}>
+						<StoreIcon sx={{ color: 'white' }}></StoreIcon>
+						<span>{currentOrder?.storeName}</span>
+					</h3>
 					{currentOrder?.orderDetails?.map((product) => {
 						return <ProductInOrder product={product}></ProductInOrder>;
 					})}

@@ -1,4 +1,5 @@
 @import url('../../../constansts/color.css');
+$primary-color: #f36522;
 .product {
 	text-decoration: none;
 	color: black;
@@ -11,9 +12,21 @@
 	background-color: #fff;
 	padding: 15px;
 	position: relative;
+	overflow: hidden;
 	// cursor: pointer;
 	p {
 		margin: 0;
+	}
+	&__store {
+		position: absolute;
+		display: block;
+		padding: 0.5rem 1rem;
+		top: 0;
+		right: 0;
+		color: white;
+		font-size: 1.1rem;
+		background: $primary-color;
+		z-index: 10;
 	}
 	&-image {
 		width: 110px;

@@ -209,13 +209,6 @@ export default function OrderPage() {
 			setOrderType(ORDER_TYPE_ENUM[2]);
 		}
 		setNumOfStoresInCart(newNumberOfStoresInCart);
-		//
-		// console.log(newNumberOfStoresInCart);
-		// setShippingFee(calculateShippingFee(newNumberOfStoresInCart, orderType?.id));
-		// const totalFee = calculateFee(shippingFee);
-		// setFees(totalFee);
-
-		//
 		dispatch(preOrder());
 		setIsValidCartItem(true);
 		carts.forEach((cart) => {
@@ -223,9 +216,6 @@ export default function OrderPage() {
 		});
 	}, [carts]);
 
-	// useEffect(() => {
-	// 	// setShippingFee(calculateShippingFee(numOfStoresInCart, orderType?.id));
-	// }, [orderType]);
 	useEffect(() => {
 		const totalFee = calculateFee(shippingFee);
 		setFees(totalFee);
@@ -236,7 +226,6 @@ export default function OrderPage() {
 		}
 	}, [roomList]);
 	useEffect(() => {
-		// setShippingFee(calculateShippingFee(numOfStoresInCart, orderType?.id));
 		if (numOfStoresInCart > 1) {
 			setAbleToChangeOrderType(false);
 		} else setAbleToChangeOrderType(true);
