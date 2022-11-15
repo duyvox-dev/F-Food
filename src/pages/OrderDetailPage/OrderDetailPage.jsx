@@ -1,18 +1,10 @@
 import * as React from 'react';
-import PropTypes from 'prop-types';
 import { styled } from '@mui/material/styles';
 import Stack from '@mui/material/Stack';
 import moment from 'moment/moment';
-import Check from '@mui/icons-material/Check';
 import { Box, Container, Typography } from '@mui/material';
-import Inventory2Icon from '@mui/icons-material/Inventory2';
-import AssignmentTurnedInIcon from '@mui/icons-material/AssignmentTurnedIn';
-import HailIcon from '@mui/icons-material/Hail';
 import FmdGoodOutlinedIcon from '@mui/icons-material/FmdGoodOutlined';
 import CalendarTodayOutlinedIcon from '@mui/icons-material/CalendarTodayOutlined';
-import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
-import StepConnector, { stepConnectorClasses } from '@mui/material/StepConnector';
-import { ORANGE_COLOR } from '../../constansts/constants';
 import ProductInOrder from '../OrderHistoryPage/ProductInOrder/ProductInOrder';
 import Button from '@mui/material/Button';
 import { vndCurrencyFormat } from '../../util/currency.util';
@@ -24,154 +16,9 @@ import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getOrderDetail, updateOrderStatus } from '../../redux/orderSlice';
 import { useParams } from 'react-router-dom';
-import { setSuccessMessage } from '../../redux/messageSlice';
 import { useConfirm } from 'material-ui-confirm';
 import _ from 'lodash';
-import { ORDER_TYPE_ENUM } from '../../util/order.util';
 import { ORDER_STATUS_ENUM } from '../../util/order.util';
-// const QontoConnector = styled(StepConnector)(({ theme }) => ({
-// 	[`&.${stepConnectorClasses.alternativeLabel}`]: {
-// 		top: 10,
-// 		left: 'calc(-50% + 16px)',
-// 		right: 'calc(50% + 16px)',
-// 	},
-// 	[`&.${stepConnectorClasses.active}`]: {
-// 		[`& .${stepConnectorClasses.line}`]: {
-// 			borderColor: ORANGE_COLOR,
-// 		},
-// 	},
-// 	[`&.${stepConnectorClasses.completed}`]: {
-// 		[`& .${stepConnectorClasses.line}`]: {
-// 			borderColor: ORANGE_COLOR,
-// 		},
-// 	},
-// 	[`& .${stepConnectorClasses.line}`]: {
-// 		borderColor: theme.palette.mode === 'dark' ? theme.palette.grey[800] : '#eaeaf0',
-// 		borderTopWidth: 3,
-// 		borderRadius: 1,
-// 	},
-// }));
-
-// const QontoStepIconRoot = styled('div')(({ theme, ownerState }) => ({
-// 	color: theme.palette.mode === 'dark' ? theme.palette.grey[700] : '#eaeaf0',
-// 	display: 'flex',
-// 	height: 22,
-// 	alignItems: 'center',
-// 	...(ownerState.active && {
-// 		color: '#784af4',
-// 	}),
-// 	'& .QontoStepIcon-completedIcon': {
-// 		color: '#784af4',
-// 		zIndex: 1,
-// 		fontSize: 18,
-// 	},
-// 	'& .QontoStepIcon-circle': {
-// 		width: 8,
-// 		height: 8,
-// 		borderRadius: '50%',
-// 		backgroundColor: 'currentColor',
-// 	},
-// }));
-
-// function QontoStepIcon(props) {
-// 	const { active, completed, className } = props;
-
-// 	return (
-// 		<QontoStepIconRoot ownerState={{ active }} className={className}>
-// 			{completed ? <Check className='QontoStepIcon-completedIcon' /> : <div className='QontoStepIcon-circle' />}
-// 		</QontoStepIconRoot>
-// 	);
-// }
-
-// QontoStepIcon.propTypes = {
-// 	/**
-// 	 * Whether this step is active.
-// 	 * @default false
-// 	 */
-// 	active: PropTypes.bool,
-// 	className: PropTypes.string,
-// 	/**
-// 	 * Mark the step as completed. Is passed to child components.
-// 	 * @default false
-// 	 */
-// 	completed: PropTypes.bool,
-// };
-
-// const ColorlibConnector = styled(StepConnector)(({ theme }) => ({
-// 	[`&.${stepConnectorClasses.alternativeLabel}`]: {
-// 		top: 22,
-// 	},
-// 	[`&.${stepConnectorClasses.active}`]: {
-// 		[`& .${stepConnectorClasses.line}`]: {
-// 			backgroundColor: ORANGE_COLOR,
-// 		},
-// 	},
-// 	[`&.${stepConnectorClasses.completed}`]: {
-// 		[`& .${stepConnectorClasses.line}`]: {
-// 			backgroundColor: ORANGE_COLOR,
-// 		},
-// 	},
-// 	[`& .${stepConnectorClasses.line}`]: {
-// 		height: 3,
-// 		border: 0,
-// 		backgroundColor: theme.palette.mode === 'dark' ? theme.palette.grey[800] : '#eaeaf0',
-// 		borderRadius: 1,
-// 	},
-// }));
-
-// const ColorlibStepIconRoot = styled('div')(({ theme, ownerState }) => ({
-// 	backgroundColor: theme.palette.mode === 'dark' ? theme.palette.grey[700] : '#ccc',
-// 	zIndex: 1,
-// 	color: '#fff',
-// 	width: 50,
-// 	height: 50,
-// 	display: 'flex',
-// 	borderRadius: '50%',
-// 	justifyContent: 'center',
-// 	alignItems: 'center',
-// 	...(ownerState.active && {
-// 		backgroundColor: ORANGE_COLOR,
-// 		boxShadow: '0 4px 10px 0 rgba(0,0,0,.25)',
-// 	}),
-// 	...(ownerState.completed && {
-// 		backgroundColor: ORANGE_COLOR,
-// 	}),
-// }));
-
-// function ColorlibStepIcon(props) {
-// 	const { active, completed, className } = props;
-
-// 	const icons = {
-// 		1: <Inventory2Icon />,
-// 		2: <HailIcon />,
-// 		3: <AssignmentTurnedInIcon />,
-// 	};
-
-// 	return (
-// 		<ColorlibStepIconRoot ownerState={{ completed, active }} className={className}>
-// 			{icons[String(props.icon)]}
-// 		</ColorlibStepIconRoot>
-// 	);
-// }
-
-// ColorlibStepIcon.propTypes = {
-// 	/**
-// 	 * Whether this step is active.
-// 	 * @default false
-// 	 */
-// 	active: PropTypes.bool,
-// 	className: PropTypes.string,
-// 	/**
-// 	 * Mark the step as completed. Is passed to child components.
-// 	 * @default false
-// 	 */
-// 	completed: PropTypes.bool,
-// 	/**
-// 	 * The label displayed in the step icon.
-// 	 */
-// 	icon: PropTypes.node,
-// };
-
 const StyledButton = styled(Button)({
 	color: 'gray',
 	background: 'white',
@@ -271,11 +118,13 @@ export default function OrderDetailPage() {
 					</Stepper>
 				</div> */}
 				<div style={{ width: '100%', margin: '0 auto', marginTop: '20px' }}>
-					<h2 style={{ color: 'grey' }}>Thông tin đơn hàng</h2>
-					<div>
+					<h2 style={{ color: 'grey' }}>
+						Thông tin đơn hàng <span style={{ color: 'black' }}>#{currentOrder?.orderName}</span>
+					</h2>
+					<div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)' }}>
 						<p
 							style={{
-								fontSize: '1.5rem',
+								fontSize: '1.2rem',
 							}}>
 							<span>Họ tên: </span>
 							<span
@@ -287,7 +136,7 @@ export default function OrderDetailPage() {
 						</p>
 						<p
 							style={{
-								fontSize: '1.5rem',
+								fontSize: '1.2rem',
 							}}>
 							<span>Số điện thoại: </span>
 							<span
@@ -297,35 +146,61 @@ export default function OrderDetailPage() {
 								{currentOrder?.deliveryPhone}
 							</span>
 						</p>
-					</div>
-					<div style={{ marginTop: '15px' }}>
-						<span
+						<p
 							style={{
-								display: 'block',
-								fontSize: '1.5rem',
-								color: '#f36522',
-								margin: '0.5rem 0',
+								fontSize: '1.2rem',
 							}}>
-							{_.isEmpty(currentOrder) == false ? ORDER_STATUS_ENUM[currentOrder?.orderStatus].name : ''}
-						</span>
-						<span>
-							<FmdGoodOutlinedIcon style={{ width: '15px', height: '15px' }} />
-							Giao tại:{' '}
-							<b>
-								{_.isEmpty(currentOrder?.roomNumber) == false && currentOrder?.orderType == 2
-									? currentOrder?.roomNumber
-									: 'Nhận tại cửa hàng'}
-							</b>
-						</span>
+							Thời gian:
+							<span
+								style={{
+									fontWeight: 'bold',
+								}}>
+								{moment(currentOrder.checkInDate).format('DD/MM/YYYY HH:MM')}
+							</span>
+						</p>
+						<p
+							style={{
+								fontSize: '1.2rem',
+							}}>
+							Trạng thái:
+							<span
+								style={{
+									fontSize: '1.2rem',
+									color: '#f36522',
+									margin: '0.5rem 0',
+									fontWeight: 'bold',
+								}}>
+								{_.isEmpty(currentOrder) == false ? ORDER_STATUS_ENUM[currentOrder?.orderStatus].name : ''}
+							</span>
+						</p>
+					</div>
+					<div>
+						<div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)' }}>
+							<p
+								style={{
+									fontSize: '1.2rem',
+								}}>
+								<FmdGoodOutlinedIcon style={{ width: '15px', height: '15px' }} />
+								Giao tại:{' '}
+								<b>
+									{_.isEmpty(currentOrder?.roomNumber) == false && currentOrder?.orderType == 2
+										? currentOrder?.roomNumber
+										: 'Nhận tại cửa hàng'}
+								</b>
+							</p>
 
-						<span style={{ marginLeft: '100px' }}>
-							<CalendarTodayOutlinedIcon style={{ width: '15px', height: '15px' }} />
-							Nhận hàng:{' '}
-							<b>
-								{moment(`2015-06-17 ${mappedTimeSlot?.arriveTime}`).format('HH:mm')}-
-								{moment(`2015-06-17 ${mappedTimeSlot?.checkoutTime}`).format('HH:mm')}
-							</b>
-						</span>
+							<p
+								style={{
+									fontSize: '1.2rem',
+								}}>
+								<CalendarTodayOutlinedIcon style={{ width: '15px', height: '15px' }} />
+								Nhận hàng:{' '}
+								<b>
+									{moment(`2015-06-17 ${mappedTimeSlot?.arriveTime}`).format('HH:mm')}-
+									{moment(`2015-06-17 ${mappedTimeSlot?.checkoutTime}`).format('HH:mm')}
+								</b>
+							</p>
+						</div>
 					</div>
 				</div>
 
